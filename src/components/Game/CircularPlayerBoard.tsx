@@ -54,13 +54,12 @@ export default function CircularPlayerBoard({
     : null;
 
   return (
-    <div className="relative w-full" style={{ paddingBottom: '100%', maxHeight: '520px' }}>
+    <div className="flex flex-col gap-2">
       {/* Selection mode banner */}
       {selectionMode && (
         <div
-          className="absolute top-0 left-1/2 z-30 px-3 py-1 rounded-full text-xs font-gothic font-bold animate-pulse"
+          className="self-center px-3 py-1 rounded-full text-xs font-gothic font-bold animate-pulse"
           style={{
-            transform: 'translateX(-50%)',
             background: modeColor ? `${modeColor}22` : undefined,
             border: `1px solid ${modeColor}`,
             color: modeColor ?? undefined,
@@ -68,9 +67,10 @@ export default function CircularPlayerBoard({
         >
           {selectionMode === 'select-nominee' && '🎯 Selecciona al NOMINADO'}
           {selectionMode === 'select-nominator' && '👆 Selecciona al NOMINADOR'}
-          {selectionMode === 'select-voter' && '🗳️ Selecciona al VOTANTE'}
+          {selectionMode === 'select-voter' && '🗳️ Selecciona al JUGADOR'}
         </div>
       )}
+    <div className="relative w-full" style={{ paddingBottom: '100%', maxHeight: '520px' }}>
       <div className="absolute inset-0">
         {/* Decorative ring */}
         <svg
@@ -263,6 +263,7 @@ export default function CircularPlayerBoard({
           );
         })}
       </div>
+    </div>
     </div>
   );
 }
