@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Moon, CheckCircle, Circle, ChevronRight, FileText, Skull, Users, Eye, EyeOff, RefreshCw, Maximize2, X } from 'lucide-react';
 import type { Game, Character, NightAction } from '../../types';
 import { CharacterTypeBadge } from '../UI/CharacterTypeBadge';
@@ -9,6 +9,7 @@ import { getDistribution } from '../../data/scripts';
 interface Props {
   game: Game;
   allChars: Character[];
+  scriptChars?: Character[]; // chars belonging to this script (for bluff pool)
   onUpdate: (game: Game) => void;
 }
 
@@ -50,7 +51,7 @@ function getNightOrder(game: Game, allChars: Character[], isFirstNight: boolean)
   return actions;
 }
 
-export default function GameNightPhase({ game, allChars, onUpdate }: Props) {
+export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }: Props) {
   const isFirstNight = game.round === 1;
   const currentRound = game.rounds[game.rounds.length - 1];
 
@@ -62,13 +63,26 @@ export default function GameNightPhase({ game, allChars, onUpdate }: Props) {
   const [deaths, setDeaths] = useState<string[]>(currentRound.deaths || []);
   const [storytellerNotes, setStorytellernotes] = useState(game.storytellerNotes);
   const [selectedPlayerId, setSelectedPlayerId] = useState<string | undefined>();
+  // Controlled notes per action index
+  const [actionNotes, setActionNotes] = useState<Record<number, string>>(
+    () => Object.fromEntries((currentRound.nightActions).map((a, i) => [i, a.note || '']))
+  );
+  // Index of the action currently waiting for player selection (-1 = none)
+  const [pickingForIdx, setPickingForIdx] = useState<number | null>(null);
+  // Token picker/display state
+  const [showTokenPicker, setShowTokenPicker] = useState(false);
+  const [showTokenDisplay, setShowTokenDisplay] = useState<Character | null>(null);
+  // Ref to the circular board container for scrolling
+  const boardRef = useRef<HTMLDivElement>(null);
   const distribution = getDistribution(game.players.length);
 
   // ── Coartadas (bluffs) ───────────────────────────────────────
-  // Characters in the script but NOT in play → pool for bluffs
-  const scriptCharIds = new Set(game.players.map(p => p.characterId));
-  const bluffPool = allChars.filter(
-    c => (c.type === 'townsfolk' || c.type === 'outsider') && !scriptCharIds.has(c.id)
+  // Characters in the script but NOT assigned to any player → pool for bluffs
+  const assignedCharIds = new Set(game.players.map(p => p.characterId));
+  // Use scriptChars (scoped to this script) if provided, otherwise fall back to allChars
+  const bluffSourceChars = scriptChars ?? allChars;
+  const bluffPool = bluffSourceChars.filter(
+    c => (c.type === 'townsfolk' || c.type === 'outsider') && !assignedCharIds.has(c.id)
   );
   const [selectedBluffs, setSelectedBluffs] = useState<Character[]>([]);
   const [showBluffPicker, setShowBluffPicker] = useState(false);
@@ -111,6 +125,7 @@ export default function GameNightPhase({ game, allChars, onUpdate }: Props) {
   };
 
   const markDone = (idx: number, note: string) => {
+    setActionNotes(prev => ({ ...prev, [idx]: note }));
     setNightActions(prev => prev.map((a, i) => i === idx ? { ...a, isDone: true, note } : a));
     setActiveIdx(prev => {
       const next = nightActions.findIndex((a, i) => i > idx && !a.isDone);
@@ -169,6 +184,24 @@ export default function GameNightPhase({ game, allChars, onUpdate }: Props) {
     onUpdate(updatedGame);
   };
 
+  const handleBoardSelect = (player: import('../../types').Player) => {
+    if (pickingForIdx !== null) {
+      setActionNotes(prev => {
+        const current = prev[pickingForIdx] || '';
+        const sep = current.trim() ? ', ' : '';
+        return { ...prev, [pickingForIdx]: current + sep + player.name };
+      });
+      setPickingForIdx(null);
+      return;
+    }
+    setSelectedPlayerId(prev => prev === player.id ? undefined : player.id);
+  };
+
+  const handlePickPlayer = (idx: number) => {
+    setPickingForIdx(idx);
+    boardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
   const doneCount = nightActions.filter(a => a.isDone).length;
 
   return (
@@ -220,14 +253,24 @@ export default function GameNightPhase({ game, allChars, onUpdate }: Props) {
             </div>
           </div>
 
-          <div style={{ maxWidth: 420, margin: '0 auto' }}>
+          <div ref={boardRef} style={{ maxWidth: 420, margin: '0 auto' }}>
+            {pickingForIdx !== null && (
+              <div className="mb-2 flex items-center justify-between gap-2 px-3 py-2 rounded-lg border border-blue-600/60 bg-blue-900/30">
+                <p className="text-blue-300 text-xs font-gothic">
+                  🎯 Pulsa un jugador para añadirlo a la nota de <strong>{allChars.find(c => c.id === nightActions[pickingForIdx]?.characterId)?.name ?? 'la acción'}</strong>
+                </p>
+                <button onClick={() => setPickingForIdx(null)} className="text-blue-500 hover:text-blue-200 text-xs">✕</button>
+              </div>
+            )}
             <CircularPlayerBoard
               players={game.players}
               allChars={allChars}
               showRoles={true}
-              selectedId={selectedPlayerId}
-              onSelect={p => setSelectedPlayerId(prev => prev === p.id ? undefined : p.id)}
+              selectedId={pickingForIdx !== null ? undefined : selectedPlayerId}
+              onSelect={handleBoardSelect}
+              highlightIds={pickingForIdx !== null ? game.players.map(p => p.id) : undefined}
               isNight={true}
+              selectionMode={pickingForIdx !== null ? 'select-voter' : null}
               centerContent={
                 <div className="text-center">
                   <Moon className="w-6 h-6 text-blue-400 mx-auto mb-1" />
@@ -459,6 +502,10 @@ export default function GameNightPhase({ game, allChars, onUpdate }: Props) {
                         player={player}
                         reminder={reminder}
                         isActive={isActive}
+                        note={actionNotes[idx] ?? action.note}
+                        onNoteChange={v => setActionNotes(prev => ({ ...prev, [idx]: v }))}
+                        onPickPlayer={() => { handlePickPlayer(idx); setActiveIdx(idx); }}
+                        onShowTokens={() => setShowTokenPicker(true)}
                         onToggleDone={() => toggleDone(idx)}
                         onMarkDone={(note) => markDone(idx, note)}
                         onClick={() => !action.isDone && setActiveIdx(idx)}
@@ -518,6 +565,68 @@ export default function GameNightPhase({ game, allChars, onUpdate }: Props) {
           </div>
         </div>
       </div>
+
+      {/* ── TOKEN PICKER MODAL ─────────────────────────────────── */}
+      {showTokenPicker && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: 'rgba(0,0,0,0.85)' }}
+          onClick={() => setShowTokenPicker(false)}
+        >
+          <div
+            className="card border-amber-800/40 w-full max-w-2xl max-h-[80vh] overflow-y-auto"
+            style={{ background: 'rgba(15,10,5,0.97)' }}
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-gothic text-amber-300 text-lg">🃏 Tokens del Script</h2>
+              <button onClick={() => setShowTokenPicker(false)} className="text-gothic-500 hover:text-gothic-200">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            {(['townsfolk','outsider','minion','demon'] as const).map(type => {
+              const typeChars = (scriptChars ?? allChars).filter(c => c.type === type);
+              if (typeChars.length === 0) return null;
+              const labels: Record<string, string> = { townsfolk: '🏘️ Aldeanos', outsider: '🧳 Forasteros', minion: '😈 Esbirros', demon: '👹 Demonios' };
+              return (
+                <div key={type} className="mb-4">
+                  <p className="text-xs font-gothic uppercase tracking-widest text-gothic-500 mb-2">{labels[type]}</p>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                    {typeChars.map(c => (
+                      <button
+                        key={c.id}
+                        onClick={() => { setShowTokenDisplay(c); setShowTokenPicker(false); }}
+                        className="flex flex-col items-center gap-1 p-2 rounded-lg border border-gothic-800/40 hover:border-amber-600/60 bg-gothic-900/40 hover:bg-amber-950/30 transition-all"
+                      >
+                        <span className="text-3xl">{c.icon || '❓'}</span>
+                        <span className="font-gothic text-xs text-gothic-200 text-center leading-tight">{c.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ── TOKEN FULLSCREEN DISPLAY ───────────────────────────── */}
+      {showTokenDisplay && (
+        <div
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center cursor-pointer"
+          style={{ background: 'rgba(0,0,0,0.95)' }}
+          onClick={() => setShowTokenDisplay(null)}
+        >
+          <div className="text-center select-none">
+            <div className="text-[12rem] leading-none mb-6 drop-shadow-2xl">{showTokenDisplay.icon || '❓'}</div>
+            <h1 className="font-gothic text-5xl text-amber-300 mb-3">{showTokenDisplay.name}</h1>
+            {showTokenDisplay.ability && (
+              <p className="text-gothic-300 text-lg max-w-md mx-auto leading-relaxed px-4">{showTokenDisplay.ability}</p>
+            )}
+            <p className="text-gothic-600 text-sm mt-8">Toca para cerrar</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -528,6 +637,10 @@ function NightActionItem({
   player,
   reminder,
   isActive,
+  note,
+  onNoteChange,
+  onPickPlayer,
+  onShowTokens,
   onToggleDone,
   onMarkDone,
   onClick,
@@ -537,11 +650,14 @@ function NightActionItem({
   player?: { name: string; isAlive: boolean };
   reminder?: string;
   isActive: boolean;
+  note: string;
+  onNoteChange: (v: string) => void;
+  onPickPlayer: () => void;
+  onShowTokens: () => void;
   onToggleDone: () => void;
   onMarkDone: (note: string) => void;
   onClick: () => void;
 }) {
-  const [note, setNote] = useState(action.note);
   const [expanded, setExpanded] = useState(isActive);
 
   const className = action.isDone
@@ -579,21 +695,37 @@ function NightActionItem({
         )}
 
         {(isActive || expanded) && !action.isDone && (
-          <div className="mt-2 flex gap-2">
-            <input
-              className="input-gothic text-xs flex-1"
-              value={note}
-              onChange={e => setNote(e.target.value)}
-              onClick={e => e.stopPropagation()}
-              placeholder="Nota sobre la acción..."
-            />
-            <button
-              onClick={e => { e.stopPropagation(); onMarkDone(note); }}
-              className="btn-primary text-xs px-3"
-            >
-              <CheckCircle className="w-3 h-3" />
-              Hecho
-            </button>
+          <div className="mt-2 space-y-2">
+            <div className="flex gap-2">
+              <input
+                className="input-gothic text-xs flex-1"
+                value={note}
+                onChange={e => onNoteChange(e.target.value)}
+                onClick={e => e.stopPropagation()}
+                placeholder="Nota sobre la acción..."
+              />
+              <button
+                onClick={e => { e.stopPropagation(); onMarkDone(note); }}
+                className="btn-primary text-xs px-3"
+              >
+                <CheckCircle className="w-3 h-3" />
+                Hecho
+              </button>
+            </div>
+            <div className="flex gap-2 flex-wrap">
+              <button
+                onClick={e => { e.stopPropagation(); onPickPlayer(); }}
+                className="flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-200 border border-blue-800/40 hover:border-blue-600 bg-blue-950/30 hover:bg-blue-900/40 px-2 py-1 rounded transition-all font-gothic"
+              >
+                🎯 Elegir jugador
+              </button>
+              <button
+                onClick={e => { e.stopPropagation(); onShowTokens(); }}
+                className="flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-200 border border-amber-800/40 hover:border-amber-600 bg-amber-950/30 hover:bg-amber-900/40 px-2 py-1 rounded transition-all font-gothic"
+              >
+                🃏 Mostrar tokens
+              </button>
+            </div>
           </div>
         )}
 

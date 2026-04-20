@@ -22,11 +22,17 @@ export default function GamePage() {
 
   // If there's an active game, show it
   if (activeGame && activeGame.phase !== 'ended') {
+    const activeScript = allScripts.find(s => s.id === activeGame.scriptId);
+    const activeScriptChars = activeScript
+      ? activeScript.characters.map(id => allChars.find(c => c.id === id)).filter(Boolean) as import('../types').Character[]
+      : [];
+
     if (activeGame.phase === 'night') {
       return (
         <GameNightPhase
           game={activeGame}
           allChars={allChars}
+          scriptChars={activeScriptChars}
           onUpdate={saveGame}
         />
       );
