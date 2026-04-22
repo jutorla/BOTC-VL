@@ -2,16 +2,23 @@ import { useState } from 'react';
 import { Users, Shuffle, ChevronRight, Plus, Trash2, AlertCircle, ShoppingBag, Eye, X } from 'lucide-react';
 import type { Game, Player, Script, Character } from '../../types';
 import { getDistribution, DIFFICULTY_LABELS } from '../../data/scripts';
+import { loricCharacters } from '../../data/characters';
 import { CharacterTypeBadge } from '../UI/CharacterTypeBadge';
 
 interface Props {
   scripts: Script[];
   allChars: Character[];
+  extraLorics?: Character[];
   initialScriptId?: string;
   onStart: (game: Game) => void;
 }
 
-export default function GameSetupPhase({ scripts, allChars, initialScriptId, onStart }: Props) {
+export default function GameSetupPhase({ scripts, allChars, extraLorics = [], initialScriptId, onStart }: Props) {
+  // Merge built-in lorics with any custom loric characters from JSONBin
+  const allLorics = [
+    ...loricCharacters,
+    ...extraLorics.filter(c => c.type === 'loric' && !loricCharacters.find(l => l.id === c.id)),
+  ];
   const [scriptId, setScriptId] = useState(initialScriptId || scripts[0]?.id || '');
   const [playerNames, setPlayerNames] = useState<string[]>(['', '', '', '', '']);
   const [assignments, setAssignments] = useState<Record<string, string>>({}); // playerId -> charId
@@ -19,6 +26,8 @@ export default function GameSetupPhase({ scripts, allChars, initialScriptId, onS
   const [showAbility, setShowAbility] = useState<string | null>(null);
   // Characters selected to be in this game (subset of script chars)
   const [selectedCharIds, setSelectedCharIds] = useState<Set<string>>(new Set());
+  // Loric characters active in this game
+  const [selectedLoricIds, setSelectedLoricIds] = useState<Set<string>>(new Set());
 
   // Bag draw state
   const [bagMode, setBagMode] = useState(false);
@@ -86,22 +95,17 @@ export default function GameSetupPhase({ scripts, allChars, initialScriptId, onS
   };
 
   // ---- Bag draw helpers ----
-  const initBag = () => {
-    const dist = getDistribution(validNames.length);
-    const chars = activeScriptChars;
-    const pool: Character[] = [
-      ...shuffle(chars.filter(c => c.type === 'townsfolk')).slice(0, dist[0]),
-      ...shuffle(chars.filter(c => c.type === 'outsider')).slice(0, dist[1]),
-      ...shuffle(chars.filter(c => c.type === 'minion')).slice(0, dist[2]),
-      ...shuffle(chars.filter(c => c.type === 'demon')).slice(0, dist[3]),
-    ];
-    setBag(shuffle(pool));
+  // La bolsa contiene exactamente los personajes seleccionados por el narrador en el paso 2.
+  // Es responsabilidad del narrador ajustar la selección si algún personaje modifica
+  // el conteo de forasteros/aldeanos (p.ej. Barón añade 2 forasteros, etc.).
+  const initBag = (chars: Character[]) => {
+    setBag(shuffle(chars));
     setAssignments({});
   };
 
   const enterBagMode = () => {
     setBagMode(true);
-    initBag();
+    initBag(activeScriptChars);
   };
 
   const drawFromBag = (pid: string, playerName: string) => {
@@ -153,6 +157,7 @@ export default function GameSetupPhase({ scripts, allChars, initialScriptId, onS
         deaths: [],
       }],
       hasExecutionToday: false,
+      lorics: [...selectedLoricIds],
       storytellerNotes: '',
       createdAt: now,
       updatedAt: now,
@@ -258,6 +263,41 @@ export default function GameSetupPhase({ scripts, allChars, initialScriptId, onS
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
+
+          {/* Loric selector */}
+          <div className="mt-6 border-t border-dark-200 pt-4">
+            <p className="text-gothic-300 text-sm font-gothic mb-3">
+              🃏 ¿Usar algún <strong className="text-amber-400">Loric</strong>? (opcional)
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {allLorics.map(loric => {
+                const active = selectedLoricIds.has(loric.id);
+                return (
+                  <button
+                    key={loric.id}
+                    onClick={() => setSelectedLoricIds(prev => {
+                      const next = new Set(prev);
+                      if (next.has(loric.id)) next.delete(loric.id); else next.add(loric.id);
+                      return next;
+                    })}
+                    className={`flex items-start gap-2 p-2 rounded border text-left transition-all ${
+                      active
+                        ? 'border-amber-600/60 bg-amber-950/30'
+                        : 'border-dark-200 bg-dark-500 opacity-60 hover:opacity-90'
+                    }`}
+                    title={loric.ability}
+                  >
+                    <span className="text-lg flex-shrink-0">{loric.icon}</span>
+                    <div className="flex-1 min-w-0">
+                      <p className={`font-gothic text-sm ${active ? 'text-amber-300' : 'text-gothic-400'}`}>{loric.name}</p>
+                      <p className="text-gothic-600 text-xs leading-tight line-clamp-2">{loric.ability}</p>
+                    </div>
+                    {active && <span className="text-amber-400 text-xs flex-shrink-0">✓</span>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       )}
 
@@ -315,10 +355,24 @@ export default function GameSetupPhase({ scripts, allChars, initialScriptId, onS
               ))}
             </div>
 
-            {totalSelected > 0 && totalSelected < validNames.length && (
+            {/* Aviso de conteo manual */}
+            <div className="flex items-start gap-2 text-gothic-400 text-xs mb-3 p-2 bg-dark-500 border border-dark-200/50 rounded">
+              <AlertCircle className="w-3 h-3 flex-shrink-0 mt-0.5 text-amber-500" />
+              <span>
+                <span className="text-amber-400 font-bold">Recuerda:</span> algunos personajes modifican la distribución (p.ej. el Barón añade 2 forasteros y quita 2 aldeanos).
+                Los contadores de arriba son la base oficial — <strong className="text-gothic-200">tú decides cuántos seleccionas realmente</strong>. La bolsa contendrá exactamente los personajes que marques aquí.
+              </span>
+            </div>
+
+            {totalSelected > 0 && totalSelected !== validNames.length && (
               <div className="flex items-center gap-2 text-yellow-400 text-xs mb-3 p-2 bg-yellow-900/20 border border-yellow-700/30 rounded">
                 <AlertCircle className="w-3 h-3 flex-shrink-0" />
-                <span>Selecciona al menos {validNames.length} personajes para poder asignarlos (actualmente {totalSelected}).</span>
+                <span>
+                  Hay <strong>{totalSelected}</strong> personajes seleccionados para <strong>{validNames.length}</strong> jugadores.
+                  {totalSelected < validNames.length
+                    ? ' Selecciona más personajes o la bolsa quedará corta.'
+                    : ' Hay más personajes que jugadores — sobrará alguno en la bolsa.'}
+                </span>
               </div>
             )}
 
@@ -378,7 +432,6 @@ export default function GameSetupPhase({ scripts, allChars, initialScriptId, onS
               <button onClick={() => setStep('players')} className="btn-secondary">← Volver</button>
               <button
                 onClick={() => setStep('roles')}
-                disabled={totalSelected > 0 && totalSelected < validNames.length}
                 className="btn-primary ml-auto"
               >
                 {totalSelected === 0 ? 'Usar todos los personajes' : 'Continuar con selección'}

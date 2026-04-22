@@ -49,9 +49,12 @@ export default function HomePage() {
         <div className="flex justify-center mb-4">
           <Moon className="w-16 h-16 text-blood-500" />
         </div>
-        <h1 className="page-title text-5xl mb-4">Blood on the Clocktower</h1>
+        <h1 className="page-title text-5xl mb-4">
+          Valentia on the Ludicatower
+        </h1>
         <p className="text-gothic-300 text-xl font-body italic max-w-2xl mx-auto leading-relaxed">
-          "En Ravenswood Bluff, el Demonio acecha entre vosotros. Solo la astucia del pueblo puede salvar el alba."
+          "En Ravenswood Bluff, el Demonio acecha entre vosotros. Solo la
+          astucia del pueblo puede salvar el alba."
         </p>
         <div className="flex justify-center mt-4">
           <span className="text-gold-600 text-2xl select-none">✦ ✦ ✦</span>
@@ -64,10 +67,13 @@ export default function HomePage() {
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 bg-blood-500 rounded-full animate-pulse" />
             <div>
-              <p className="font-gothic text-gold-400 text-sm">Partida activa</p>
+              <p className="font-gothic text-gold-400 text-sm">
+                Partida activa
+              </p>
               <p className="text-gothic-200 text-sm">
-                {activeGame.scriptName} · Ronda {activeGame.round} ·{' '}
-                {activeGame.players.filter(p => p.isAlive).length} jugadores vivos
+                {activeGame.scriptName} · Ronda {activeGame.round} ·{" "}
+                {activeGame.players.filter((p) => p.isAlive).length} jugadores
+                vivos
               </p>
             </div>
           </div>
@@ -80,32 +86,52 @@ export default function HomePage() {
 
       {/* Feature cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-        {features.map(({ to, icon: Icon, title, description, color, iconColor, highlight }) => (
-          <Link
-            key={to}
-            to={to}
-            className={`card border-2 ${color} transition-all duration-300 hover:shadow-xl group ${
-              highlight ? 'glow-blood' : ''
-            }`}
-          >
-            <div className="flex items-start gap-4">
-              <div className={`p-3 rounded-lg bg-dark-400 border border-dark-200 ${highlight ? 'group-hover:border-blood-600' : ''}`}>
-                <Icon className={`w-6 h-6 ${iconColor}`} />
+        {features.map(
+          ({
+            to,
+            icon: Icon,
+            title,
+            description,
+            color,
+            iconColor,
+            highlight,
+          }) => (
+            <Link
+              key={to}
+              to={to}
+              className={`card border-2 ${color} transition-all duration-300 hover:shadow-xl group ${
+                highlight ? "glow-blood" : ""
+              }`}
+            >
+              <div className="flex items-start gap-4">
+                <div
+                  className={`p-3 rounded-lg bg-dark-400 border border-dark-200 ${highlight ? "group-hover:border-blood-600" : ""}`}
+                >
+                  <Icon className={`w-6 h-6 ${iconColor}`} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-gothic text-lg text-gothic-100 mb-1 group-hover:text-gold-400 transition-colors">
+                    {title}
+                    {highlight && (
+                      <span className="ml-2 text-xs text-blood-400 font-gothic">
+                        (Principal)
+                      </span>
+                    )}
+                  </h3>
+                  <p className="text-gothic-300 text-sm leading-relaxed">
+                    {description}
+                  </p>
+                </div>
               </div>
-              <div className="flex-1">
-                <h3 className="font-gothic text-lg text-gothic-100 mb-1 group-hover:text-gold-400 transition-colors">
-                  {title}
-                  {highlight && <span className="ml-2 text-xs text-blood-400 font-gothic">(Principal)</span>}
-                </h3>
-                <p className="text-gothic-300 text-sm leading-relaxed">{description}</p>
-              </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ),
+        )}
       </div>
 
       {/* Stats */}
-      {(state.customScripts.length > 0 || state.customCharacters.length > 0 || state.savedGames.length > 0) && (
+      {(state.customScripts.length > 0 ||
+        state.customCharacters.length > 0 ||
+        state.savedGames.length > 0) && (
         <div className="card border-gold-600/30">
           <div className="flex items-center gap-2 mb-4">
             <Star className="w-5 h-5 text-gold-400" />
@@ -113,15 +139,21 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="font-gothic text-3xl text-blood-400">{state.customScripts.length}</p>
+              <p className="font-gothic text-3xl text-blood-400">
+                {state.customScripts.length}
+              </p>
               <p className="text-gothic-400 text-sm">Scripts propios</p>
             </div>
             <div>
-              <p className="font-gothic text-3xl text-blood-400">{state.customCharacters.length}</p>
+              <p className="font-gothic text-3xl text-blood-400">
+                {state.customCharacters.length}
+              </p>
               <p className="text-gothic-400 text-sm">Personajes creados</p>
             </div>
             <div>
-              <p className="font-gothic text-3xl text-blood-400">{state.savedGames.length}</p>
+              <p className="font-gothic text-3xl text-blood-400">
+                {state.savedGames.length}
+              </p>
               <p className="text-gothic-400 text-sm">Partidas guardadas</p>
             </div>
           </div>
@@ -130,7 +162,8 @@ export default function HomePage() {
 
       {/* Footer note */}
       <p className="text-center text-gothic-500 text-xs mt-12 font-body">
-        Herramienta de ayuda al Narrador · Blood on the Clocktower es un juego de Pandemonium Institute
+        Herramienta de ayuda al Narrador · Blood on the Clocktower es un juego
+        de Pandemonium Institute
       </p>
     </div>
   );

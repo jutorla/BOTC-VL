@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { OFFICIAL_SCRIPTS } from '../data/scripts';
-import { ALL_CHARACTERS } from '../data/characters';
+import { ALL_CHARACTERS, loricCharacters } from '../data/characters';
 import type { Script } from '../types';
 import GameSetupPhase from '../components/Game/GameSetupPhase';
 import GameNightPhase from '../components/Game/GameNightPhase';
@@ -16,7 +16,7 @@ export default function GamePage() {
 
   const locationState = location.state as { scriptId?: string } | null;
   const allScripts: Script[] = [...OFFICIAL_SCRIPTS, ...state.customScripts];
-  const allChars = [...ALL_CHARACTERS, ...state.customCharacters];
+  const allChars = [...ALL_CHARACTERS, ...loricCharacters, ...state.customCharacters];
 
   const activeGame = state.savedGames.find(g => g.id === state.activeGameId);
 
@@ -86,6 +86,7 @@ export default function GamePage() {
       <GameSetupPhase
         scripts={allScripts}
         allChars={allChars}
+        extraLorics={state.customCharacters.filter(c => c.type === 'loric')}
         initialScriptId={locationState?.scriptId}
         onStart={(game) => {
           saveGame(game);

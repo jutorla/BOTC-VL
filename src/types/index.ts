@@ -1,4 +1,4 @@
-export type CharacterType = 'townsfolk' | 'outsider' | 'minion' | 'demon' | 'traveller' | 'fabled';
+export type CharacterType = 'townsfolk' | 'outsider' | 'minion' | 'demon' | 'traveller' | 'fabled' | 'loric';
 
 export interface Character {
   id: string;
@@ -13,6 +13,7 @@ export interface Character {
   setup?: boolean;           // requiere acción en el setup
   isCustom?: boolean;
   icon?: string;             // emoji icono
+  author?: string;           // nombre del creador (personajes custom)
 }
 
 export interface Script {
@@ -96,6 +97,7 @@ export interface Game {
   rounds: GameRound[];
   currentNomination?: Nomination;
   hasExecutionToday: boolean;
+  lorics?: string[];          // IDs de personajes loric activos en la partida
   winner?: 'good' | 'evil';
   winReason?: string;
   storytellerNotes: string;

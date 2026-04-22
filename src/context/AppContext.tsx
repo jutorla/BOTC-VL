@@ -1,9 +1,17 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { AppState, Script, Character, Game } from '../types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { loadSharedData, saveSharedData } from '../lib/jsonbin';
+import type { SharedData } from '../lib/jsonbin';
+
+interface LocalData {
+  savedGames: Game[];
+  activeGameId: string | undefined;
+}
 
 interface AppContextType {
   state: AppState;
+  loading: boolean;
   addCustomScript: (script: Script) => void;
   updateCustomScript: (script: Script) => void;
   deleteCustomScript: (id: string) => void;
@@ -17,48 +25,57 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | null>(null);
 
-const INITIAL_STATE: AppState = {
-  customScripts: [],
-  customCharacters: [],
+const INITIAL_LOCAL: LocalData = {
   savedGames: [],
   activeGameId: undefined,
 };
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = useLocalStorage<AppState>('botc-app-state', INITIAL_STATE);
+  const [shared, setShared] = useState<SharedData>({ customScripts: [], customCharacters: [] });
+  const [loading, setLoading] = useState(true);
+  const [local, setLocal] = useLocalStorage<LocalData>('botc-local-state', INITIAL_LOCAL);
 
-  const addCustomScript = (script: Script) => {
-    setState(prev => ({ ...prev, customScripts: [...prev.customScripts, script] }));
-  };
+  useEffect(() => {
+    loadSharedData()
+      .then(data => setShared(data))
+      .catch(err => console.error('Could not load shared data:', err))
+      .finally(() => setLoading(false));
+  }, []);
 
-  const updateCustomScript = (script: Script) => {
-    setState(prev => ({
+  const updateShared = useCallback((updater: (prev: SharedData) => SharedData) => {
+    setShared(prev => {
+      const next = updater(prev);
+      saveSharedData(next).catch(err => console.error('Could not save shared data:', err));
+      return next;
+    });
+  }, []);
+
+  const addCustomScript = (script: Script) =>
+    updateShared(prev => ({ ...prev, customScripts: [...prev.customScripts, script] }));
+
+  const updateCustomScript = (script: Script) =>
+    updateShared(prev => ({
       ...prev,
       customScripts: prev.customScripts.map(s => s.id === script.id ? script : s),
     }));
-  };
 
-  const deleteCustomScript = (id: string) => {
-    setState(prev => ({ ...prev, customScripts: prev.customScripts.filter(s => s.id !== id) }));
-  };
+  const deleteCustomScript = (id: string) =>
+    updateShared(prev => ({ ...prev, customScripts: prev.customScripts.filter(s => s.id !== id) }));
 
-  const addCustomCharacter = (char: Character) => {
-    setState(prev => ({ ...prev, customCharacters: [...prev.customCharacters, char] }));
-  };
+  const addCustomCharacter = (char: Character) =>
+    updateShared(prev => ({ ...prev, customCharacters: [...prev.customCharacters, char] }));
 
-  const updateCustomCharacter = (char: Character) => {
-    setState(prev => ({
+  const updateCustomCharacter = (char: Character) =>
+    updateShared(prev => ({
       ...prev,
       customCharacters: prev.customCharacters.map(c => c.id === char.id ? char : c),
     }));
-  };
 
-  const deleteCustomCharacter = (id: string) => {
-    setState(prev => ({ ...prev, customCharacters: prev.customCharacters.filter(c => c.id !== id) }));
-  };
+  const deleteCustomCharacter = (id: string) =>
+    updateShared(prev => ({ ...prev, customCharacters: prev.customCharacters.filter(c => c.id !== id) }));
 
   const saveGame = (game: Game) => {
-    setState(prev => {
+    setLocal(prev => {
       const exists = prev.savedGames.some(g => g.id === game.id);
       return {
         ...prev,
@@ -71,7 +88,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   };
 
   const deleteGame = (id: string) => {
-    setState(prev => ({
+    setLocal(prev => ({
       ...prev,
       savedGames: prev.savedGames.filter(g => g.id !== id),
       activeGameId: prev.activeGameId === id ? undefined : prev.activeGameId,
@@ -79,12 +96,20 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   };
 
   const setActiveGame = (id: string | undefined) => {
-    setState(prev => ({ ...prev, activeGameId: id }));
+    setLocal(prev => ({ ...prev, activeGameId: id }));
+  };
+
+  const state: AppState = {
+    customScripts: shared.customScripts,
+    customCharacters: shared.customCharacters,
+    savedGames: local.savedGames,
+    activeGameId: local.activeGameId,
   };
 
   return (
     <AppContext.Provider value={{
-      state, addCustomScript, updateCustomScript, deleteCustomScript,
+      state, loading,
+      addCustomScript, updateCustomScript, deleteCustomScript,
       addCustomCharacter, updateCustomCharacter, deleteCustomCharacter,
       saveGame, deleteGame, setActiveGame,
     }}>

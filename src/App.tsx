@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AppProvider } from './context/AppContext';
+import { AppProvider, useApp } from './context/AppContext';
 import Navbar from './components/Layout/Navbar';
 import HomePage from './pages/HomePage';
 import ScriptsPage from './pages/ScriptsPage';
@@ -8,6 +8,19 @@ import CharacterCreatorPage from './pages/CharacterCreatorPage';
 import GamePage from './pages/GamePage';
 
 function AppRoutes() {
+  const { loading } = useApp();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #050a1a 0%, #0a0d20 100%)' }}>
+        <div className="text-center">
+          <div className="text-5xl mb-4 animate-pulse">🕯️</div>
+          <p className="font-gothic text-blue-400 text-lg">Cargando datos...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen">
       <Navbar />

@@ -473,6 +473,68 @@ const sectsVioletsCharacters: Character[] = [
 ];
 
 // ============================================================
+// LORIC (Personajes especiales de reglas)
+// ============================================================
+export const loricCharacters: Character[] = [
+  {
+    id: 'bootlegger', name: 'Contrabandista', type: 'loric', icon: '🍺',
+    ability: 'Este script tiene personajes o reglas no oficiales.',
+    reminders: ['?', '?'], setup: true,
+  },
+  {
+    id: 'bigwig', name: 'Mandamás', type: 'loric', icon: '🎩',
+    ability: 'Cada nominado elige un jugador: hasta la votación, solo ese jugador puede hablar y debe proclamar que el nominado es bueno, o podría morir.',
+    reminders: [],
+  },
+  {
+    id: 'gardener', name: 'Jardinero', type: 'loric', icon: '🌱',
+    ability: 'El Narrador asigna los personajes de todos los jugadores.',
+    reminders: [], setup: true,
+  },
+  {
+    id: 'godofug', name: 'Dios de Ug', type: 'loric', icon: '🎓',
+    ability: 'Un sombrero de Ug. Al llevarlo puesto, debes hablar una sílaba a la vez pero votas dos veces. Si fallas, pasa el sombrero de Ug.',
+    reminders: ['Sombrero'],
+  },
+  {
+    id: 'hindu', name: 'Hindú', type: 'loric', icon: '☸️',
+    ability: 'Los primeros 4 jugadores en morir se reencarnan inmediatamente como Viajeros del mismo bando.',
+    reminders: [],
+  },
+  {
+    id: 'knaves', name: 'Bellacos', type: 'loric', icon: '🃏',
+    ability: 'Hay 2 Narradores: uno miente y uno dice la verdad. Una vez por partida, al anochecer, pueden intercambiarse.',
+    reminders: [],
+  },
+  {
+    id: 'pope', name: 'Papa', type: 'loric', icon: '⛪',
+    ability: 'Hay personajes buenos duplicados en juego. También podrían ser coartadas.',
+    reminders: [], setup: true,
+  },
+  {
+    id: 'stormcatcher', name: 'Cazatormenta', type: 'loric', icon: '⛈️',
+    ability: 'Nombra un personaje bueno. Si está en juego, solo puede morir por ejecución, pero los jugadores malvados saben qué jugador es.',
+    reminders: ['Cazado'],
+    firstNight: 1, firstNightReminder: 'Anuncia qué personaje está cazado. Si está en juego, márcalo. Despierta a los malvados y muéstrales el token del personaje y el jugador marcado.',
+  },
+  {
+    id: 'tor', name: 'Tor', type: 'loric', icon: '⚡',
+    ability: 'Los jugadores no saben su personaje ni su bando. Lo aprenden cuando mueren.',
+    reminders: [], setup: true,
+  },
+  {
+    id: 'ventriloquist', name: 'Ventrílocuo', type: 'loric', icon: '🪆',
+    ability: 'Si un jugador está obsesionado con ser un personaje nuevo durante su nominación, podría no morir si es ejecutado hoy.',
+    reminders: ['Obsesionado'],
+  },
+  {
+    id: 'zenomancer', name: 'Zenomante', type: 'loric', icon: '🐢',
+    ability: 'Uno o más jugadores tienen un objetivo. Al lograrlo, ese jugador aprende un dato verdadero.',
+    reminders: ['Objetivo', 'Objetivo', 'Objetivo'],
+  },
+];
+
+// ============================================================
 // BASE DE DATOS COMPLETA
 // ============================================================
 export const ALL_CHARACTERS: Character[] = [

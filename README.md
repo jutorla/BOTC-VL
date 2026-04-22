@@ -1,6 +1,7 @@
 # BOTC Storyteller
 
-Herramienta de narrador para **Blood on the Clocktower** construida con React + TypeScript + Vite.
+Herramienta de narrador para **Blood on the Clocktower** construida con React + TypeScript + Vite 
+disponible en https://botc-vl.vercel.app/
 
 ## Requisitos
 

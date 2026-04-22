@@ -539,6 +539,26 @@ export default function GameDayPhase({ game, allChars, onUpdate }: Props) {
         {/* Player status */}
         <PlayerStatusBar players={game.players} allChars={allChars} showRoles={showRoles} />
 
+        {/* Loric reminder */}
+        {(() => {
+          const loricChars = (game.lorics ?? []).map(id => allChars.find(c => c.id === id)).filter(Boolean) as Character[];
+          if (!loricChars.length) return null;
+          return (
+            <div className="mt-3 p-3 rounded-lg border border-amber-700/50 bg-amber-950/20 text-amber-300">
+              <p className="font-gothic text-xs font-bold mb-1.5 flex items-center gap-1.5">⚗️ Lorics en juego:</p>
+              <div className="flex flex-wrap gap-2">
+                {loricChars.map(lc => (
+                  <div key={lc.id} className="flex items-center gap-1.5 px-2 py-1 rounded bg-amber-900/20 border border-amber-800/40 text-xs">
+                    <span>{lc.icon}</span>
+                    <span className="font-gothic text-amber-200">{lc.name}</span>
+                    <span className="text-amber-500 hidden sm:inline">— {lc.ability}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
+
         {/* Vote threshold */}
         <div className="flex items-center gap-2 mt-3 text-sm text-yellow-400 font-gothic">
           <Clock className="w-4 h-4" />

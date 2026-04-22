@@ -7,6 +7,7 @@ const TYPE_LABELS: Record<CharacterType, string> = {
   demon: 'Demonio',
   traveller: 'Viajero',
   fabled: 'Legendario',
+  loric: 'Loric',
 };
 
 export function CharacterTypeBadge({ type }: { type: CharacterType }) {

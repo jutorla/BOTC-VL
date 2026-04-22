@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { User, Plus, Trash2, Save, Edit, X, Download, Upload } from 'lucide-react';
+import { User, Plus, Save, X, Download, Upload } from 'lucide-react';
 import { CharacterTypeBadge, TYPE_LABELS } from '../components/UI/CharacterTypeBadge';
 import { useApp } from '../context/AppContext';
 import type { Character, CharacterType } from '../types';
 import Modal from '../components/UI/Modal';
 
-const CHAR_TYPES: CharacterType[] = ['townsfolk', 'outsider', 'minion', 'demon', 'traveller'];
+const CHAR_TYPES: CharacterType[] = ['townsfolk', 'outsider', 'minion', 'demon', 'traveller', 'loric'];
 const EMOJIS = ['👤','🧙','⚔️','🛡️','🔮','💀','👹','😈','🌙','☠️','🗡️','🔱','💎','🌟','🎭','🧟','👿','🐉','🦇','🌑','⚡','🔥','❄️','🌊','🌿','🎯','💜','🩸','🏰','⚰️'];
 
 const EMPTY_CHAR: Omit<Character, 'id'> = {
@@ -19,6 +19,7 @@ const EMPTY_CHAR: Omit<Character, 'id'> = {
   otherNightReminder: '',
   reminders: [],
   isCustom: true,
+  author: '',
 };
 
 function nightOrderLabel(n: number): { text: string; color: string } {
@@ -114,6 +115,7 @@ function CharacterForm({
   const handleSave = () => {
     if (!form.name.trim()) return alert('El personaje necesita un nombre.');
     if (!form.ability.trim()) return alert('El personaje necesita una habilidad.');
+    if (!form.author?.trim()) return alert('El personaje necesita un nombre de creador.');
     onSave(form);
   };
 
@@ -156,6 +158,18 @@ function CharacterForm({
               <option key={t} value={t}>{TYPE_LABELS[t]}</option>
             ))}
           </select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label className="text-sm text-gothic-300 font-gothic mb-1 block">Creador *</label>
+          <input
+            className="input-gothic"
+            value={form.author || ''}
+            onChange={e => setForm(f => ({ ...f, author: e.target.value }))}
+            placeholder="Tu nombre o alias..."
+          />
         </div>
       </div>
 
@@ -279,7 +293,7 @@ function CharacterForm({
 }
 
 export default function CharacterCreatorPage() {
-  const { state, addCustomCharacter, updateCustomCharacter, deleteCustomCharacter } = useApp();
+  const { state, addCustomCharacter, updateCustomCharacter } = useApp();
   const [showForm, setShowForm] = useState(false);
   const [editChar, setEditChar] = useState<Character | null>(null);
 
@@ -336,38 +350,60 @@ export default function CharacterCreatorPage() {
           <User className="w-8 h-8 text-blood-500" />
           <div>
             <h1 className="page-title mb-0">Personajes</h1>
-            <p className="text-gothic-300 text-sm">Crea personajes únicos para tus scripts.</p>
+            <p className="text-gothic-300 text-sm">
+              Crea personajes únicos para tus scripts.
+            </p>
           </div>
         </div>
-      <div className="flex items-center gap-2 flex-wrap">
-        <button onClick={importCharacters} className="btn-secondary text-sm" title="Importar personajes desde JSON">
-          <Upload className="w-4 h-4" />
-          Importar
-        </button>
-        {state.customCharacters.length > 0 && (
-          <button onClick={exportCharacters} className="btn-secondary text-sm" title="Exportar personajes a JSON">
-            <Download className="w-4 h-4" />
-            Exportar
+        <div className="flex items-center gap-2 flex-wrap">
+          <button
+            onClick={importCharacters}
+            className="btn-secondary text-sm"
+            title="Importar personajes desde JSON"
+          >
+            <Upload className="w-4 h-4" />
+            Importar
           </button>
-        )}
-        <button onClick={() => { setEditChar(null); setShowForm(true); }} className="btn-primary">
-          <Plus className="w-4 h-4" />
-          Nuevo Personaje
-        </button>
-      </div>
+          {state.customCharacters.length > 0 && (
+            <button
+              onClick={exportCharacters}
+              className="btn-secondary text-sm"
+              title="Exportar personajes a JSON"
+            >
+              <Download className="w-4 h-4" />
+              Exportar
+            </button>
+          )}
+          <button
+            onClick={() => {
+              setEditChar(null);
+              setShowForm(true);
+            }}
+            className="btn-primary"
+          >
+            <Plus className="w-4 h-4" />
+            Nuevo Personaje
+          </button>
+        </div>
       </div>
 
       {/* Form modal */}
       <Modal
         isOpen={showForm || !!editChar}
-        onClose={() => { setShowForm(false); setEditChar(null); }}
-        title={editChar ? `Editar: ${editChar.name}` : 'Nuevo Personaje'}
+        onClose={() => {
+          setShowForm(false);
+          setEditChar(null);
+        }}
+        title={editChar ? `Editar: ${editChar.name}` : "Nuevo Personaje"}
         maxWidth="max-w-2xl"
       >
         <CharacterForm
           initial={editChar || undefined}
           onSave={handleSave}
-          onCancel={() => { setShowForm(false); setEditChar(null); }}
+          onCancel={() => {
+            setShowForm(false);
+            setEditChar(null);
+          }}
         />
       </Modal>
 
@@ -375,29 +411,49 @@ export default function CharacterCreatorPage() {
       {state.customCharacters.length === 0 ? (
         <div className="card text-center py-16">
           <User className="w-16 h-16 text-gothic-600 mx-auto mb-4" />
-          <h3 className="font-gothic text-xl text-gothic-400 mb-2">Sin personajes personalizados</h3>
-          <p className="text-gothic-500 mb-6">Crea personajes únicos para usar en tus scripts.</p>
-          <button onClick={() => setShowForm(true)} className="btn-primary mx-auto">
+          <h3 className="font-gothic text-xl text-gothic-400 mb-2">
+            Sin personajes personalizados
+          </h3>
+          <p className="text-gothic-500 mb-6">
+            Crea personajes únicos para usar en tus scripts.
+          </p>
+          <button
+            onClick={() => setShowForm(true)}
+            className="btn-primary mx-auto"
+          >
             <Plus className="w-4 h-4" />
             Crear primer personaje
           </button>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {state.customCharacters.map(char => (
-            <div key={char.id} className="card border-dark-200 hover:border-blood-700 transition-colors">
+          {state.customCharacters.map((char) => (
+            <div
+              key={char.id}
+              className="card border-dark-200 hover:border-blood-700 transition-colors"
+            >
               <div className="flex items-start gap-3">
-                <span className="text-3xl">{char.icon || '👤'}</span>
+                <span className="text-3xl">{char.icon || "👤"}</span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <h3 className="font-gothic text-gold-400">{char.name}</h3>
                     <CharacterTypeBadge type={char.type} />
                   </div>
-                  <p className="text-gothic-300 text-sm leading-relaxed mb-2">{char.ability}</p>
+                  {char.author && (
+                    <p className="text-gothic-500 text-xs mb-1 font-gothic">
+                      ✍️ {char.author}
+                    </p>
+                  )}
+                  <p className="text-gothic-300 text-sm leading-relaxed mb-2">
+                    {char.ability}
+                  </p>
                   {char.reminders && char.reminders.length > 0 && (
                     <div className="flex flex-wrap gap-1">
                       {char.reminders.map((r, i) => (
-                        <span key={i} className="bg-dark-400 border border-dark-200 text-gothic-400 text-xs px-1.5 py-0.5 rounded">
+                        <span
+                          key={i}
+                          className="bg-dark-400 border border-dark-200 text-gothic-400 text-xs px-1.5 py-0.5 rounded"
+                        >
                           {r}
                         </span>
                       ))}
@@ -405,9 +461,14 @@ export default function CharacterCreatorPage() {
                   )}
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <button onClick={() => setEditChar(char)} className="btn-secondary p-1.5">
+                  {/* Delete button with confirmation 
+                  <button
+                    onClick={() => setEditChar(char)}
+                    className="btn-secondary p-1.5"
+                  >
                     <Edit className="w-4 h-4" />
                   </button>
+                 
                   <button
                     onClick={() => {
                       if (confirm(`¿Eliminar "${char.name}"?`)) deleteCustomCharacter(char.id);
@@ -416,6 +477,7 @@ export default function CharacterCreatorPage() {
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
+                  */}
                 </div>
               </div>
             </div>

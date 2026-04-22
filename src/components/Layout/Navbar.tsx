@@ -23,7 +23,7 @@ export default function Navbar() {
           <Link to="/" className="flex items-center gap-2 group">
             <Moon className="w-7 h-7 text-blood-500 group-hover:text-blood-400 transition-colors" />
             <span className="font-gothic text-xl text-gold-400 group-hover:text-gold-300 transition-colors hidden sm:block">
-              Blood on the Clocktower
+              Valentia on the Ludicatower
             </span>
             <span className="font-gothic text-xl text-gold-400 group-hover:text-gold-300 transition-colors sm:hidden">
               BotC
