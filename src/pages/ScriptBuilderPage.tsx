@@ -22,14 +22,14 @@ export default function ScriptBuilderPage() {
   const [difficulty, setDifficulty] = useState<Script['difficulty']>(existingScript?.difficulty || 'intermediate');
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set(existingScript?.characters || []));
   const [search, setSearch] = useState('');
-  const [filterType, setFilterType] = useState<CharacterType | 'all'>('all');
+  const [filterType, setFilterType] = useState<CharacterType | 'all' | 'custom'>('all');
 
   const allChars = [...ALL_CHARACTERS, ...state.customCharacters];
 
   const filtered = allChars.filter(c => {
     const matchSearch = c.name.toLowerCase().includes(search.toLowerCase()) ||
       c.ability.toLowerCase().includes(search.toLowerCase());
-    const matchType = filterType === 'all' || c.type === filterType;
+    const matchType = filterType === 'all' || (filterType === 'custom' ? !!c.isCustom : c.type === filterType);
     return matchSearch && matchType;
   });
 
@@ -188,6 +188,12 @@ export default function ScriptBuilderPage() {
                 >
                   Todos
                 </button>
+                <button
+                  onClick={() => setFilterType('custom')}
+                  className={`px-3 py-1.5 rounded text-xs font-gothic border transition-all ${filterType === 'custom' ? 'bg-green-800 border-green-600 text-green-100' : 'bg-dark-400 border-dark-200 text-green-400 hover:border-green-700'}`}
+                >
+                  ✨ Custom
+                </button>
                 {CHAR_TYPES.map(t => (
                   <button
                     key={t}
@@ -216,6 +222,7 @@ export default function ScriptBuilderPage() {
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-lg">{char.icon || '👤'}</span>
                       <span className="font-gothic text-sm text-gothic-100 flex-1">{char.name}</span>
+                      {char.isCustom && <span className="text-xs text-green-400 border border-green-700/50 bg-green-950/30 rounded px-1 py-0.5 font-gothic">✨</span>}
                       {isSelected && <Check className="w-4 h-4 text-blood-400 flex-shrink-0" />}
                     </div>
                     <CharacterTypeBadge type={char.type} />

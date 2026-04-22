@@ -83,8 +83,9 @@ export interface GameRound {
   events: DayEvent[];
   nightActions: NightAction[];
   nominations: Nomination[];
-  deaths: string[];          // IDs de jugadores muertos esta ronda
-  storytellerNotes?: string; // notas del narrador para esta ronda
+  deaths: string[];                      // IDs de jugadores muertos esta ronda
+  storytellerNotes?: string;             // notas del narrador para esta ronda
+  playerNotes?: Record<string, string>;  // notas por jugador al final del día
 }
 
 export interface Game {

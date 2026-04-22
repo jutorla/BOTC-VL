@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Scroll, Star, Trash2, Edit, Play, Plus, BookOpen, Users, Download, Upload } from 'lucide-react';
+import { Scroll, Star, Play, Plus, BookOpen, Users, Download, Upload, Trash2, Edit } from 'lucide-react';
 import { OFFICIAL_SCRIPTS, DIFFICULTY_LABELS, DIFFICULTY_COLORS } from '../data/scripts';
 import { ALL_CHARACTERS } from '../data/characters';
 import { CharacterTypeBadge } from '../components/UI/CharacterTypeBadge';
@@ -41,7 +41,9 @@ function ScriptCard({
           <div className="flex items-center gap-2 mb-1 flex-wrap">
             <h3 className="font-gothic text-lg text-gold-400">{script.name}</h3>
             {script.difficulty && (
-              <span className={`text-xs px-2 py-0.5 rounded-full border font-gothic ${DIFFICULTY_COLORS[script.difficulty]}`}>
+              <span
+                className={`text-xs px-2 py-0.5 rounded-full border font-gothic ${DIFFICULTY_COLORS[script.difficulty]}`}
+              >
                 {DIFFICULTY_LABELS[script.difficulty]}
               </span>
             )}
@@ -54,7 +56,9 @@ function ScriptCard({
           {script.author && (
             <p className="text-gothic-400 text-xs mb-2">por {script.author}</p>
           )}
-          <p className="text-gothic-300 text-sm leading-relaxed mb-3">{script.description}</p>
+          <p className="text-gothic-300 text-sm leading-relaxed mb-3">
+            {script.description}
+          </p>
 
           {/* Character counts */}
           <div className="flex gap-3 flex-wrap mb-3">
@@ -70,15 +74,17 @@ function ScriptCard({
             className="text-xs text-gothic-400 hover:text-gothic-200 transition-colors flex items-center gap-1"
           >
             <Users className="w-3 h-3" />
-            {expanded ? 'Ocultar personajes' : `Ver ${chars.length} personajes`}
+            {expanded ? "Ocultar personajes" : `Ver ${chars.length} personajes`}
           </button>
 
           {expanded && (
             <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-              {chars.map(char => (
+              {chars.map((char) => (
                 <div key={char.id} className="flex items-center gap-2 text-xs">
-                  <span className="text-base">{char.icon || '👤'}</span>
-                  <span className="text-gothic-200 font-gothic">{char.name}</span>
+                  <span className="text-base">{char.icon || "👤"}</span>
+                  <span className="text-gothic-200 font-gothic">
+                    {char.name}
+                  </span>
                   <CharacterTypeBadge type={char.type} />
                 </div>
               ))}
@@ -100,11 +106,13 @@ function ScriptCard({
           {isCustom && (
             <button
               onClick={() => {
-                const blob = new Blob([JSON.stringify([script], null, 2)], { type: 'application/json' });
+                const blob = new Blob([JSON.stringify([script], null, 2)], {
+                  type: "application/json",
+                });
                 const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
+                const a = document.createElement("a");
                 a.href = url;
-                a.download = `${script.name.replace(/\s+/g, '-').toLowerCase()}.json`;
+                a.download = `${script.name.replace(/\s+/g, "-").toLowerCase()}.json`;
                 a.click();
                 URL.revokeObjectURL(url);
               }}

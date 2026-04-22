@@ -1,8 +1,16 @@
 import { Link } from 'react-router-dom';
-import { Scroll, BookOpen, User, Swords, Moon, Star } from 'lucide-react';
+import { Scroll, BookOpen, User, Swords, Moon, HelpCircle, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const features = [
+  {
+    to: '/rules',
+    icon: HelpCircle,
+    title: 'Cómo se juega',
+    description: 'Aprende las reglas de Blood on the Clocktower y consulta las FAQ más comunes.',
+    color: 'border-teal-700/50 hover:border-teal-500',
+    iconColor: 'text-teal-400',
+  },
   {
     to: '/scripts',
     icon: Scroll,

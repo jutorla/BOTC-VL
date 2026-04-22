@@ -454,7 +454,7 @@ export default function GameDayPhase({ game, allChars, onUpdate }: Props) {
       rounds: [
         ...game.rounds.map((r, i) =>
           i === game.rounds.length - 1
-            ? { ...r, nominations, events, storytellerNotes: notes }
+            ? { ...r, nominations, events, storytellerNotes: notes, playerNotes }
             : r
         ),
         roundNight,

@@ -15,7 +15,7 @@ export default function GameSavedList({ games, onResume, onDelete }: Omit<Props,
     <div className="card border-gold-600/20 mb-6">
       <h2 className="section-title mb-4 flex items-center gap-2">
         <Clock className="w-5 h-5 text-gold-500" />
-        Partidas Guardadas
+        Partidas Jugadas
       </h2>
       <div className="space-y-3">
         {games.map(game => {

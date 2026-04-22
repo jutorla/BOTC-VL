@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Scroll, BookOpen, User, Swords, Home, Moon } from 'lucide-react';
+import { Scroll, BookOpen, User, Swords, Home, Moon, HelpCircle } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 const navItems = [
   { to: '/', label: 'Inicio', icon: Home },
+  { to: '/rules', label: 'Reglas', icon: HelpCircle },
   { to: '/scripts', label: 'Scripts', icon: Scroll },
   { to: '/script-builder', label: 'Crear Script', icon: BookOpen },
   { to: '/character-creator', label: 'Personajes', icon: User },

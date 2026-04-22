@@ -6,6 +6,7 @@ import ScriptsPage from './pages/ScriptsPage';
 import ScriptBuilderPage from './pages/ScriptBuilderPage';
 import CharacterCreatorPage from './pages/CharacterCreatorPage';
 import GamePage from './pages/GamePage';
+import RulesPage from './pages/RulesPage';
 
 function AppRoutes() {
   const { loading } = useApp();
@@ -31,6 +32,7 @@ function AppRoutes() {
           <Route path="/script-builder" element={<ScriptBuilderPage />} />
           <Route path="/character-creator" element={<CharacterCreatorPage />} />
           <Route path="/game" element={<GamePage />} />
+          <Route path="/rules" element={<RulesPage />} />
         </Routes>
       </main>
     </div>

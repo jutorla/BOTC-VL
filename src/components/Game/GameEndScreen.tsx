@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RefreshCw, Trash2, BarChart2, Moon, Sun, FileText, ChevronDown, ChevronUp, Skull, Sword, ScrollText, MessageSquare } from 'lucide-react';
+import { RefreshCw, BarChart2, Moon, Sun, FileText, ChevronDown, ChevronUp, Skull, Sword, ScrollText, MessageSquare } from 'lucide-react';
 import type { Game, Character } from '../../types';
 import { CharacterTypeBadge } from '../UI/CharacterTypeBadge';
 
@@ -10,7 +10,7 @@ interface Props {
   onDelete: () => void;
 }
 
-export default function GameEndScreen({ game, allChars, onNewGame, onDelete }: Props) {
+export default function GameEndScreen({ game, allChars, onNewGame }: Props) {
   const [showChronicle, setShowChronicle] = useState(true);
   const [showPlayers, setShowPlayers] = useState(true);
 
@@ -267,6 +267,24 @@ export default function GameEndScreen({ game, allChars, onNewGame, onDelete }: P
                             <p className="whitespace-pre-wrap">{dayRound.storytellerNotes}</p>
                           </div>
                         )}
+                        {dayRound.playerNotes && Object.entries(dayRound.playerNotes).some(([, v]) => v?.trim()) && (
+                          <div className="mt-2 space-y-1">
+                            <p className="font-gothic text-gothic-500 text-xs uppercase tracking-widest">📋 Notas por jugador</p>
+                            {game.players.map(p => {
+                              const note = dayRound.playerNotes?.[p.id];
+                              if (!note?.trim()) return null;
+                              const char = allChars.find(c => c.id === p.characterId);
+                              return (
+                                <div key={p.id} className="bg-dark-500 border border-dark-200 rounded p-2 text-xs">
+                                  <p className="font-gothic text-gothic-200 mb-0.5 flex items-center gap-1">
+                                    <span>{char?.icon}</span>{p.name}
+                                  </p>
+                                  <p className="text-gothic-400 whitespace-pre-wrap leading-relaxed">{note}</p>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -290,10 +308,10 @@ export default function GameEndScreen({ game, allChars, onNewGame, onDelete }: P
             <RefreshCw className="w-4 h-4" />
             Nueva Partida
           </button>
-          <button onClick={onDelete} className="btn-danger">
+          {/*<button onClick={onDelete} className="btn-danger">
             <Trash2 className="w-4 h-4" />
             Eliminar registro
-          </button>
+          </button>*/}
         </div>
       </div>
     </div>
