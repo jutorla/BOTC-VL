@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from 'react';
 import type { Player, Character } from '../../types';
 import { CharacterIcon } from '../UI/CharacterTypeBadge';
 
@@ -9,6 +10,7 @@ interface Props {
   showRoles: boolean;
   selectedId?: string;
   onSelect: (player: Player) => void;
+  onReorder?: (newPlayers: Player[]) => void;
   highlightIds?: string[];
   centerContent?: React.ReactNode;
   isNight?: boolean;
@@ -37,6 +39,7 @@ export default function CircularPlayerBoard({
   showRoles,
   selectedId,
   onSelect,
+  onReorder,
   highlightIds = [],
   centerContent,
   isNight = false,
@@ -53,6 +56,71 @@ export default function CircularPlayerBoard({
     : selectionMode === 'select-nominator' ? '#f97316'
     : selectionMode === 'select-voter' ? '#eab308'
     : null;
+
+  // ── Drag to reorder ─────────────────────────────────────────
+  const boardRef = useRef<HTMLDivElement>(null);
+  const [reorderMode, setReorderMode] = useState(false);
+  const [draggingId, setDraggingId] = useState<string | null>(null);
+  const [pointerPos, setPointerPos] = useState<{ x: number; y: number } | null>(null);
+  const [targetIdx, setTargetIdx] = useState<number | null>(null);
+
+  function computeAngleToIdx(px: number, py: number, el: HTMLElement | null, count: number): number {
+    const rect = el?.getBoundingClientRect();
+    if (!rect) return 0;
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const angle = Math.atan2(py - cy, px - cx);
+    const normalized = ((angle + Math.PI / 2) + 2 * Math.PI) % (2 * Math.PI);
+    return Math.round((normalized / (2 * Math.PI)) * count) % count;
+  }
+
+  useEffect(() => {
+    if (!draggingId) return;
+    const onMove = (e: PointerEvent) => {
+      e.preventDefault();
+      setPointerPos({ x: e.clientX, y: e.clientY });
+      setTargetIdx(computeAngleToIdx(e.clientX, e.clientY, boardRef.current, n));
+    };
+    const onUp = (e: PointerEvent) => {
+      e.preventDefault();
+      const ti = computeAngleToIdx(e.clientX, e.clientY, boardRef.current, n);
+      const fromIdx = players.findIndex(p => p.id === draggingId);
+      if (fromIdx !== -1 && ti !== fromIdx && onReorder) {
+        const result = [...players];
+        const [removed] = result.splice(fromIdx, 1);
+        result.splice(ti, 0, removed);
+        onReorder(result);
+      }
+      setDraggingId(null);
+      setPointerPos(null);
+      setTargetIdx(null);
+    };
+    document.addEventListener('pointermove', onMove, { passive: false });
+    document.addEventListener('pointerup', onUp, { passive: false });
+    return () => {
+      document.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerup', onUp);
+    };
+  }, [draggingId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const getDisplayPlayers = (): Player[] => {
+    if (draggingId === null || targetIdx === null) return players;
+    const fromIdx = players.findIndex(p => p.id === draggingId);
+    if (fromIdx === -1) return players;
+    const result = [...players];
+    const [removed] = result.splice(fromIdx, 1);
+    result.splice(targetIdx, 0, removed);
+    return result;
+  };
+  const displayPlayers = getDisplayPlayers();
+
+  const handlePointerDown = (e: React.PointerEvent, player: Player) => {
+    if (!onReorder || !reorderMode || selectionMode) return;
+    e.preventDefault();
+    setDraggingId(player.id);
+    setPointerPos({ x: e.clientX, y: e.clientY });
+    setTargetIdx(players.findIndex(p => p.id === player.id));
+  };
 
   return (
     <div className="flex flex-col gap-2">
@@ -71,7 +139,21 @@ export default function CircularPlayerBoard({
           {selectionMode === 'select-voter' && '🗳️ Selecciona al JUGADOR'}
         </div>
       )}
-    <div className="relative w-full" style={{ paddingBottom: '100%', maxHeight: '520px' }}>
+      {onReorder && !selectionMode && (
+        <button
+          onClick={() => { setReorderMode(m => !m); setDraggingId(null); setPointerPos(null); setTargetIdx(null); }}
+          className={`self-center flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-gothic border transition-all ${
+            reorderMode
+              ? isNight
+                ? 'bg-blue-700/40 border-blue-500 text-blue-200'
+                : 'bg-amber-700/40 border-amber-500 text-amber-200'
+              : 'bg-transparent border-gothic-600 text-gothic-500 hover:border-gothic-400 hover:text-gothic-300'
+          }`}
+        >
+          ⟳ {reorderMode ? 'Salir de modo reordenar' : 'Reordenar jugadores'}
+        </button>
+      )}
+    <div ref={boardRef} className="relative w-full" style={{ paddingBottom: '100%', maxHeight: '520px', touchAction: reorderMode ? 'none' : 'auto' }}>
       <div className="absolute inset-0">
         {/* Decorative ring */}
         <svg
@@ -115,7 +197,7 @@ export default function CircularPlayerBoard({
         </div>
 
         {/* Players */}
-        {players.map((player, i) => {
+        {displayPlayers.map((player, i) => {
           const angle = (i / n) * 2 * Math.PI - Math.PI / 2;
           const x = 50 + rPct * Math.cos(angle);
           const y = 50 + rPct * Math.sin(angle);
@@ -123,6 +205,7 @@ export default function CircularPlayerBoard({
           const isSelected = selectedId === player.id;
           const isHighlighted = highlightIds.includes(player.id);
           const isDisabled = disabledIds.includes(player.id);
+          const isDragging = draggingId === player.id;
           const colors = getTeamColor(showRoles ? char : undefined);
 
           const nameFontSize = n <= 8 ? 10 : n <= 12 ? 9 : 8;
@@ -135,13 +218,16 @@ export default function CircularPlayerBoard({
                 left: `${x}%`,
                 top: `${y}%`,
                 transform: 'translate(-50%, -50%)',
+                opacity: isDragging ? 0.25 : 1,
+                transition: draggingId ? 'left 0.12s ease, top 0.12s ease' : undefined,
               }}
             >
               <button
-                onClick={() => !isDisabled && onSelect(player)}
+                onClick={() => !isDisabled && !draggingId && onSelect(player)}
+                onPointerDown={e => handlePointerDown(e, player)}
                 disabled={isDisabled}
-                className={`flex flex-col items-center gap-0.5 group transition-transform ${isDisabled ? 'opacity-30 cursor-not-allowed' : 'hover:scale-110'} ${selectionMode && !isDisabled ? 'cursor-crosshair' : ''}`}
-                title={`${player.name}${showRoles && char ? ` — ${char.name}` : ''}${isDisabled ? ' (no disponible)' : ''}`}
+                className={`flex flex-col items-center gap-0.5 group transition-transform ${isDisabled ? 'opacity-30 cursor-not-allowed' : reorderMode ? 'cursor-grab active:cursor-grabbing' : 'hover:scale-110'} ${selectionMode && !isDisabled ? 'cursor-crosshair' : ''}`}
+                title={`${player.name}${showRoles && char ? ` — ${char.name}` : ''}${isDisabled ? ' (no disponible)' : ''}${reorderMode ? ' · Arrastra para mover' : ''}`}
               >
                 {/* Token */}
                 <div
@@ -265,6 +351,33 @@ export default function CircularPlayerBoard({
         })}
       </div>
     </div>
+    {/* Ghost flotante mientras se arrastra */}
+    {draggingId && pointerPos && (() => {
+      const dragPlayer = players.find(p => p.id === draggingId);
+      const dragChar = dragPlayer ? allChars.find(c => c.id === dragPlayer.characterId) : null;
+      return (
+        <div
+          className="fixed z-50 pointer-events-none"
+          style={{ left: pointerPos.x - outer / 2, top: pointerPos.y - outer / 2 }}
+        >
+          <div
+            className="rounded-full flex items-center justify-center shadow-2xl"
+            style={{
+              width: outer,
+              height: outer,
+              border: `3px solid ${isNight ? '#60a5fa' : '#ef4444'}`,
+              background: isNight ? 'rgba(37,99,235,0.85)' : 'rgba(185,28,28,0.85)',
+              boxShadow: `0 0 20px 4px ${isNight ? 'rgba(59,130,246,0.6)' : 'rgba(220,38,38,0.6)'}`,
+            }}
+          >
+            {dragChar
+              ? <CharacterIcon character={dragChar} size="lg" />
+              : <span className="font-gothic font-bold text-white" style={{ fontSize: Math.max(outer * 0.3, 10) }}>{dragPlayer?.name.charAt(0).toUpperCase()}</span>
+            }
+          </div>
+        </div>
+      );
+    })()}
     </div>
   );
 }

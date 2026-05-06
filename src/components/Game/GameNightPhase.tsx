@@ -28,8 +28,8 @@ function getNightOrder(game: Game, allChars: Character[], isFirstNight: boolean)
     const char = getCharacter(player.characterId, allChars);
     if (!char) return;
 
-    const order = isFirstNight ? (char.firstNight || 0) : (char.otherNight || 0);
-    if (order > 0) {
+    const hasReminder = isFirstNight ? !!char.firstNightReminder : !!char.otherNightReminder;
+    if (hasReminder) {
       actions.push({
         characterId: char.id,
         playerId: player.id,
@@ -199,6 +199,10 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
     setSelectedPlayerId(prev => prev === player.id ? undefined : player.id);
   };
 
+  const handleReorder = (newPlayers: import('../../types').Player[]) => {
+    onUpdate({ ...game, players: newPlayers, updatedAt: new Date().getTime() });
+  };
+
   const handlePickPlayer = (idx: number) => {
     savedScrollY.current = window.scrollY;
     setPickingForIdx(idx);
@@ -291,6 +295,7 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
               showRoles={true}
               selectedId={pickingForIdx !== null ? undefined : selectedPlayerId}
               onSelect={handleBoardSelect}
+              onReorder={handleReorder}
               highlightIds={pickingForIdx !== null ? game.players.map(p => p.id) : undefined}
               isNight={true}
               selectionMode={pickingForIdx !== null ? 'select-voter' : null}
@@ -307,7 +312,52 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
             />
           </div>
         </div>
-
+        {/* Panel jugador seleccionado */}
+        {selectedPlayerId && pickingForIdx === null && (() => {
+          const sel = game.players.find(p => p.id === selectedPlayerId);
+          const selChar = sel ? getCharacter(sel.characterId, allChars) : null;
+          if (!sel) return null;
+          const isDead = deaths.includes(sel.id);
+          return (
+            <div className="mt-4 p-4 rounded-lg border border-blue-800/40 bg-dark-500/50 flex items-start gap-4 flex-wrap">
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                {selChar && <CharacterIcon character={selChar} size="lg" />}
+                <div className="min-w-0">
+                  <h4 className="font-gothic text-gothic-100 text-base">{sel.name}</h4>
+                  {selChar && (
+                    <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                      <span className="text-gothic-300 text-sm">{selChar.name}</span>
+                      <CharacterTypeBadge type={selChar.type} />
+                    </div>
+                  )}
+                  <p className={`text-xs mt-1 ${sel.isAlive && !isDead ? 'text-green-400' : 'text-red-400'}`}>
+                    {sel.isAlive && !isDead ? '🌟 Vivo' : '💀 Muerto esta noche'}
+                  </p>
+                  {selChar?.ability && (
+                    <p className="text-xs text-gothic-500 italic mt-1 leading-relaxed">"{selChar.ability}"</p>
+                  )}
+                </div>
+              </div>
+              <div className="flex gap-2 items-center flex-shrink-0">
+                <button
+                  onClick={() => toggleDeath(sel.id)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-gothic transition-all ${
+                    isDead
+                      ? 'bg-green-950/40 border-green-700/50 text-green-300 hover:bg-green-900/50'
+                      : 'bg-red-950/40 border-red-800/50 text-red-300 hover:bg-red-900/50'
+                  }`}
+                >
+                  {isDead
+                    ? <><Circle className="w-3 h-3 mr-1" />Revivir</>
+                    : <><Skull className="w-3 h-3 mr-1" />Matar esta noche</>}
+                </button>
+                <button onClick={() => setSelectedPlayerId(undefined)} className="text-gothic-500 hover:text-gothic-300">
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          );
+        })()}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
           {/* Night order */}
           <div className="lg:col-span-2">
@@ -565,8 +615,8 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
                       }`}
                     >
                       {isDead ? <Skull className="w-4 h-4 text-red-400" /> : <Circle className="w-4 h-4 text-gothic-500" />}
+                      {char && <CharacterIcon character={char} size="sm" />}
                       <span className="font-gothic">{player.name}</span>
-                      {char && <span className="text-xs opacity-60">{char.icon}</span>}
                     </button>
                   );
                 })}
@@ -707,7 +757,7 @@ function NightActionItem({
 
       <div className="flex-1 min-w-0" onClick={onClick}>
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-lg">{char?.icon || '👤'}</span>
+          {char ? <CharacterIcon character={char} size="md" /> : <span className="text-lg">👤</span>}
           <span className="font-gothic text-sm text-gothic-100">{char?.name || '?'}</span>
           {char && <CharacterTypeBadge type={char.type} />}
           {player && (

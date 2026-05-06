@@ -199,6 +199,10 @@ export default function GameDayPhase({ game, allChars, onUpdate }: Props) {
     setSelectedPlayerId(undefined);
   };
 
+  const handleReorder = (newPlayers: import('../../types').Player[]) => {
+    onUpdate({ ...game, players: newPlayers, updatedAt: Date.now() });
+  };
+
   const selectedPlayer = game.players.find(p => p.id === selectedPlayerId);
   const selectedChar = selectedPlayer ? getChar(selectedPlayer.characterId, allChars) : null;
 
@@ -602,6 +606,7 @@ export default function GameDayPhase({ game, allChars, onUpdate }: Props) {
                 showRoles={showRoles}
                 selectedId={selectedPlayerId}
                 onSelect={handleCircleClick}
+                onReorder={handleReorder}
                 highlightIds={[
                   ...(activeNomination ? [activeNomination.nomineeId, activeNomination.nominatorId] : []),
                   ...(pendingNominatorId ? [pendingNominatorId] : []),
