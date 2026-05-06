@@ -33,10 +33,10 @@ export default function GameDayPhase({ game, allChars, onUpdate }: Props) {
   const [nomineeId, setNomineeId] = useState('');
   const [showNominateModal, setShowNominateModal] = useState(false);
   const [events, setEvents] = useState<DayEvent[]>(currentRound.events || []);
-  const [notes, setNotes] = useState(game.storytellerNotes);
+  const [notes, setNotes] = useState(currentRound.storytellerNotes ?? '');
   const [showRoles, setShowRoles] = useState(true);
   const [playerNotes, setPlayerNotes] = useState<Record<string, string>>(
-    Object.fromEntries(game.players.map(p => [p.id, p.notes]))
+    currentRound.playerNotes ?? {}
   );
 
   const alivePlayers = game.players.filter(p => p.isAlive);
@@ -460,7 +460,6 @@ export default function GameDayPhase({ game, allChars, onUpdate }: Props) {
         roundNight,
       ],
       hasExecutionToday: false,
-      storytellerNotes: notes,
       updatedAt: Date.now(),
     };
 

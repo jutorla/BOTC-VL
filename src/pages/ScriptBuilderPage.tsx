@@ -26,12 +26,17 @@ export default function ScriptBuilderPage() {
 
   const allChars = [...ALL_CHARACTERS, ...state.customCharacters];
 
-  const filtered = allChars.filter(c => {
-    const matchSearch = c.name.toLowerCase().includes(search.toLowerCase()) ||
-      c.ability.toLowerCase().includes(search.toLowerCase());
-    const matchType = filterType === 'all' || (filterType === 'custom' ? !!c.isCustom : c.type === filterType);
-    return matchSearch && matchType;
-  });
+  const filtered = allChars
+    .filter(c => {
+      const q = search.toLowerCase();
+      const matchSearch = !q ||
+        c.name.toLowerCase().includes(q) ||
+        c.id.toLowerCase().includes(q) ||
+        c.ability.toLowerCase().includes(q);
+      const matchType = filterType === 'all' || (filterType === 'custom' ? !!c.isCustom : c.type === filterType);
+      return matchSearch && matchType;
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, 'es'));
 
   const selectedChars = allChars.filter(c => selectedIds.has(c.id));
 
@@ -186,11 +191,11 @@ export default function ScriptBuilderPage() {
         {/* Right: Character selector */}
         <div className="lg:col-span-2">
           <div className="card">
-            <div className="flex flex-col sm:flex-row gap-3 mb-4">
-              <div className="relative flex-1">
+            <div className="flex flex-col gap-3 mb-4">
+              <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gothic-400" />
                 <input
-                  className="input-gothic pl-9"
+                  className="input-gothic pl-9 w-full"
                   placeholder="Buscar personaje..."
                   value={search}
                   onChange={e => setSearch(e.target.value)}

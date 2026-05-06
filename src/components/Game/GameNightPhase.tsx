@@ -61,7 +61,7 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
   });
   const [activeIdx, setActiveIdx] = useState(0);
   const [deaths, setDeaths] = useState<string[]>(currentRound.deaths || []);
-  const [storytellerNotes, setStorytellernotes] = useState(game.storytellerNotes);
+  const [storytellerNotes, setStorytellernotes] = useState(currentRound.storytellerNotes ?? '');
   const [selectedPlayerId, setSelectedPlayerId] = useState<string | undefined>();
   // Controlled notes per action index
   const [actionNotes, setActionNotes] = useState<Record<number, string>>(
@@ -74,6 +74,8 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
   const [showTokenDisplay, setShowTokenDisplay] = useState<Character | null>(null);
   // Ref to the circular board container for scrolling
   const boardRef = useRef<HTMLDivElement>(null);
+  // Guardar posición de scroll antes de navegar al tablero
+  const savedScrollY = useRef<number>(0);
   const distribution = getDistribution(game.players.length);
 
   // ── Coartadas (bluffs) ───────────────────────────────────────
@@ -177,7 +179,6 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
       phase: 'day',
       rounds: [...game.rounds.slice(0, -1), updatedRound, dayRound],
       hasExecutionToday: false,
-      storytellerNotes,
       updatedAt: new Date().getTime(),
     };
 
@@ -192,12 +193,14 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
         return { ...prev, [pickingForIdx]: current + sep + player.name };
       });
       setPickingForIdx(null);
+      window.scrollTo({ top: savedScrollY.current, behavior: 'smooth' });
       return;
     }
     setSelectedPlayerId(prev => prev === player.id ? undefined : player.id);
   };
 
   const handlePickPlayer = (idx: number) => {
+    savedScrollY.current = window.scrollY;
     setPickingForIdx(idx);
     boardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
@@ -279,7 +282,7 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
                 <p className="text-blue-300 text-xs font-gothic">
                   🎯 Pulsa un jugador para añadirlo a la nota de <strong>{allChars.find(c => c.id === nightActions[pickingForIdx]?.characterId)?.name ?? 'la acción'}</strong>
                 </p>
-                <button onClick={() => setPickingForIdx(null)} className="text-blue-500 hover:text-blue-200 text-xs">✕</button>
+                <button onClick={() => { setPickingForIdx(null); window.scrollTo({ top: savedScrollY.current, behavior: 'smooth' }); }} className="text-blue-500 hover:text-blue-200 text-xs">✕</button>
               </div>
             )}
             <CircularPlayerBoard
