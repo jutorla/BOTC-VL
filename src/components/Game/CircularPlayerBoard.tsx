@@ -1,4 +1,5 @@
 import type { Player, Character } from '../../types';
+import { CharacterIcon } from '../UI/CharacterTypeBadge';
 
 export type SelectionMode = 'select-nominee' | 'select-nominator' | 'select-voter' | null;
 
@@ -180,7 +181,7 @@ export default function CircularPlayerBoard({
                   {!player.isAlive ? (
                     <span>💀</span>
                   ) : showRoles && char ? (
-                    <span>{char.icon}</span>
+                    <CharacterIcon character={char} size="lg" />
                   ) : (
                     <span
                       className="font-gothic font-bold text-gothic-200"

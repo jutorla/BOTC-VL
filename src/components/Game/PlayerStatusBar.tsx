@@ -1,4 +1,5 @@
 import type { Player, Character } from '../../types';
+import { CharacterIcon } from '../UI/CharacterTypeBadge';
 
 interface Props {
   players: Player[];
@@ -32,7 +33,7 @@ export default function PlayerStatusBar({ players, allChars, showRoles = false }
               }`}
             >
               {!player.isAlive && <span>💀</span>}
-              {char && <span>{char.icon || '👤'}</span>}
+              {char && <CharacterIcon character={char} size="sm" />}
               <span>{player.name}</span>
               {showRoles && char && (
                 <span className="text-gothic-400">({char.name})</span>

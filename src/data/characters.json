@@ -1,0 +1,2488 @@
+[
+  {
+    "id": "steward",
+    "name": "Steward",
+    "team": "townsfolk",
+    "edition": "carousel",
+    "firstNightReminder": "Señala a la jugadora marcada como *CONOCE*.",
+    "reminders": [
+      "Know"
+    ],
+    "setup": false,
+    "ability": "Empiezas conociendo a 1 jugador bueno.",
+    "flavor": "¡Cómo te atreves a acusar a Su Señoría de malos hábitos? ¡Conozco a Su Señoría toda mi vida! ¡Tres años!"
+  },
+  {
+    "id": "knight",
+    "name": "Knight",
+    "team": "townsfolk",
+    "edition": "carousel",
+    "firstNightReminder": "Señala a las 2 jugadoras marcadas como *CONOCE*.",
+    "reminders": [
+      "Know",
+      "Know"
+    ],
+    "setup": false,
+    "ability": "Empiezas conociendo a 2 jugadoras que no son el Demonio.",
+    "flavor": "Cuando una persona miente, asesina una parte del mundo."
+  },
+  {
+    "id": "chef",
+    "name": "Chef",
+    "edition": "tb",
+    "team": "townsfolk",
+    "firstNightReminder": "Muestra una señal con los dedos.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Empiezas sabiendo cuántos pares de jugadoras malas hay.",
+    "flavor": "Las reservas de esta noche parecen extrañas. Nunca antes la Señora Mayweather había tenido compañía con esa zorra de Hudson Lane. Sin embargo, hoy tienen una mesa para dos. Extraño."
+  },
+  {
+    "id": "noble",
+    "name": "Noble",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "Señala a las 3 jugadoras marcadas como *CONOCE*.",
+    "reminders": [
+      "Know",
+      "Know",
+      "Know"
+    ],
+    "setup": false,
+    "ability": "Empiezas conociendo a 3 jugadoras, 1 y solo 1 de las cuales es mala.",
+    "flavor": "El sarcasmo es ciertamente la forma más baja de ingenio. Pero respondiendo a tu crítica, Señor, sigue siendo una forma de ingenio."
+  },
+  {
+    "id": "investigator",
+    "name": "Investigator",
+    "edition": "tb",
+    "team": "townsfolk",
+    "firstNightReminder": "Muestra el token del personaje Esbirra. Señala a la *ESBIRRA* y a la jugadora *INCORRECTA*.",
+    "reminders": [
+      "Esbirra",
+      "Incorrecta"
+    ],
+    "setup": false,
+    "ability": "Empiezas sabiendo que 1 de 2 jugadoras es una particular Esbirra.",
+    "flavor": "Es una buena noche para caminar, ¿no te parece, Señor Morozov? O debería decir... Baron Morozov?"
+  },
+  {
+    "id": "washerwoman",
+    "name": "Washerwoman",
+    "edition": "tb",
+    "team": "townsfolk",
+    "firstNightReminder": "Muestra el token del personaje Aldeana. Señala a la *ALDEANA* y a la jugadora *INCORRECTA*.",
+    "reminders": [
+      "Aldeana",
+      "Incorrecta"
+    ],
+    "setup": false,
+    "ability": "Empiezas sabiendo que 1 de 2 jugadoras es una particular Aldeana.",
+    "flavor": "¿Manchas de sangre en un smoking? No, esto es sherry para cocinar. Qué descuidada."
+  },
+  {
+    "id": "clockmaker",
+    "name": "Clockmaker",
+    "edition": "snv",
+    "team": "townsfolk",
+    "firstNightReminder": "Muestra una señal con los dedos.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Empiezas sabiendo cuántos pasos hay desde el Demonio hasta su Esbirra más cercana.",
+    "flavor": "No me molestes. El tictac debe continuar, porque el círculo es un símbolo de la vida y contiene todas las respuestas en su maquinaria divina. Debo trabajar."
+  },
+  {
+    "id": "grandmother",
+    "name": "Grandmother",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "firstNightReminder": "Señala a la jugadora nieta y muestra su token de personaje.",
+    "otherNightReminder": "Si la nieta fue asesinada por el Demonio, la Abuela muere también. :reminder:",
+    "reminders": [
+      "Nieta",
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Empiezas conociendo a una jugadora buena y su personaje. Si el Demonio las mata a ella, tú también mueres.",
+    "flavor": "Póntese una chaqueta si sale afuera, querida. Y tu termo. Y tu bufanda. Tengo un corazón débil, ya lo sabe. ¿Qué haría yo si se resfría... o peor?"
+  },
+  {
+    "id": "librarian",
+    "name": "Librarian",
+    "edition": "tb",
+    "team": "townsfolk",
+    "firstNightReminder": "Muestra el token del personaje Forastera. Señala a la *FORASTERA* y a la jugadora *INCORRECTA*.",
+    "reminders": [
+      "Forastera",
+      "Incorrecta"
+    ],
+    "setup": false,
+    "ability": "Empiezas sabiendo que 1 de 2 jugadoras es una particular Forastera. (O que ninguna está en juego.)",
+    "flavor": "Ciertamente, señora, bajo circunstancias normales, podría prestarle el Codex Malificarium de los archivo. Sin embargo, no parece ser miembro."
+  },
+  {
+    "id": "shugenja",
+    "name": "Shugenja",
+    "team": "townsfolk",
+    "edition": "carousel",
+    "firstNightReminder": "Señala en sentido horario o antihorario.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Empiezas sabiendo si tu jugadora mala más cercana está en sentido horario o antihorario. Si está equidistante, esta información es arbitraria.",
+    "flavor": "これは夢。これも夢。すべて夢です。"
+  },
+  {
+    "id": "pixie",
+    "name": "Pixie",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "Muestra el token del personaje Aldeana marcado como *LOCA*.",
+    "reminders": [
+      "Loca",
+      "Tiene Habilidad"
+    ],
+    "setup": false,
+    "ability": "Empiezas conociendo a 1 Aldeana en juego. Si estuvieras loca por ser este personaje, ganas su habilidad cuando muere.",
+    "flavor": "Ronda y ronda por el jardín, van. Las niñas corren de aquí para allá. Los niños trepan al árbol. ¿Cuál de estos debería ser Pixie? Las damas sonríen y van a la ciudad. Los señores con hacha cortan el bosque abajo. Lo tuyo es mío. Lo mío, divino. Tonta pequeña Pixie, yo."
+  },
+  {
+    "id": "bountyhunter",
+    "name": "Bounty Hunter",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "Señala a la jugadora marcada como *CONOCE*.",
+    "otherNightReminder": "Si la jugadora marcada como *CONOCE* murió hoy o esta noche, señala a la nueva jugadora marcada como *CONOCE*.",
+    "reminders": [
+      "Conoce"
+    ],
+    "setup": true,
+    "ability": "Empiezas conociendo a 1 jugadora mala. Si la jugadora que conoces muere, aprendes otra jugadora mala esta noche. [1 Aldeana es mala]",
+    "flavor": "Solo, camino por estas calles, pavimentadas con el hedor sick de la corrupción. Su espesor se cuela en mis fosas nasales, no invitado, quemando con revulsión. Y anticipación. La enfermedad de este lugar wretched crece cada noche. Y yo... yo soy la cura."
+  },
+  {
+    "id": "empath",
+    "name": "Empath",
+    "edition": "tb",
+    "team": "townsfolk",
+    "firstNightReminder": "Muestra una señal con los dedos.",
+    "otherNightReminder": "Muestra una señal con los dedos.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada noche, aprendes cuántas de tus 2 vecinas vivas son malas.",
+    "flavor": "Mi piel se me pone de gallina. Algo no está bien aquí. Puedo sentirlo."
+  },
+  {
+    "id": "highpriestess",
+    "name": "High Priestess",
+    "team": "townsfolk",
+    "edition": "carousel",
+    "firstNightReminder": "Señala a una jugadora.",
+    "otherNightReminder": "Señala a una jugadora.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada noche, aprende qué jugadora cree la Narradora que deberías hablar con la más.",
+    "flavor": "Hay vida detrás de la personalidad que usa personalidades como máscaras. Hay momentos en que la vida se quita la máscara y las respuestas profundas encuentran respuestas profundas."
+  },
+  {
+    "id": "sailor",
+    "name": "Sailor",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "firstNightReminder": "La Marinera elige a una jugadora viva. :reminder:",
+    "otherNightReminder": "La Marinera elige a una jugadora viva. :reminder:",
+    "reminders": [
+      "Borracha"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora viva: o tú o ellas están borrachas hasta el crepúsculo. No puedes morir.",
+    "flavor": "¡Les voy a beber a cualquiera bajo la mesa! ¡Tú! ¡La parlanchina! ¿Creo que puedes conmigo? ¿No? ¿Qué hay de ti, Abuela? ¿Has probado nunca el Ron Extra Añejado de McKillys? ¡Garantizado para poner pelos en el pecho! ¡Pisa a bordo, ay!"
+  },
+  {
+    "id": "balloonist",
+    "name": "Balloonist",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "Señala a cualquier jugadora. :reminder:",
+    "otherNightReminder": "Señala a una jugadora con un tipo de personaje diferente a la mostrada la noche anterior. :reminder:",
+    "reminders": [
+      "Conoce"
+    ],
+    "setup": true,
+    "ability": "Cada noche, aprendes una jugadora de un tipo de personaje diferente a la noche anterior. [+0 o +1 Forastera]",
+    "flavor": "¡Más calor! ¡Más arriba! ¡Más alto! Più alto! Ahhh... Es tan hermoso desde arriba, ¿no te parece? ¿Puedes ver a los niños pescando en el río, bajo el sauce? ¿Puedes ver el brillo del sol en las pértigas de la tienda del circo? ¿Qué es esto? ¿Un viejo, solo, desmayado en la viña? Menos calor. Más abajo. Más bajo. Vai più in basso!"
+  },
+  {
+    "id": "general",
+    "name": "General",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "Muestra una señal con el pulgar.",
+    "otherNightReminder": "Muestra una señal con el pulgar.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada noche, aprendes qué alineación cree la Narradora que está ganando: buena, mala, o ninguna.",
+    "flavor": "No tengo tiempo para citas."
+  },
+  {
+    "id": "preacher",
+    "name": "Preacher",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "La Predicadora elige a una jugadora. :reminder: Si eligió a una Esbirra: Pon a la Predicadora a dormir. Despierta a la objetivo. Muestra el token *ESTE PERSONAJE TE ELEGIRÁ* y el de Predicadora.",
+    "otherNightReminder": "La Predicadora elige a una jugadora. :reminder: Si eligió a una Esbirra: Pon a la Predicadora a dormir. Despierta a la objetivo. Muestra el token *ESTE PERSONAJE TE ELEGIRÁ* y el de Predicadora.",
+    "reminders": [
+      "Sin Habilidad",
+      "Sin Habilidad",
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora: una Esbirra, si es elegida, aprende esto. Todas las Esbirras elegidas no tienen habilidad.",
+    "flavor": "Es mejor ser rica y saludable que pobre y enferma."
+  },
+  {
+    "id": "chambermaid",
+    "name": "Chambermaid",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "firstNightReminder": "La Camarera elige 2 jugadoras vivas. Muestra una señal con los dedos.",
+    "otherNightReminder": "La Camarera elige 2 jugadoras vivas. Muestra una señal con los dedos.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada noche, elige 2 jugadoras vivas (no tú): aprendes cuántas se despertaron esta noche por su habilidad.",
+    "flavor": "No he visto nada irregular, Milady. Disculpe su permiso, pero si vi algo, ciertamente no era el señor de la casa entrando en el laboratorio del profesor alrededor de las once en punto y mezclando pociones fancy, justo como usted dijo, Señorita."
+  },
+  {
+    "id": "villageidiot",
+    "name": "Village Idiot",
+    "team": "townsfolk",
+    "edition": "carousel",
+    "firstNightReminder": "Si hay múltiples Idiotas, marca a una como *BORRACHA*. :reminder: Despierta a las Idiotas una por una para elegir a una jugadora. Muestra una señal con el pulgar.",
+    "otherNightReminder": "Despierta a las Idiotas una por una para elegir a una jugadora. Muestra una señal con el pulgar.",
+    "reminders": [
+      "Borracha"
+    ],
+    "setup": true,
+    "ability": "Cada noche, elige a una jugadora: aprendes su alineación. [+0 a +2 Idiots. 1 de las extrañas está borracha]",
+    "special": [
+      {
+        "type": "selection",
+        "name": "bag-duplicate"
+      }
+    ],
+    "flavor": "Las rosas son azules, y las violetas son rojas, Por favor, invierte lo que acabo de decir."
+  },
+  {
+    "id": "snakecharmer",
+    "name": "Snake Charmer",
+    "edition": "snv",
+    "team": "townsfolk",
+    "firstNightReminder": "La Encantadora de Serpientes elige a una jugadora. Si eligió al Demonio: Muestra los tokens *TÚ ERES* y Demonio. Muestra un pulgar hacia abajo. Intercambia los tokens de Encantadora de Serpientes y Demonio. Pon a la vieja Encantadora de Serpientes a dormir. Despierta a la vieja Demonio. Muestra los tokens *TÚ ERES* y Encantadora de Serpientes y muestra un pulgar hacia arriba. :reminder:",
+    "otherNightReminder": "La Encantadora de Serpientes elige a una jugadora. Si eligió al Demonio: Muestra los tokens *TÚ ERES* y Demonio. Muestra un pulgar hacia abajo. Intercambia los tokens de Encantadora de Serpientes y Demonio. Pon a la vieja Encantadora de Serpientes a dormir. Despierta a la vieja Demonio. Muestra los tokens *TÚ ERES* y Encantadora de Serpientes y muestra un pulgar hacia arriba. :reminder:",
+    "reminders": [
+      "Envenenada"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora viva: un Demonio elegido, si lo es, intercambia personajes y alineaciones contigo y luego está envenenada.",
+    "flavor": "Effendi... Soy una humilde hombre, pero mi pipa es dorada y un solo tema puede domesticar al djinn más salvaje, Inshallah. Dicen que la codicia cuelga más hombres que cuerda. Pero no yo, Effendi... no yo."
+  },
+  {
+    "id": "mathematician",
+    "name": "Mathematician",
+    "edition": "snv",
+    "team": "townsfolk",
+    "firstNightReminder": "Muestra una señal con los dedos.",
+    "otherNightReminder": "Muestra una señal con los dedos.",
+    "reminders": [
+      "Anormal",
+      "Anormal",
+      "Anormal",
+      "Anormal",
+      "Anormal"
+    ],
+    "setup": false,
+    "ability": "Cada noche, aprendes cuántas jugadoras tuvieron sus habilidades funcionando anormalmente (desde el amanecer) debido a la habilidad de otro personaje.",
+    "flavor": "Cualquier sistema formal x consistente, dentro del cual se puede llevar a cabo una cierta cantidad de aritmética elemental es incompleto; es decir, hay declaraciones del lenguaje de x que ni pueden ser probadas ni refutadas en x. Ergo, estás borracha."
+  },
+  {
+    "id": "king",
+    "name": "King",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "Despierta al Demonio: Muestra el token *ESTA JUGADORA ES* y Rey, luego señala a la Reina.",
+    "otherNightReminder": "Si los muertos son igual o más que los vivos, muestra el token de personaje de una jugadora viva.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada noche, si los muertos son igual o más que los vivos, aprendes 1 personaje vivo. El Demonio sabe que eres la Reina.",
+    "flavor": "Entre las cadencias desconocidas de la lucha mortal / Y la noche morbosa, dulce con misterio y lamento / Yace las alegrías desatadas del destino larga y colorida vida / cuyo jardín florece con cada Pintado Cara Para Mostrar."
+  },
+  {
+    "id": "dreamer",
+    "name": "Dreamer",
+    "edition": "snv",
+    "team": "townsfolk",
+    "firstNightReminder": "La Soñadora señala a una jugadora. Muestra 1 token de personaje bueno y 1 malo, 1 de los cuales es su personaje.",
+    "otherNightReminder": "La Soñadora señala a una jugadora. Muestra 1 token de personaje bueno y 1 malo, 1 de los cuales es su personaje.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora (no tú ni Viajeras): aprendes 1 personaje bueno y 1 malo, 1 de los cuales es correcto.",
+    "flavor": "Recuerdo a la Relojera. El cielo era rojo y estaba lloviendo triángulos fractales. Había un olor a violetas y un sonido burbujeante. Una mujer con ojos brillantes y una barba raquítica le gritaba al cielo. Luego, me desperté."
+  },
+  {
+    "id": "fortuneteller",
+    "name": "Fortune Teller",
+    "edition": "tb",
+    "team": "townsfolk",
+    "firstNightReminder": "La Adivina elige 2 jugadoras. Asiente si alguna es el Demonio (o la *CESPEDERA*).",
+    "otherNightReminder": "La Adivina elige 2 jugadoras. Asiente si alguna es el Demonio (o la *CESPEDERA*).",
+    "reminders": [
+      "Cespedera"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige 2 jugadoras: aprendes si alguna es un Demonio. Hay una jugadora buena que se registra como un Demonio para ti.",
+    "flavor": "¡Siento un gran mal en tu alma! Pero... eso podría ser solo tu perfume. Soy alérgica a la Eyerguerrera."
+  },
+  {
+    "id": "cultleader",
+    "name": "Cult Leader",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "La Culta Líder puede cambiar de alineación. Si lo hace, muestra el token de información *TÚ ERES* y muestra una señal con el pulgar.",
+    "otherNightReminder": "La Culta Líder puede cambiar de alineación. Si lo hace, muestra el token de información *TÚ ERES* y muestra una señal con el pulgar.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada noche, te conviertes en la alineación de una vecina viva. Si todas las jugadoras buenas eligen unirse a tu culto, tu equipo gana.",
+    "flavor": "Pensando que eran sabios, se volvieron tontas."
+  },
+  {
+    "id": "flowergirl",
+    "name": "Flowergirl",
+    "edition": "snv",
+    "team": "townsfolk",
+    "otherNightReminder": "Asiente o sacude la cabeza.",
+    "reminders": [
+      "Demonio Votó",
+      "Demonio No Votó"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, aprendes si un Demonio votó hoy.",
+    "flavor": "Las violetas de ayer se han marchitado y muerto, pero hoy mis amapolas florecen."
+  },
+  {
+    "id": "towncrier",
+    "name": "Town Crier",
+    "edition": "snv",
+    "team": "townsfolk",
+    "otherNightReminder": "Asiente o sacude la cabeza.",
+    "reminders": [
+      "Esbirras No Nombradas",
+      "Esbirra Nombrada"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, aprendes si una Esbirra nombró hoy.",
+    "flavor": "¡Oíd! ¡Oíd! ¡Hechicería en el laberinto! ¡El sabio genio revela todo! ¡Peligro en el pueblo! ¡Oíd!"
+  },
+  {
+    "id": "oracle",
+    "name": "Oracle",
+    "edition": "snv",
+    "team": "townsfolk",
+    "otherNightReminder": "Muestra una señal con los dedos.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada noche*, aprendes cuántas jugadoras muertas son malas.",
+    "flavor": "Solo los elegidos pueden mirar más allá del velo. Los muertos están inquietos, y señalan en silencio hacia el norte helado."
+  },
+  {
+    "id": "undertaker",
+    "name": "Undertaker",
+    "edition": "tb",
+    "team": "townsfolk",
+    "otherNightReminder": "Si una jugadora fue ejecutada hoy, muestra su token de personaje.",
+    "reminders": [
+      "Murió Hoy"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, aprendes qué personaje murió por ejecución hoy.",
+    "flavor": "Mmmm....qué tenemos aquí? La bota izquierda está desgastada hasta el tacón, con virutas de flint bajo la lengüeta. Esto es el adorno de una mujer militar."
+  },
+  {
+    "id": "innkeeper",
+    "name": "Innkeeper",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "otherNightReminder": "La Posadera elige 2 jugadoras. :reminder: :reminder: :reminder:",
+    "reminders": [
+      "Segura",
+      "Segura",
+      "Borracha"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige 2 jugadoras: no pueden morir esta noche, pero 1 está borracha hasta el crepúsculo.",
+    "flavor": "Entra, bella viajera, y descansa tus cansados huesos. Bebe y regocíjate, porque las legiones de la Oscura No la molestarán esta noche."
+  },
+  {
+    "id": "monk",
+    "name": "Monk",
+    "edition": "tb",
+    "team": "townsfolk",
+    "otherNightReminder": "La Monja elige a una jugadora. :reminder:",
+    "reminders": [
+      "Segura"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige a una jugadora (no tú): está segura del Demonio esta noche.",
+    "flavor": "Una noche fría y solitaria. Ven, mi hermana, refúgiate en la abadía mientras la tormenta ruge. Por mi palabra, o por mi vida, estarás a salvo."
+  },
+  {
+    "id": "gambler",
+    "name": "Gambler",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "otherNightReminder": "La Jugadora elige a una jugadora y un personaje. :reminder:",
+    "reminders": [
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige a una jugadora y adivina su personaje: si fallas, mueres.",
+    "flavor": "Cara, gano. Cruz, pierdes."
+  },
+  {
+    "id": "acrobat",
+    "name": "Acrobat",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "otherNightReminder": "La Acrobata elige a una jugadora. :reminder:",
+    "reminders": [
+      "Muerta",
+      "Elegida"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige a una jugadora: si ellas son o se vuelven borracha o envenenada esta noche, tú mueres.",
+    "flavor": "Bienvenida, una y toda, al espectáculo más grande de la tierra."
+  },
+  {
+    "id": "exorcist",
+    "name": "Exorcist",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "otherNightReminder": "La Exorcista elige a una jugadora. :reminder: Pon a la Exorcista a dormir. Si la Exorcista eligió al Demonio: Despierta al Demonio. Muestra el token *ESTE PERSONAJE TE ELEGÓ* y Exorcista. Señala a la Exorcista.",
+    "reminders": [
+      "Elegida"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige a una jugadora (diferente a la noche anterior): el Demonio, si es elegida, aprende quién eres y no se despierta esta noche.",
+    "flavor": "Te expulsamos, cada espíritu inmundo, cada poder satánico, cada embestida del adverso infernal, cada legión, cada grupo demoníaco y secta, en el nombre y por el poder de Nuestro Señor Jesucristo. Te ordenamos, vete y vuela lejos de la Iglesia de Dios, de las almas hechas por Dios en su imagen y redimidas por la preciosa sangre del Divino Cordero."
+  },
+  {
+    "id": "lycanthrope",
+    "name": "Lycanthrope",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "otherNightReminder": "La Licántropa elige a una jugadora. :reminder:",
+    "reminders": [
+      "Pata Falsa",
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige a una jugadora viva. Si es buena, muere y el Demonio no mata esta noche. Una jugadora buena se registra como mala.",
+    "flavor": "Bajo la delgada corteza de la civilización yace una loca cómo un aullido."
+  },
+  {
+    "id": "gossip",
+    "name": "Gossip",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "otherNightReminder": "Si la Cotillea está debida matar a una jugadora, muere. :reminder:",
+    "reminders": [
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Cada día, puedes hacer una declaración pública. Esta noche, si fue verdad, una jugadora muere.",
+    "flavor": "Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah. Blah."
+  },
+  {
+    "id": "savant",
+    "name": "Savant",
+    "edition": "snv",
+    "team": "townsfolk",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada día, puedes visitar a la Narradora para aprender 2 cosas en privado: 1 es verdad y 1 es falso.",
+    "flavor": "Cincuenta y dos cerillas en el suelo... el sol se pone temprano pero la luna es in cambiada... un pedazo roto de tela... mal en la casa de la manor... tres por tres... la que confiábamos no es lo que parece... luz verde significa magnesio... residuo, pero el patrón está mal. Cincuenta y dos cerillas en el suelo..."
+  },
+  {
+    "id": "alsaahir",
+    "name": "Alsaahir",
+    "team": "townsfolk",
+    "edition": "carousel",
+    "reminders": [],
+    "setup": false,
+    "ability": "Si públicamente adivinas qué jugadoras son Esbirra(s) y cuál es el Demonio, bien gana.",
+    "flavor": "Estoy aquí por ti, y tú estás aquí por mí."
+  },
+  {
+    "id": "engineer",
+    "name": "Engineer",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "La Ingeniera puede elegir Esbirras o Demonios. Pon a la Ingeniera a dormir. Despierta a la(s) objetivo(s). Muestra el token *TÚ ERES* y su nuevo token de personaje. :reminder:",
+    "otherNightReminder": "La Ingeniera puede elegir Esbirras o Demonios. Pon a la Ingeniera a dormir. Despierta a la(s) objetivo(s). Muestra el token *TÚ ERES* y su nuevo token de personaje. :reminder:",
+    "reminders": [
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, en la noche, elige cuáles Esbirras o cuál Demonio están en juego.",
+    "flavor": "Si se dobla, bien. Si se rompe, bien, probablemente necesitaba arreglarse de todos modos."
+  },
+  {
+    "id": "nightwatchman",
+    "name": "Nightwatchman",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "La Guardia Nocturna puede elegir a una jugadora. Pon a la Guardia Nocturna a dormir. Despierta a la objetivo. Muestra el token *ESTA JUGADORA ES* y Guardia Nocturna, luego señala a la Guardia Nocturna. :reminder:",
+    "otherNightReminder": "La Guardia Nocturna puede elegir a una jugadora. Pon a la Guardia Nocturna a dormir. Despierta a la objetivo. Muestra el token *ESTA JUGADORA ES* y Guardia Nocturna, luego señala a la Guardia Nocturna. :reminder:",
+    "reminders": [
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, en la noche, elige a una jugadora: aprende que eres la Guardia Nocturna.",
+    "flavor": "La noche es fría y solitaria, pero tengo la luna, las estrellas, el viento crujiente y el suave golpe de botas de cuero en piedra empedrada para compañía. Más allá, la luz de la vela parpadea tras una ventana turbia..."
+  },
+  {
+    "id": "courtier",
+    "name": "Courtier",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "firstNightReminder": "La Cortesana puede elegir un personaje. :reminder: :reminder:",
+    "otherNightReminder": "La Cortesana puede elegir un personaje. :reminder: :reminder:",
+    "reminders": [
+      "Borracha 3",
+      "Borracha 2",
+      "Borracha 1",
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, en la noche, elige un personaje: está borracha por 3 noches y 3 días.",
+    "flavor": "Tengo más miedo de un ejército de cien ovejas lideradas por un león que de un ejército de cien leones liderados por una oveja."
+  },
+  {
+    "id": "seamstress",
+    "name": "Seamstress",
+    "edition": "snv",
+    "team": "townsfolk",
+    "firstNightReminder": "La Costurera puede elegir 2 jugadoras. Asiente o sacude la cabeza. :reminder:",
+    "otherNightReminder": "La Costurera puede elegir 2 jugadoras. Asiente o sacude la cabeza. :reminder:",
+    "reminders": [
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, en la noche, elige 2 jugadoras (no tú): aprendes si son de la misma alineación.",
+    "flavor": "¿Oíste a esa extraña en el abrigo de cachemira poner la palabra a nuestra Belle joven? Y dijo que sí? Bueno, eso es nada comparado con lo que Harry y ese malabarista hicieron en la feria. ¡Las cosas que podría decir si fuera una cotilla... ay, sí."
+  },
+  {
+    "id": "philosopher",
+    "name": "Philosopher",
+    "edition": "snv",
+    "team": "townsfolk",
+    "firstNightReminder": "La Filósofa puede elegir un personaje. Si es necesario, intercambia su token de personaje. :reminder:",
+    "otherNightReminder": "La Filósofa puede elegir un personaje. Si es necesario, intercambia su token de personaje. :reminder:",
+    "reminders": [
+      "Borracha"
+    ],
+    "remindersGlobal": [
+      "Es la Filósofa"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, en la noche, elige un personaje bueno: gana esa habilidad. Si este personaje está en juego, está borracha.",
+    "special": [
+      {
+        "type": "reveal",
+        "name": "replace-character"
+      }
+    ],
+    "flavor": "Si algo es real, la cerveza es real. Bebe, porque mañana podemos morir."
+  },
+  {
+    "id": "huntsman",
+    "name": "Huntsman",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "La Cazadora puede elegir a una jugadora. :reminder: Si eligió a la Doncella: Pon a la Cazadora a dormir. Despierta al objetivo. Muestra el token *TÚ ERES* y su nuevo token de personaje.",
+    "otherNightReminder": "La Cazadora puede elegir a una jugadora. :reminder: Si eligió a la Doncella: Pon a la Cazadora a dormir. Despierta al objetivo. Muestra el token *TÚ ERES* y su nuevo token de personaje.",
+    "reminders": [
+      "Sin Habilidad"
+    ],
+    "setup": true,
+    "ability": "Una vez por juego, en la noche, elige a una jugadora viva: la Doncella, si es elegida, se convierte en una Aldeana no en juego. [+la Doncella]",
+    "flavor": "Mi cabaña es cálida y sólida. Mi hacha junto a la puerta, mis botas secándose junto al fuego, y el guiso de corzo a hervir... ¡Zas! ¡Un grito resuena por el valle! La lluvia y el lodo y el frío, frío viento enmascaran el olor de los lobos, pero conozco el camino y mi paso es estable. Estoy viniendo."
+  },
+  {
+    "id": "professor",
+    "name": "Professor",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "otherNightReminder": "La Profesora puede elegir a una jugadora muerta. :reminder: :reminder:",
+    "reminders": [
+      "Viva",
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, en la noche*, elige a una jugadora muerta: si es una Aldeana, es resucitada.",
+    "flavor": "El proceso es simple. Conecta el confabulador hidráulico al amplificador de la matriz chi, añade 20 CC de pseudodorafina, mantén sus niveles Z por encima del 20%, y tu esposo estará bien. Ahora, solo necesitamos un golpe de rayos."
+  },
+  {
+    "id": "artist",
+    "name": "Artist",
+    "edition": "snv",
+    "team": "townsfolk",
+    "reminders": [
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, durante el día, pregunta en privado a la Narradora cualquier pregunta de sí/no.",
+    "flavor": "¡Mon Dieu! C'est lumineux! Mi trabajo, ella es... ¿cómo lo dices... Magnifique! ¡Dieu est révélé! Sí."
+  },
+  {
+    "id": "slayer",
+    "name": "Slayer",
+    "edition": "tb",
+    "team": "townsfolk",
+    "reminders": [
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, durante el día, públicamente elige a una jugadora: si es el Demonio, muere.",
+    "flavor": "Muere."
+  },
+  {
+    "id": "fisherman",
+    "name": "Fisherman",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "reminders": [
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, durante el día, visita a la Narradora para obtener ayuda para ayudar a tu equipo a ganar.",
+    "flavor": "Esta era mi parte favorita del río... ¿ves cómo la luz del sol hace un arcoíris desde el monasterio hasta el mercado? Este era el mejor lugar para peces grandes. Y cuanto más vieja me vuelvo, más grandes eran."
+  },
+  {
+    "id": "princess",
+    "name": "Princess",
+    "team": "townsfolk",
+    "edition": "carousel",
+    "otherNightReminder": "Si la Princesa nombró a la jugadora que fue ejecutada hoy, despierta al Demonio como normal, pero nadie muere por la habilidad del Demonio. :reminder:",
+    "reminders": [
+      "No Mata"
+    ],
+    "setup": false,
+    "ability": "En tu 1er día, si nombraste y ejecutaste a una jugadora, el Demonio no mata esta noche.",
+    "flavor": "Nuestras palabras son sabuesos, atados por hilos de seda, queridas señoras. Ponga la cortesía verdadera, a menos que las riendas se desaten y destruyan nuestra corte."
+  },
+  {
+    "id": "juggler",
+    "name": "Juggler",
+    "edition": "snv",
+    "team": "townsfolk",
+    "otherNightReminder": "Muestra una señal con los dedos.",
+    "reminders": [
+      "Correcta",
+      "Correcta",
+      "Correcta",
+      "Correcta",
+      "Correcta"
+    ],
+    "setup": false,
+    "ability": "En tu 1er día, públicamente adivina hasta 5 personajes de jugadoras. Esa noche, aprendes cuántas acertaste.",
+    "flavor": "Para mi próximo truco, por petición, necesito una flor, una bolsa de frijoles, una serpiente de juguete, un pincel y un dispositivo de trimming de hedge de gasolina motorizado. Advierto que este truco puede ser mi último. Oh querida."
+  },
+  {
+    "id": "soldier",
+    "name": "Soldier",
+    "edition": "tb",
+    "team": "townsfolk",
+    "reminders": [],
+    "setup": false,
+    "ability": "Estás segura del Demonio.",
+    "flavor": "Como dijo David a Goliat, como Teseo al Minotauro, como Arjuna a Bhagadatta... No."
+  },
+  {
+    "id": "alchemist",
+    "name": "Alchemist",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "Muestra el token *TÚ ERES* y un token de Esbirra.",
+    "reminders": [],
+    "remindersGlobal": [
+      "Es la Alquimista"
+    ],
+    "setup": false,
+    "ability": "Tienes una habilidad de Esbirra. Cuando uses esto, la Narradora puede pedir que elijas diferente.",
+    "special": [
+      {
+        "type": "reveal",
+        "name": "replace-character"
+      }
+    ],
+    "flavor": "Visita el interior de la Tierra. Por rectificación hallarás la piedra oculta. Sobre el oro, yace el rojo. Kether en Malkuth."
+  },
+  {
+    "id": "cannibal",
+    "name": "Cannibal",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "reminders": [
+      "Envenenada",
+      "Almuerzo"
+    ],
+    "setup": false,
+    "ability": "Tienes la habilidad de la ejecutada recientemente matada. Si es mala, estás envenenada hasta que una jugadora buena muera por ejecución.",
+    "flavor": "No me gustan los payasos. Tienen un sabor extraño."
+  },
+  {
+    "id": "amnesiac",
+    "name": "Amnesiac",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "Haz lo que sea necesario para satisfacer la habilidad de la Amnésica.",
+    "otherNightReminder": "Haz lo que sea necesario para satisfacer la habilidad de la Amnésica.",
+    "reminders": [
+      "?",
+      "?",
+      "?"
+    ],
+    "setup": false,
+    "ability": "No sabes cuál es tu habilidad. Cada día, pregunta en privado cuál es: aprendes qué tan precisa eres.",
+    "flavor": "Espera. Qué. ¿Quién? Ah, bien. Espera. ¿Qué?"
+  },
+  {
+    "id": "farmer",
+    "name": "Farmer",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "otherNightReminder": "Si la Granjera murió esta noche, despierta a una jugadora buena viva. Muestra el token *TÚ ERES* y un token de Granjera.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cuando mueres en la noche, una jugadora buena viva se convierte en una Granjera.",
+    "flavor": "Incluso los altos ymighty necesitan comida en la mesa. Sin nosotros, la ciudad se muere de hambre."
+  },
+  {
+    "id": "minstrel",
+    "name": "Minstrel",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "reminders": [
+      "Todas Están Borrachas"
+    ],
+    "setup": false,
+    "ability": "Cuando una Esbirra muere por ejecución, todas las otras jugadoras (excepto Viajeras) están borrachas hasta el amanecer de mañana.",
+    "flavor": "Y escucharé, aunque tú caminas suavemente sobre mí... Y todos mis sueños serán más cálidos y más dulces... Si no me olvidarás de que me amas... Simplemente duermo en paz hasta que vengas a mí."
+  },
+  {
+    "id": "ravenkeeper",
+    "name": "Ravenkeeper",
+    "edition": "tb",
+    "team": "townsfolk",
+    "otherNightReminder": "Si la Cuervoguarda murió esta noche, la Cuervoguarda elige a una jugadora. Muestra el token de personaje de esa jugadora.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Si mueres en la noche, te despiertas para elegir una jugadora: aprendes su personaje.",
+    "flavor": "¡Mis pájaros me vengarán! ¡Vuela! ¡Vuela, mis dulces y dóciles mascotas! ¡Al manor y al río! ¡A los callejones y a los salones! ¡Vuela!"
+  },
+  {
+    "id": "sage",
+    "name": "Sage",
+    "edition": "snv",
+    "team": "townsfolk",
+    "otherNightReminder": "Si el Demonio mató a la Sabihonda, despierta a la Sabihonda y señala a 2 jugadoras, 1 de las cuales es el Demonio.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Si el Demonio te mata, aprendes que es 1 de 2 jugadoras.",
+    "flavor": "¡Estas montañas de tomos guardan el secreto, estoy segura de ello! Entre palabra y palabra, yace en espera. Más velas, muchacho! Más tinta! Estas notas pueden verse arcanas, pero el infierno puzzle se revela."
+  },
+  {
+    "id": "choirboy",
+    "name": "Choirboy",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "otherNightReminder": "Si el Demonio mató a la Rey, señala al Demonio.",
+    "reminders": [],
+    "setup": true,
+    "ability": "Si el Demonio mata a la Reyta, aprendes qué jugadora es el Demonio. [+el Rey]",
+    "flavor": "Vi eso, lo hice. Estaba en los bancos, arreglando los himnos, cuando un terrible comienzo desde la tubería del órgano. El organista tenía una larga capa, y largos dedos en las teclas. Y un sombrero que parecía... justo como... el tuyo."
+  },
+  {
+    "id": "banshee",
+    "name": "Banshee",
+    "team": "townsfolk",
+    "edition": "carousel",
+    "otherNightReminder": "Si la Banshee fue asesinada por el Demonio esta noche, anuncia que la Banshee ha muerto. :reminder:",
+    "reminders": [
+      "Tiene Habilidad"
+    ],
+    "setup": false,
+    "ability": "Si el Demonio te mata, todas las jugadoras aprenden esto. Desde ahora, puedes nombrar dos veces por día y votar dos veces por nombramiento.",
+    "flavor": "Gorm do shúile, dearg do ghruaig, ní bheidh sé i bhfad, is a mbeidh tú san uaigh."
+  },
+  {
+    "id": "tealady",
+    "name": "Tea Lady",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "reminders": [
+      "No Puede Morir",
+      "No Puede Morir"
+    ],
+    "setup": false,
+    "ability": "Si ambas tus vecinas vivas son buenas, no pueden morir.",
+    "flavor": "Si tienes frío, el té te calentará. Si tienes demasiado calor, el té te enfriará. Si estás deprimida, el té te alegrará. Si estás emocionada, el té te calmará."
+  },
+  {
+    "id": "mayor",
+    "name": "Mayor",
+    "edition": "tb",
+    "team": "townsfolk",
+    "reminders": [],
+    "setup": false,
+    "ability": "Si solo 3 jugadoras viven y no ocurre ejecución, tu equipo gana. Si mueres en la noche, otra jugadora podría morir en su lugar.",
+    "flavor": "Debemos poner nuestras diferencias a un lado, y cesar este sin sentido asesinato. Somos todos contribuyentes de todos modos. Bueno, la mayoría de nosotros."
+  },
+  {
+    "id": "fool",
+    "name": "Fool",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "reminders": [
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "La 1ra vez que mueres, no lo haces.",
+    "flavor": "...y el Rey dijo \"¡Qué?! ¡Nunca he posedido un par de pantalones de goma, ni siquiera un cañón de crema!\" Ho-ho! ¡Jolly day!"
+  },
+  {
+    "id": "virgin",
+    "name": "Virgin",
+    "edition": "tb",
+    "team": "townsfolk",
+    "reminders": [
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "La 1ra vez que te nombran, si la nominadora es una Aldeana, son ejecutadas inmediatamente.",
+    "flavor": "Soy pura. Que aquellos que están sin pecado se arrojen abajo y sufren en mi lugar. Mi reputación no será manchada con vuestros venenosos acusaciones."
+  },
+  {
+    "id": "magician",
+    "name": "Magician",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "Durante la Información de Esbirras, señala a la Mga y al Demonio. Durante la Información de Demonio, señala a la Mga y a las Esbirras.",
+    "reminders": [],
+    "setup": false,
+    "ability": "El Demonio piensa que eres una Esbirra. Las Esbirras piensan que eres un Demonio.",
+    "flavor": "1... 2... Abra... 3... 4... Cadabra... *poof!* ¡Y, como pueden ver, damas y caballeros, la bolsa de oro de Captain Farnsworth ha desaparecido! ¡Gone! Sin rastro. ¡Gracias, y buenas noches!"
+  },
+  {
+    "id": "poppygrower",
+    "name": "Poppy Grower",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "firstNightReminder": "Salta la Información de Esbirras y la Información de Demonio. Despierta al Demonio. Muestra el token *ESTOS PERSONAJES NO ESTÁN EN JUEGO*. Muestra 3 tokens de personaje buenos no en juego.",
+    "otherNightReminder": "Si la Cultivadora de Amapolas murió hoy o esta noche, despierta a todas las Esbirras. Muestra el token *ESTE ES EL DEMONIO*. Señala al Demonio. Pon a las Esbirras a dormir. Despierta al Demonio. Muestra el token *ESTAS SON TUS ESBIRRAS*. Señala a las Esbirras.",
+    "reminders": [
+      "Mala Despierta"
+    ],
+    "setup": false,
+    "ability": "Las Esbirras y Demonios no se conocen. Si mueres, se aprenden quiénes son esa noche.",
+    "flavor": "En los bosques ocultos del profundo bosque, la amapola negra habita. Ver su revelación es ser encantado. Oler su aroma grueso es ser perdido para siempre, un esclavo de los dioses de luz y oscuridad."
+  },
+  {
+    "id": "pacifist",
+    "name": "Pacifist",
+    "edition": "bmr",
+    "team": "townsfolk",
+    "reminders": [],
+    "setup": false,
+    "ability": "Las jugadoras buenas ejecutadas podrían no morir.",
+    "flavor": "Desconfía de aquellos en quienes el impulso a castigar es poderoso."
+  },
+  {
+    "id": "atheist",
+    "name": "Atheist",
+    "edition": "carousel",
+    "team": "townsfolk",
+    "reminders": [],
+    "setup": true,
+    "ability": "La Narradora puede romper las reglas del juego, y si es ejecutada, bien gana, incluso si estás muerta. [Sin personajes malos]",
+    "special": [
+      {
+        "type": "selection",
+        "name": "good-duplicate"
+      }
+    ],
+    "flavor": "Dispersémonos con la conjetura innecesaria y la paranoia tonta. Hay una explicación perfectamente racional para todo. Sí, una taza de té puede estar orbitando el planeta, demasiado pequeña para ver, pero beberé mi té de la china muy real en mis manos muy reales."
+  },
+  {
+    "id": "hermit",
+    "name": "Hermit",
+    "team": "outsider",
+    "edition": "carousel",
+    "reminders": [
+      "1",
+      "2",
+      "3"
+    ],
+    "setup": true,
+    "ability": "Tienes todas las habilidades de Forastera. [-0 o -1 Forastera]",
+    "flavor": "En los lugares perdidos y olvidados de la tierra, la luz del alma llama."
+  },
+  {
+    "id": "butler",
+    "name": "Butler",
+    "edition": "tb",
+    "team": "outsider",
+    "firstNightReminder": "El Mayordomo elige a una jugadora. :reminder:",
+    "otherNightReminder": "El Mayordomo elige a una jugadora. :reminder:",
+    "reminders": [
+      "Maestro"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora (no tú): mañana solo puedes votar si ellas también están votando.",
+    "flavor": "Sí, señor... No, señor... Cierto, señor."
+  },
+  {
+    "id": "goon",
+    "name": "Goon",
+    "edition": "bmr",
+    "team": "outsider",
+    "reminders": [
+      "Borracha"
+    ],
+    "setup": false,
+    "ability": "Cada noche, la 1ra jugadora que te elige con su habilidad está borracha hasta el crepúsculo. Te vuelves de su alineación.",
+    "flavor": "¡Sí jefe! ¡Expliqué fings real buena a esa vieja! ¡No quiere que yo lo explique otra vez! ¡Nah jefe! ¡No necesito ningún doctor - es solo una herida de cuchillo! ¡Estaré bien por la mañana!"
+  },
+  {
+    "id": "ogre",
+    "name": "Ogre",
+    "team": "outsider",
+    "edition": "carousel",
+    "firstNightReminder": "El Ogro elige a una jugadora. :reminder:",
+    "reminders": [
+      "Amigo"
+    ],
+    "setup": false,
+    "ability": "En tu 1ra noche, elige a una jugadora (no tú): te vuelves de su alineación (no sabes cuál) incluso si estás borracha o envenenada.",
+    "flavor": "<grunt><grin></grunt>"
+  },
+  {
+    "id": "lunatic",
+    "name": "Lunatic",
+    "edition": "bmr",
+    "team": "outsider",
+    "firstNightReminder": "Si hay 7 o más jugadoras, despierta a la Lunática: Muestra el token *ESTAS SON TUS ESBIRRAS*. Señala a cualquier jugadoras. Muestra el token *ESTOS PERSONAJES NO ESTÁN EN JUEGO*. Muestra 3 tokens de personaje buenos. Pon a la Lunática a dormir. Despierta al Demonio. Muestra el token *TÚ ERES* y el token de Demonio. Muestra el token *ESTA JUGADORA ES* y la Lunática, luego señala a la Lunática.",
+    "otherNightReminder": "Haz lo que sea necesario para simular al Demonio actuando. Pon a la Lunática a dormir. Despierta al Demonio. Muestra el token de la Lunática y señala a ellas, luego a sus objetivo(s).",
+    "reminders": [
+      "Elegida",
+      "Elegida",
+      "Elegida"
+    ],
+    "setup": false,
+    "ability": "Piensas que eres un Demonio, pero no lo eres. El Demonio sabe quién eres y a quién eliges en la noche.",
+    "flavor": "Soy la noche... creo."
+  },
+  {
+    "id": "drunk",
+    "name": "Drunk",
+    "edition": "tb",
+    "team": "outsider",
+    "reminders": [],
+    "remindersGlobal": [
+      "Es la Borracha"
+    ],
+    "setup": true,
+    "ability": "No sabes que eres la Borracha. Piensas que eres un personaje Aldeano, pero no lo eres.",
+    "special": [
+      {
+        "type": "selection",
+        "name": "bag-disabled"
+      },
+      {
+        "type": "reveal",
+        "name": "replace-character"
+      }
+    ],
+    "flavor": "Soy solo una *jijí* bebedora social, querida. Admitidamente, soy una *¡estornudo* socializadora pesada."
+  },
+  {
+    "id": "tinker",
+    "name": "Tinker",
+    "edition": "bmr",
+    "team": "outsider",
+    "otherNightReminder": "La Hojalatera puede morir. :reminder:",
+    "reminders": [
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Puedes morir en cualquier momento.",
+    "flavor": "Creo que veo el problema. ¡Afortunadamente, tengo una idea! Esta catapulta volará dos veces más lejos con solo un ajuste menor..."
+  },
+  {
+    "id": "recluse",
+    "name": "Recluse",
+    "edition": "tb",
+    "team": "outsider",
+    "reminders": [],
+    "setup": false,
+    "ability": "Puedes registrarte como mala y como una Esbirra o Demonio, incluso si estás muerta.",
+    "flavor": "¡Garn git ya darn grub ya mitts ofma lorn yasee! ¡Grr! Natsy pikkins yonder southwise ye begittin afta ya! Git! Me harvy no so widda licks and demmons no be fightin' hadsup ne'er ma kin! ¡Git, assay!"
+  },
+  {
+    "id": "golem",
+    "name": "Golem",
+    "edition": "carousel",
+    "team": "outsider",
+    "reminders": [
+      "Puede No Nombrar"
+    ],
+    "setup": false,
+    "ability": "Solo puedes nombrar una vez por juego. Cuando lo hagas, si la nominada no es el Demonio, muere.",
+    "flavor": "¡Golem ayudar! ¡Golem hacer astillas! ¡Golem ayudar!"
+  },
+  {
+    "id": "sweetheart",
+    "name": "Sweetheart",
+    "edition": "snv",
+    "team": "outsider",
+    "otherNightReminder": "Si la Novia murió, una jugadora se volvió borracha inmediatamente. Si no has hecho esto aún, hazlo ahora. :reminder:",
+    "reminders": [
+      "Borracha"
+    ],
+    "setup": false,
+    "ability": "Cuando mueres, 1 jugadora está borracha desde ahora.",
+    "flavor": "Nunca la olvidaré. Nunca."
+  },
+  {
+    "id": "plaguedoctor",
+    "name": "Plague Doctor",
+    "team": "outsider",
+    "edition": "carousel",
+    "otherNightReminder": "Si la Doctora de la Peste murió, la Narradora ganó una habilidad de Esbirra. Si no has hecho esto aún, hazlo ahora. :reminder:",
+    "reminders": [
+      "Habilidad de la Narradora"
+    ],
+    "setup": false,
+    "ability": "Cuando mueres, la Narradora gana una habilidad de Esbirra.",
+    "flavor": "Pleauze shtay shtill. Thinks nid tiime for hillink. Myrhh-myrhh."
+  },
+  {
+    "id": "klutz",
+    "name": "Klutz",
+    "edition": "snv",
+    "team": "outsider",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cuando aprendes que moriste, públicamente elige 1 jugadora viva: si es mala, tu equipo pierde.",
+    "flavor": "Ups."
+  },
+  {
+    "id": "moonchild",
+    "name": "Moonchild",
+    "edition": "bmr",
+    "team": "outsider",
+    "otherNightReminder": "Si la Hija de la Luna está debida matar a una jugadora buena, muere. :reminder:",
+    "reminders": [
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Cuando aprendes que moriste, públicamente elige 1 jugadora viva. Esta noche, si fue una jugadora buena, muere.",
+    "flavor": "Escorpio mira de lado a los amantes, y tienes una elección que hacer. Con cruz de plata mi palma, y tu destino será revelado. Con cruz de acero mi garganta, y por las estrellas te arrepentirás."
+  },
+  {
+    "id": "saint",
+    "name": "Saint",
+    "edition": "tb",
+    "team": "outsider",
+    "reminders": [],
+    "setup": false,
+    "ability": "Si mueres por ejecución, tu equipo pierde.",
+    "flavor": "La sabiduría genera paz. La paciencia genera sabiduría. No temas, porque el tiempo vendrá cuando el miedo también pasará. Oremos, y que la unidad de nuestra visión nos haga santos a todos."
+  },
+  {
+    "id": "barber",
+    "name": "Barber",
+    "edition": "snv",
+    "team": "outsider",
+    "otherNightReminder": "Si el Barbero murió hoy o esta noche, muestra al Demonio el token *ESTE PERSONAJE TE ELEGIRÁ* y el de Barba. Si el Demonio eligió 2 jugadoras, despierta una por una. Muestra el token *TÚ ERES* y su nuevo token de personaje.",
+    "reminders": [
+      "Cortes de Cabello Esta Noche"
+    ],
+    "setup": false,
+    "ability": "Si moriste hoy o esta noche, el Demonio puede elegir 2 jugadoras (no otra Demonio) para intercambiar personajes.",
+    "flavor": "¿Sabías que la barbería y la cirugía eran una vez la misma profesión? ¿No? Bueno, ahora lo sabes."
+  },
+  {
+    "id": "hatter",
+    "name": "Hatter",
+    "team": "outsider",
+    "edition": "carousel",
+    "otherNightReminder": "Si la Sombrerera murió, despierta a las Esbirras y Demonios. Cada una puede elegir un nuevo personaje. Si lo hacen, muestra el token *TÚ ERES* y su nuevo token de personaje.",
+    "reminders": [
+      "Fiesta de Té Esta Noche"
+    ],
+    "setup": false,
+    "ability": "Si moriste hoy o esta noche, las jugadoras Esbirra y Demonio pueden elegir nuevos personajes Esbirra y Demonio para ser.",
+    "flavor": "Un Sombrero. Demasiado Sombrero. Tres Sombreros. Sombrero de Té. Cuatro Sombreros. Thrive Sombrero. Seis Sombreros. Bastones Sombrero."
+  },
+  {
+    "id": "mutant",
+    "name": "Mutant",
+    "edition": "snv",
+    "team": "outsider",
+    "reminders": [],
+    "setup": false,
+    "ability": "Si eres \"loca\" sobre ser una Forastera, podrías ser ejecutada.",
+    "flavor": "¡No soy un freak! ¡Soy un ser humano! ¡Ten piedad!"
+  },
+  {
+    "id": "politician",
+    "name": "Politician",
+    "edition": "carousel",
+    "team": "outsider",
+    "reminders": [],
+    "setup": false,
+    "ability": "Si ganas tú eres la jugadora más responsable de que tu equipo pierda, cambias de alineación y ganas, incluso si estás muerta.",
+    "flavor": "Me alegro de que hayas hecho esa pregunta. Sinceramente, lo estoy. Pero creo que la PREGUNTA REAL aquí es..."
+  },
+  {
+    "id": "zealot",
+    "name": "Zealot",
+    "team": "outsider",
+    "edition": "carousel",
+    "reminders": [],
+    "setup": false,
+    "ability": "Si hay 5 o más jugadoras vivas, debes votar por cada nominación.",
+    "flavor": "Disfruto hablando contigo. Tu mente me apela. Se parece a mi propia mente excepto que resulta ser loca."
+  },
+  {
+    "id": "damsel",
+    "name": "Damsel",
+    "edition": "carousel",
+    "team": "outsider",
+    "firstNightReminder": "Durante la Información de Esbirras, muestra a las Esbirras el token de Doncella. Si no has hecho esto aún, hazlo ahora. Si la Doncella fue elegida por la Cazadora, muestra el token *TÚ ERES* y su nuevo token de personaje.",
+    "otherNightReminder": "Si la Doncella fue elegida por la Cazadora, muestra el token *TÚ ERES* y su nuevo token de personaje.",
+    "reminders": [
+      "Adivinanza Usada"
+    ],
+    "setup": false,
+    "ability": "Todas las Esbirras saben que una Doncella está en juego. Si una Esbirra públicamente te adivina (una vez), tu equipo pierde.",
+    "flavor": "No toques el cabello, cariño."
+  },
+  {
+    "id": "snitch",
+    "name": "Snitch",
+    "edition": "carousel",
+    "team": "outsider",
+    "firstNightReminder": "Despierta a cada Esbirra. Muestra el token *ESTOS PERSONAJES NO ESTÁN EN JUEGO*. Muestra 3 tokens de personaje no en juego.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada Esbirra tiene 3 falsificaciones.",
+    "flavor": "Fue John."
+  },
+  {
+    "id": "heretic",
+    "name": "Heretic",
+    "edition": "carousel",
+    "team": "outsider",
+    "reminders": [],
+    "setup": false,
+    "ability": "Quienquiera que gane, pierde y quienquiera que pierda, gana, incluso si estás muerta.",
+    "flavor": "Después de que el granizo haya machacado el techo y hecho añicos los cristales de las ventanas de la Catedral, se derrite de nuevo en la tierra, como un cordero muriendo en el sol del desierto. Tal es la parábola del loco."
+  },
+  {
+    "id": "puzzlemaster",
+    "name": "Puzzlemaster",
+    "edition": "carousel",
+    "team": "outsider",
+    "reminders": [
+      "Borracha",
+      "Adivinanza Usada"
+    ],
+    "setup": false,
+    "ability": "1 jugadora está borracha, incluso si mueres. Si adivinas (una vez) quién es, aprendes a la jugadora Demonio, pero adivina mal y obtienes información falsa.",
+    "flavor": "Cuando uno empieza a pensar que una cosa es simplemente otra cosa, uno está usualmente en el borde de un error. Paciencia, paciencia. No confundes solo y debería con es y no es."
+  },
+  {
+    "id": "mezepheles",
+    "name": "Mezepheles",
+    "edition": "carousel",
+    "team": "minion",
+    "firstNightReminder": "Muestra la palabra secreta.",
+    "otherNightReminder": "Si una jugadora buena dijo la palabra secreta, despierta a la jugadora. Muestra el token *TÚ ERES* y muestra un pulgar hacia abajo. :reminder: :reminder:",
+    "reminders": [
+      "Se Vuelve Mala",
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "Empiezas conociendo una palabra secreta. La 1ra jugadora buena que diga esta palabra se vuelve mala esa noche.",
+    "flavor": "Eso que emana del corazón solo, doblará los corazones de otros al tuyo."
+  },
+  {
+    "id": "godfather",
+    "name": "Godfather",
+    "edition": "bmr",
+    "team": "minion",
+    "firstNightReminder": "Muestra los tokens de personaje de todas las Forasteras en juego.",
+    "otherNightReminder": "Si una Forastera murió hoy, la Padrina elige a una jugadora. :reminder:",
+    "reminders": [
+      "Murió Hoy",
+      "Muerta"
+    ],
+    "setup": true,
+    "ability": "Empiezas sabiendo cuáles Forasteras están en juego. Si 1 murió hoy, elige a una jugadora esta noche: muere. [-1 o +1 Forastera]",
+    "flavor": "Normalmente, es solo negocios. Pero cuando insultas a mi hija, insultas a mí. Y cuando me insultas, insultas a mi familia. Realmente deberías tener más cuidado - sería una pena si tuvieras un accidente desafortunado."
+  },
+  {
+    "id": "poisoner",
+    "name": "Poisoner",
+    "edition": "tb",
+    "team": "minion",
+    "firstNightReminder": "La Envenenadora elige a una jugadora. :reminder:",
+    "otherNightReminder": "La Envenenadora elige a una jugadora. :reminder:",
+    "reminders": [
+      "Envenenada"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora: está envenenada esta noche y mañana día.",
+    "flavor": "Añade compuesto Alpha al compuesto Beta... ¡NO DEMASIADO!"
+  },
+  {
+    "id": "devilsadvocate",
+    "name": "Devil's Advocate",
+    "edition": "bmr",
+    "team": "minion",
+    "firstNightReminder": "La Abogada del Diablo elige a una jugadora viva. :reminder:",
+    "otherNightReminder": "La Abogada del Diablo elige a una jugadora viva. :reminder:",
+    "reminders": [
+      "Sobrevive la Ejecución"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora viva (diferente a la noche anterior): si es ejecutada mañana, no muere.",
+    "flavor": "Mi cliente, si la objeción es sobreseída, declara inocente por virtue del non-observance de la statute 27.B - conjugación incorrecta o engañosa de un verbo. El hecho de que nueve del jurado murieron anoche es simplemente prima facie, que es, como Wills vs Thule estableció precedente para, es further razón para absolver."
+  },
+  {
+    "id": "spy",
+    "name": "Spy",
+    "edition": "tb",
+    "team": "minion",
+    "firstNightReminder": "Muestra el Grimoire por tanto tiempo como la Espía necesite.",
+    "otherNightReminder": "Muestra el Grimoire por tanto tiempo como la Espía necesite.",
+    "reminders": [],
+    "setup": false,
+    "special": [
+      {
+        "type": "signal",
+        "name": "grimoire",
+        "time": "night"
+      }
+    ],
+    "ability": "Cada noche, ves el Grimoire. Puedes registrarte como buena y como una Aldeana o Forastera, incluso si estás muerta.",
+    "flavor": "Cualquiera brewmaster digno de su licor, sabe que ninguna poción vierte problemas más rápidos, que uno donde espías parecen doble."
+  },
+  {
+    "id": "harpy",
+    "name": "Harpy",
+    "team": "minion",
+    "edition": "carousel",
+    "firstNightReminder": "La Harpía elige 2 jugadoras. :reminder: :reminder: Pon a la Harpía a dormir. Despierta al 1er objetivo. Muestra el token *ESTE PERSONAJE TE ELEGIRÁ*, el token de Harpía, luego señala al 2do objetivo.",
+    "otherNightReminder": "La Harpía elige 2 jugadoras. :reminder: :reminder: Pon a la Harpía a dormir. Despierta al 1er objetivo. Muestra el token *ESTE PERSONAJE TE ELEGIRÁ*, el token de Harpía, luego señala al 2do objetivo.",
+    "reminders": [
+      "Loca",
+      "2da"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige 2 jugadoras: mañana, la 1ra jugadora está loca que la 2da es mala, o una o ambas podrían morir.",
+    "flavor": "Tan hermoso un día nunca vi, ni tan hollido presencia colgando sobre mí."
+  },
+  {
+    "id": "witch",
+    "name": "Witch",
+    "edition": "snv",
+    "team": "minion",
+    "firstNightReminder": "La Bruja elige a una jugadora. :reminder:",
+    "otherNightReminder": "La Bruja elige a una jugadora. :reminder:",
+    "reminders": [
+      "Maldita"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora: si nombran mañana, mueren. Si solo 3 jugadoras viven, pierdes esta habilidad.",
+    "flavor": "Tres gotas de sangre de cabra. Un mechón de pelo, arrancado en ira. El nombre es pronunciado, la sombra lanzada. Camina pie izquierdo primero por ese sendero de zarzas, y no mires atrás."
+  },
+  {
+    "id": "cerenovus",
+    "name": "Cerenovus",
+    "edition": "snv",
+    "team": "minion",
+    "firstNightReminder": "El Cerenovus elige a una jugadora y un personaje. :reminder: Pon al Cerenovus a dormir. Despierta al objetivo. Muestra el token *ESTE PERSONAJE TE ELEGIRÁ*, el token de Cerenovus, luego el token de locura-personaje.",
+    "otherNightReminder": "El Cerenovus elige a una jugadora y un personaje. :reminder: Pon al Cerenovus a dormir. Despierta al objetivo. Muestra el token *ESTE PERSONAJE TE ELEGIRÁ*, el token de Cerenovus, luego el token de locura-personaje.",
+    "reminders": [
+      "Loca"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora y un personaje bueno: están \"locas\" que son este personaje mañana, o podrían ser ejecutadas.",
+    "flavor": "La realidad es meramente una opinión. Específicamente, mi opinión."
+  },
+  {
+    "id": "fearmonger",
+    "name": "Fearmonger",
+    "edition": "carousel",
+    "team": "minion",
+    "firstNightReminder": "La Sembradora de Miedo elige a una jugadora. :reminder: Anuncia que la Sembradora de Miedo ha elegido a una jugadora.",
+    "otherNightReminder": "La Sembradora de Miedo elige a una jugadora. :reminder: Si el objetivo es diferente a la noche anterior, anuncia que la Sembradora de Miedo ha elegido a una jugadora.",
+    "reminders": [
+      "Miedo"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora: si la nombras y ejecutas, su equipo pierde. Todas las jugadoras saben si eliges una nueva jugadora.",
+    "flavor": "Cuidado de mirar mucho en el Abismo, a menos que el Abismo también te mire a ti."
+  },
+  {
+    "id": "pithag",
+    "name": "Pit-Hag",
+    "edition": "snv",
+    "team": "minion",
+    "otherNightReminder": "La Pit-Hag elige a una jugadora y un personaje. Si eligió un personaje que no está en juego: Pon a la Pit-Hag a dormir. Despierta al objetivo. Muestra el token *TÚ ERES* y su nuevo token de personaje.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada noche*, elige a una jugadora y un personaje que se convierte (si no está en juego). Si un Demonio es hecho, muertes esta noche son arbitrarias.",
+    "flavor": "Ronda sobre la caldera ve; En las entrañas envenenadas echa; Rana, que bajo piedra fría; Días y noches tiene treinta y una; Veneno sudado se logra; Hierve primero en la poción encantada."
+  },
+  {
+    "id": "psychopath",
+    "name": "Psychopath",
+    "edition": "carousel",
+    "team": "minion",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada día, antes de las nominaciones, puedes públicamente elegir a una jugadora: muere. Si es ejecutada, solo mueres si pierdes rock-paper-scissors.",
+    "flavor": "¡Sorpresa!"
+  },
+  {
+    "id": "assassin",
+    "name": "Assassin",
+    "edition": "bmr",
+    "team": "minion",
+    "otherNightReminder": "La Asesina puede elegir a una jugadora. :reminder: :reminder:",
+    "reminders": [
+      "Muerta",
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, en la noche*, elige a una jugadora: muere, incluso si por alguna razón no podría.",
+    "flavor": "..."
+  },
+  {
+    "id": "wizard",
+    "name": "Wizard",
+    "edition": "carousel",
+    "team": "minion",
+    "firstNightReminder": "Haz lo que sea necesario para satisfacer la habilidad de la Mga.",
+    "otherNightReminder": "Haz lo que sea necesario para satisfacer la habilidad de la Mga.",
+    "reminders": [
+      "?",
+      "?"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, elige hacer un deseo. Si es concedido, podría tener un precio y dejar una pista sobre su naturaleza.",
+    "flavor": "Cada hombre y cada mujer es una estrella. El amor es la ley, el amor bajo voluntad."
+  },
+  {
+    "id": "widow",
+    "name": "Widow",
+    "edition": "carousel",
+    "team": "minion",
+    "firstNightReminder": "Muestra el Grimoire por tanto tiempo como la Viuda necesite. La Viuda elige a una jugadora. :reminder: Pon a la Viuda a dormir. Despierta a la jugadora marcada *CONOCE* y muestra el token de Viuda. :reminder:",
+    "reminders": [
+      "Envenenada",
+      "Conoce"
+    ],
+    "remindersGlobal": [],
+    "setup": false,
+    "special": [
+      {
+        "name": "grimoire",
+        "type": "signal",
+        "time": "night"
+      }
+    ],
+    "ability": "En tu 1ra noche, mira el Grimoire y elige a una jugadora: está envenenada. 1 jugadora buena sabe que una Viuda está en juego.",
+    "flavor": "¿Más vino? Château d'Ergot '07 es un vintage muy especial. Sí, muy especial de todos modos."
+  },
+  {
+    "id": "xaan",
+    "name": "Xaan",
+    "edition": "carousel",
+    "team": "minion",
+    "firstNightReminder": "Si X es 1, marca a la Xaan con el token de recordatorio *X*. :reminder: :reminder:",
+    "otherNightReminder": "Cambia el token de recordatorio de la Xaan a la noche relevante. Si es noche X, marca a la Xaan con el token *X*. :reminder: :reminder:",
+    "reminders": [
+      "Noche 1",
+      "Noche 2",
+      "Noche 3",
+      "X"
+    ],
+    "setup": true,
+    "ability": "En la noche X, todas las Aldeanas están envenenadas hasta el crepúsculo. [X Forasteras]",
+    "flavor": "Caen uno por uno. Por dos, por cinco."
+  },
+  {
+    "id": "marionette",
+    "name": "Marionette",
+    "edition": "carousel",
+    "team": "minion",
+    "firstNightReminder": "Despierta al Demonio. Muestra el token *ESTA JUGADORA ES* y Marioneta. Señala a la Marioneta.",
+    "reminders": [],
+    "remindersGlobal": [
+      "Es la Marioneta"
+    ],
+    "setup": true,
+    "ability": "Piensas que eres un personaje bueno, pero no lo eres. El Demonio sabe quién eres. [Te vecina al Demonio]",
+    "special": [
+      {
+        "type": "selection",
+        "name": "bag-disabled"
+      },
+      {
+        "type": "reveal",
+        "name": "replace-character"
+      }
+    ],
+    "flavor": "Palabras, palabras. Solo tenemos eso para ir."
+  },
+  {
+    "id": "wraith",
+    "name": "Wraith",
+    "team": "minion",
+    "edition": "carousel",
+    "firstNightReminder": "Despierta al Fantasma siempre que otras jugadoras malas se despierten.",
+    "otherNightReminder": "Despierta al Fantasma siempre que otras jugadoras malas se despierten.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Puedes elegir abrir tus ojos en la noche. Te despiertas cuando otras jugadoras malas se despiertan.",
+    "flavor": "Ra'āb ina pān ṣilli ša dāri. Rigim qallu ina šūri, šītu ša šunātīka iredde, u napšutka idlul ina pān maṣṣartī dāriti.",
+    "special": [
+      {
+        "type": "player",
+        "name": "open-eyes",
+        "time": "night"
+      }
+    ]
+  },
+  {
+    "id": "summoner",
+    "name": "Summoner",
+    "team": "minion",
+    "edition": "carousel",
+    "firstNightReminder": "Muestra el token *ESTOS PERSONAJES NO ESTÁN EN JUEGO*. Muestra 3 tokens de personaje buenos no en juego.",
+    "otherNightReminder": "Cambia el token de recordatorio de la Invocadora a la noche relevante. :reminder: Si es noche 3, la Invocadora elige a una jugadora y un personaje Demonio. Pon a la Invocadora a dormir. Despierta al objetivo. Muestra los tokens *TÚ ERES* y Demonio y muestra un pulgar hacia abajo.",
+    "reminders": [
+      "Noche 1",
+      "Noche 2",
+      "Noche 3"
+    ],
+    "setup": true,
+    "ability": "Tienes 3 falsificaciones. En la 3ra noche, elige a una jugadora: se convierte en un Demonio de tu elección. [Sin Demonio]",
+    "flavor": "Salud a los guardias del norte; por mi intelecto, estás cortado. Salud a los guardias del este; por mi voluntad, estás dominado. Salud a los guardias del sur; por lo que yace más allá, el misterio es revelado. Salud a los guardias del oeste; un escudo en la oscuridad."
+  },
+  {
+    "id": "eviltwin",
+    "name": "Evil Twin",
+    "edition": "snv",
+    "team": "minion",
+    "firstNightReminder": "Despierta a las gemelas. Permite contacto visual. Muestra el token de personaje de la buena a la Gemela Malvada y viceversa.",
+    "reminders": [
+      "Gemela"
+    ],
+    "setup": false,
+    "ability": "Tú y una jugadora oponente nos conocemos. Si la buena es ejecutada, mal gana. Bien no puede ganar si ambas vivas.",
+    "flavor": "¡No soy Sara! ¡Soy Clara! ELLA es Sara! ¡Sara es la mala! ¡No yo!"
+  },
+  {
+    "id": "goblin",
+    "name": "Goblin",
+    "edition": "carousel",
+    "team": "minion",
+    "reminders": [
+      "Reclamada"
+    ],
+    "setup": false,
+    "ability": "Si públicamente reclamas ser el Duende cuando te nominan y eres ejecutada ese día, tu equipo gana.",
+    "flavor": "No quieres insultar a los duendes. Realmente, realmente no. Completamente por separado... ¿puedo tener otro pedazo de pastel?"
+  },
+  {
+    "id": "boomdandy",
+    "name": "Boomdandy",
+    "edition": "carousel",
+    "team": "minion",
+    "reminders": [],
+    "setup": false,
+    "ability": "Si eres ejecutada, todas menos 3 jugadoras mueren. Después de una cuenta regresiva de 10 a 1, la jugadora con más jugadoras señalándoles, muere.",
+    "special": [
+      {
+        "type": "ability",
+        "name": "pointing",
+        "time": "day"
+      }
+    ],
+    "flavor": "Tick... Tick... Tick... TOCK."
+  },
+  {
+    "id": "mastermind",
+    "name": "Mastermind",
+    "edition": "bmr",
+    "team": "minion",
+    "reminders": [],
+    "setup": false,
+    "ability": "Si el Demonio muere por ejecución (terminando el juego), juega por 1 día más. Si una jugadora es entonces ejecutada, su equipo pierde.",
+    "flavor": "Los tentáculos de ese monstruo están clavados a las puertas de la iglesia. Madres y niños están bailando en la calle. Excelente. Todo está procediendo exactamente como he planeado."
+  },
+  {
+    "id": "scarletwoman",
+    "name": "Scarlet Woman",
+    "edition": "tb",
+    "team": "minion",
+    "otherNightReminder": "Si la Mujer Escarlata se convirtió en el Demonio hoy, muestra el token *TÚ ERES*, luego el token de Demonio.",
+    "reminders": [
+      "Es el Demonio"
+    ],
+    "setup": false,
+    "ability": "Si hay 5 o más jugadoras vivas y el Demonio muere, te conviertes en el Demonio. (Las Viajeras no cuentan.)",
+    "flavor": "Has mostrado los secretos del Consejo del Llamante Púrpura. Nos hemos yaci juntos en fuego y en lujuria y en comunión bestial, y soy siempre tu sirviente. Pero esta noche, querido mío, soy tu maestro."
+  },
+  {
+    "id": "vizier",
+    "name": "Vizier",
+    "team": "minion",
+    "edition": "carousel",
+    "firstNightReminder": "Anuncia qué jugadora es la Vizir.",
+    "reminders": [],
+    "setup": false,
+    "ability": "Todas las jugadoras saben que eres la Vizir. No puedes morir durante el día. Si malas votaron, puedes elegir ejecutar inmediatamente.",
+    "flavor": "Una excelente decisión, como siempre, sire. Tal crimen menor como tropezar con la Obispa ciertamente merece tu 'justicia' y 'misericordia'. Pasea por los jardines. Visita la galería y perusa las esculturas de Von Strauf. Relájate, sire. Deja todo... a mí."
+  },
+  {
+    "id": "organgrinder",
+    "name": "Organ Grinder",
+    "edition": "carousel",
+    "team": "minion",
+    "firstNightReminder": "La Trituradora asiente su cabeza sí para ser borracha, o sacude su cabeza no para ser sobria. :reminder:",
+    "otherNightReminder": "La Trituradora asiente su cabeza sí para ser borracha, o sacude su cabeza no para ser sobria. :reminder:",
+    "reminders": [
+      "A Punto de Morir",
+      "Borracha"
+    ],
+    "setup": false,
+    "ability": "Todas las jugadoras mantienen sus ojos cerrados al votar y el recuento de votos es secreto. Cada noche, elige si estás borracha hasta el crepúsculo.",
+    "special": [
+      {
+        "type": "vote",
+        "name": "hidden"
+      }
+    ],
+    "flavor": "Ronda y ronda las manijas van. El más que bailas el menos que sabes."
+  },
+  {
+    "id": "boffin",
+    "name": "Boffin",
+    "team": "minion",
+    "edition": "carousel",
+    "firstNightReminder": "Despierta a la Boffin y al Demonio. Muestra el token *ESTE PERSONAJE TE ELEGIRÁ* y Boffin, luego el token de personaje bueno no en juego.",
+    "reminders": [],
+    "setup": false,
+    "ability": "El Demonio (incluso si está borracha o envenenada) tiene la habilidad de un personaje bueno no en juego. Ambas lo saben.",
+    "flavor": "Hidrógeno estelar, vasto, inerte; carbono, oxígeno, gases neón, todos arruinados. Caos molecular, entropía, rinde nuevos fenómenos cósmicos, renacimiento del caos atómico, materia densa colapsando. Todo en un pequeño frasco."
+  },
+  {
+    "id": "baron",
+    "name": "Baron",
+    "edition": "tb",
+    "team": "minion",
+    "reminders": [],
+    "setup": true,
+    "ability": "Hay Forasteras extra en juego. [+2 Forasteras]",
+    "flavor": "Este pueblo se ha ido a los perros, ¿no? Mano de obra extranjera barata... esa es la ficha. Metedlos en la mina, digo. Un poco de trabajo duro nunca le hizo daño a nadie, y un golpe de oreja a cualquier bandido que lo diga. Se trata de la línea de fondo, ¿eh?"
+  },
+  {
+    "id": "yaggababble",
+    "name": "Yaggababble",
+    "team": "demon",
+    "edition": "carousel",
+    "firstNightReminder": "Muestra la frase secreta de la Yaggababble.",
+    "otherNightReminder": "Por cada vez que la Yaggababble dijo su frase hoy, una jugadora podría morir. :reminder:",
+    "reminders": [
+      "Muerta",
+      "Muerta",
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Empiezas conociendo una frase secreta. Por cada vez que la dijiste públicamente hoy, una jugadora podría morir.",
+    "flavor": "¡Asesinatos dentro de la Rue Morgue! ¡Noticias falsas! ¡Perros en los moors de Baskerville! ¡Noticias falsas! ¡Muerte mientras navegaba el Nilo! ¡Noticias falsas!"
+  },
+  {
+    "id": "pukka",
+    "name": "Pukka",
+    "edition": "bmr",
+    "team": "demon",
+    "firstNightReminder": "La Pukka elige a una jugadora. :reminder:",
+    "otherNightReminder": "La Pukka elige a una jugadora. :reminder: La jugadora previamente envenenada muere y luego se vuelve saludable. :reminder:",
+    "reminders": [
+      "Envenenada",
+      "Envenenada",
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora: está envenenada. La jugadora previamente envenenada muere y luego se vuelve saludable.",
+    "flavor": "Realmente has sido amable acogéndome en tu hermosa casa. Lo siento mucho por accidentalmente arañarte. Una cosa pequeña. No importa. Pero por favor, toma este palillo dorado como un humilde token de mi arrepentimiento."
+  },
+  {
+    "id": "lilmonsta",
+    "name": "Lil' Monsta",
+    "edition": "carousel",
+    "team": "demon",
+    "firstNightReminder": "Despierta a las Esbirras. Eligen a una jugadora. :reminder: Pon a las Esbirras a dormir. Despierta al objetivo. Muestra los tokens *TÚ ERES* y Lil' Monsta.",
+    "otherNightReminder": "Despierta a las Esbirras. Eligen a una jugadora. :reminder: Pon a las Esbirras a dormir. Despierta al objetivo. Muestra los tokens *TÚ ERES* y Lil' Monsta. Una jugadora podría morir. :reminder:",
+    "reminders": [],
+    "remindersGlobal": [
+      "Es el Demonio",
+      "Muerta"
+    ],
+    "setup": true,
+    "ability": "Cada noche, las Esbirras eligen quién cuida a Lil' Monsta y \"es el Demonio\". Cada noche*, una jugadora podría morir. [+1 Esbirra]",
+    "special": [
+      {
+        "type": "ability",
+        "name": "pointing",
+        "time": "night",
+        "global": "minion"
+      },
+      {
+        "type": "selection",
+        "name": "bag-disabled"
+      }
+    ],
+    "flavor": "Paso 1: Ser linda. Paso 2: Dominación mundial. Paso 3: Desayuno."
+  },
+  {
+    "id": "nodashii",
+    "name": "No Dashii",
+    "edition": "snv",
+    "team": "demon",
+    "otherNightReminder": "La No Dashii elige a una jugadora. :reminder:",
+    "reminders": [
+      "Muerta",
+      "Envenenada",
+      "Envenenada"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige a una jugadora: muere. Tus 2 vecinas Aldeanas están envenenadas.",
+    "flavor": "Por los pecados de Arnoch, siento tu hedor cargado. Por el sol maldito y su legión de pequeños dioses sonrientes, te corrompo. Por la noche bendita y las profundidades horribles y sin santa del mar, pongo fin a tu vida sórdida en este plano."
+  },
+  {
+    "id": "imp",
+    "name": "Imp",
+    "edition": "tb",
+    "team": "demon",
+    "otherNightReminder": "El Imp elige a una jugadora. :reminder: Si el Imp eligió a sí misma: Reemplaza 1 token de Esbirra viva con un token Imp de repuesto. Pon al viejo Imp a dormir. Despierta al nuevo Imp. Muestra el token *TÚ ERES*, luego muestra el token de Imp.",
+    "reminders": [
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige a una jugadora: muere. Si te matas a ti misma de esta manera, una Esbirra se convierte en el Imp.",
+    "flavor": "Debemos mantener nuestras mentes afiladas y nuestra espada más afilada. El mal camina entre nosotros, y no se detendrá en nada para destruirnos a nosotros, gente buena y simple, trayendo a nuestra pequeña ciudad a ruina. Confía en nadie. Pero, si debes confiar en alguien, confía en mí."
+  },
+  {
+    "id": "shabaloth",
+    "name": "Shabaloth",
+    "edition": "bmr",
+    "team": "demon",
+    "otherNightReminder": "Una jugadora previamente elegida podría ser resucitada. :reminder: La Shabaloth elige 2 jugadoras. :reminder: :reminder:",
+    "reminders": [
+      "Muerta",
+      "Muerta",
+      "Viva"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige 2 jugadoras: mueren. Una jugadora elegida la noche anterior podría ser regurgitada.",
+    "flavor": "¡Blarg f'taag nm mataan! No sho gumtha m'sik na yuuu. Fluuuuuuuuurg h-sikkkh."
+  },
+  {
+    "id": "ojo",
+    "name": "Ojo",
+    "team": "demon",
+    "edition": "carousel",
+    "otherNightReminder": "El Ojo elige un personaje. :reminder:",
+    "reminders": [
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige un personaje: muere. Si no está en juego, la Narradora elige quién muere.",
+    "flavor": "Como un fuego en una noche sin luna... Te veo, mortal."
+  },
+  {
+    "id": "kazali",
+    "name": "Kazali",
+    "team": "demon",
+    "edition": "carousel",
+    "firstNightReminder": "La Kazali elige cuáles jugadoras son cuáles Esbirras. Despierta a cada objetivo. Muestra los tokens *TÚ ERES* y Esbirra y muestra un pulgar hacia abajo.",
+    "otherNightReminder": "La Kazali elige a una jugadora. :reminder:",
+    "reminders": [
+      "Muerta"
+    ],
+    "setup": true,
+    "ability": "Cada noche*, elige a una jugadora: muere. [Tú eliges cuáles jugadoras son cuáles Esbirras. -? a +? Forasteras]",
+    "flavor": "Gon(z)a7les6. Take cau8tun. The mech4an4ion is iNvert10d. E99ors insy6tum. Reco{7}fig."
+  },
+  {
+    "id": "po",
+    "name": "Po",
+    "edition": "bmr",
+    "team": "demon",
+    "otherNightReminder": "La Po puede elegir una jugadora O elige 3 jugadoras si no eligió a nadie la noche anterior. :reminder: o :reminder: :reminder: :reminder:",
+    "reminders": [
+      "Muerta",
+      "Muerta",
+      "Muerta",
+      "3 Ataques"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, puedes elegir una jugadora: muere. Si tu última elección fue ninguna, elige 3 jugadoras esta noche.",
+    "flavor": "¿Quieres una flor? Estoy tan sola."
+  },
+  {
+    "id": "zombuul",
+    "name": "Zombuul",
+    "edition": "bmr",
+    "team": "demon",
+    "otherNightReminder": "Si no murió nadie hoy, la Zombuul elige a una jugadora. :reminder:",
+    "reminders": [
+      "Murió Hoy",
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, si nadie murió hoy, elige a una jugadora: muere. La 1ra vez que mueres, vives pero te registras como muerta.",
+    "flavor": "No. Entiendo. Tus formas. Hermana humana. Muéstrame. La tierra. Donde el santo. Yaciendo. Yo también. Debo dormir. Pronto."
+  },
+  {
+    "id": "vigormortis",
+    "name": "Vigormortis",
+    "edition": "snv",
+    "team": "demon",
+    "otherNightReminder": "La Vigormortis elige a una jugadora. :reminder: Si esa jugadora es una Esbirra, envenena a una vecina Aldeana. :reminder: :reminder:",
+    "reminders": [
+      "Muerta",
+      "Tiene Habilidad",
+      "Tiene Habilidad",
+      "Tiene Habilidad",
+      "Envenenada",
+      "Envenenada",
+      "Envenenada"
+    ],
+    "setup": true,
+    "ability": "Cada noche*, elige a una jugadora: muere. Las Esbirras que matas mantienen su habilidad y envenenan a 1 vecina Aldeana. [-1 Forastera]",
+    "flavor": "Todas las puertas son una puerta. Todas las llaves son una llave. Todas las tazas son una taza, pero quienquiera que beba del agua que yo doy nunca tendrá sed, y el agua será en él un pozo brotando hasta la vida eterna."
+  },
+  {
+    "id": "vortox",
+    "name": "Vortox",
+    "edition": "snv",
+    "team": "demon",
+    "otherNightReminder": "El Vortox elige a una jugadora. :reminder:",
+    "reminders": [
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige a una jugadora: muere. Las habilidades aldeanas producen información falsa. Cada día, si nadie es ejecutado, mal gana.",
+    "flavor": "Negro es Blanco. Derecha es Equivocado. Izquierda es Derecha. Arriba es Largo. Abajo es Vista. Corto es Ciego. Sígueme. Encuentra respuestas."
+  },
+  {
+    "id": "legion",
+    "name": "Legion",
+    "edition": "carousel",
+    "team": "demon",
+    "otherNightReminder": "Una jugadora podría morir. :reminder:",
+    "reminders": [
+      "Muerta",
+      "A Punto de Morir"
+    ],
+    "setup": true,
+    "ability": "Cada noche*, una jugadora podría morir. Las ejecuciones fallan si solo malas votaron. Te registras como una Esbirra también. [La mayoría de las jugadoras son Legión]",
+    "special": [
+      {
+        "type": "selection",
+        "name": "bag-duplicate"
+      }
+    ],
+    "flavor": "Somos el viento frío en un día de invierno. Somos la sombra en la noche sin luna. Somos el veneno en tu té y el susurro en tu oído. Estamos en todas partes."
+  },
+  {
+    "id": "fanggu",
+    "name": "Fang Gu",
+    "edition": "snv",
+    "team": "demon",
+    "otherNightReminder": "La Fang Gu elige a una jugadora. :reminder: Si eligió a una Forastera (una sola vez): Reemplaza el token de Forastera con el token de Fang Gu de repuesto. Pon a la Fang Gu a dormir. Despierta al objetivo. Muestra los tokens *TÚ ERES* y Fang Gu y muestra un pulgar hacia abajo. :reminder:",
+    "reminders": [
+      "Muerta",
+      "Una Vez"
+    ],
+    "setup": true,
+    "ability": "Cada noche*, elige a una jugadora: muere. La 1ra Forastera que mata se convierte en una Fang Gu mala y tú mueres en su lugar. [+1 Forastera]",
+    "flavor": "Tus muros y tus armas son solo humo en sueños."
+  },
+  {
+    "id": "lordoftyphon",
+    "name": "Lord of Typhon",
+    "team": "demon",
+    "edition": "carousel",
+    "firstNightReminder": "Despierta a las vecinas del Señor de Typhon. Muestra los tokens *TÚ ERES* y Esbirra y muestra un pulgar hacia abajo.",
+    "otherNightReminder": "El Señor de Typhon elige a una jugadora. :reminder:",
+    "reminders": [
+      "Muerta"
+    ],
+    "setup": true,
+    "ability": "Cada noche*, elige a una jugadora: muere. [Los personajes malos están en una línea. Estás en el medio. +1 Esbirra. -? a +? Forasteras]",
+    "flavor": "En las esquinas obscurecidas y olvidadas del cosmos, donde las estrellas susurran secretos al vacío, yace una verdad tan profunda que la mera visión de ella desintegra la cordura de las mentes mortales."
+  },
+  {
+    "id": "lleech",
+    "name": "Lleech",
+    "edition": "carousel",
+    "team": "demon",
+    "firstNightReminder": "La Sanguijuela elige a una jugadora. :reminder:",
+    "otherNightReminder": "La Sanguijuela elige a una jugadora. :reminder:",
+    "reminders": [
+      "Muerta",
+      "Envenenada"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige a una jugadora: muere. Empiezas eligiendo a una jugadora: está envenenada. Mueres solo si ellas están muertas.",
+    "flavor": "Saboroso, saboroso, saboroso, saboroso, saboroso, saboroso, saboroso, saboroso cerebro - quiero decir pastel. Sí. Pastel sabroso. Eso es lo que quise decir."
+  },
+  {
+    "id": "alhadikhia",
+    "name": "Al-Hadikhia",
+    "edition": "carousel",
+    "team": "demon",
+    "otherNightReminder": "La Al-Hadikhia elige 3 jugadoras. :reminder: :reminder: :reminder: En orden, despierta a cada objetivo. Asienten o sacuden la cabeza. Ponlas a dormir antes de despertar al siguiente objetivo.",
+    "reminders": [
+      "1",
+      "2",
+      "3"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, puedes elegir 3 jugadoras (todas las jugadoras aprenden quiénes): cada una elige silenciosamente vivir o morir, pero si todas viven, todas mueren.",
+    "flavor": "Alsukut min dhahab."
+  },
+  {
+    "id": "riot",
+    "name": "Riot",
+    "edition": "carousel",
+    "otherNightReminder": "Cambia el token de recordatorio de Motín al día relevante. :reminder: Si es noche 3, puedes despiertar a las Esbirras. Muestra los tokens *TÚ ERES* y Motín.",
+    "team": "demon",
+    "reminders": [
+      "Día 1",
+      "Día 2",
+      "Día 3"
+    ],
+    "setup": false,
+    "ability": "En el día 3, las Esbirras se convierten en Motín y las nominadas mueren pero nombran a una jugadora viva inmediatamente. Esto debe suceder.",
+    "flavor": "¡Larga vida a la revolución! ¡Mi revolución!"
+  },
+  {
+    "id": "leviathan",
+    "name": "Leviathan",
+    "edition": "carousel",
+    "team": "demon",
+    "firstNightReminder": "Anuncia que el Leviatán está en juego. :reminder:",
+    "otherNightReminder": "Cambia el token de recordatorio de Leviatán al día relevante. :reminder: Puedes anunciar que el Leviatán está en juego.",
+    "reminders": [
+      "Día 1",
+      "Día 2",
+      "Día 3",
+      "Día 4",
+      "Día 5",
+      "Jugadora Buena Ejecutada"
+    ],
+    "setup": false,
+    "ability": "Si más de 1 jugadora buena es ejecutada, mal gana. Todas las jugadoras saben que estás en juego. Después del día 5, mal gana.",
+    "flavor": "Hasta el final, me enfrento a ti. Desde el corazón del Infierno, te apuñalo. Por el odio, escupo mi último aliento en ti."
+  },
+  {
+    "id": "thief",
+    "name": "Thief",
+    "edition": "tb",
+    "team": "traveller",
+    "firstNightReminder": "El Ladrón elige a una jugadora. :reminder:",
+    "otherNightReminder": "El Ladrón elige a una jugadora. :reminder:",
+    "reminders": [
+      "Voto Negativo"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora (no tú): su voto cuenta negativamente mañana.",
+    "special": [
+      {
+        "type": "vote",
+        "name": "multiplier",
+        "value": -1
+      }
+    ],
+    "flavor": "No hice nada. Ni siquiera estaba en ese callejón anoche! No fui yo quien robó el maletín del Alcalde Bruno con todos los documentos fancy adentro. Además, era demasiado pesado para llevar lejos."
+  },
+  {
+    "id": "bureaucrat",
+    "name": "Bureaucrat",
+    "edition": "tb",
+    "team": "traveller",
+    "firstNightReminder": "La Burócrata elige a una jugadora. :reminder:",
+    "otherNightReminder": "La Burócrata elige a una jugadora. :reminder:",
+    "reminders": [
+      "3 Votos"
+    ],
+    "setup": false,
+    "ability": "Cada noche, elige a una jugadora (no tú): su voto cuenta como 3 votos mañana.",
+    "special": [
+      {
+        "type": "vote",
+        "name": "multiplier",
+        "value": 3
+      }
+    ],
+    "flavor": "Firma aquí por favor. Y aquí. Y aquí. Y aquí. Eso debería estar todo tallado y sumado para el final del día, asumiendo que las firmas de todos sean legibles. No hemos tenido un desajuste en el papeleo por ages. Mediodía de ayer, si mi memoria sirve..."
+  },
+  {
+    "id": "barista",
+    "name": "Barista",
+    "edition": "snv",
+    "team": "traveller",
+    "firstNightReminder": "Elige a una jugadora. Despiértala, muestra el token *ESTE PERSONAJE TE ELEGIRÁ* y Barista, luego muestra una señal con los dedos. :reminder:",
+    "otherNightReminder": "Elige a una jugadora. Despiértala, muestra el token *ESTE PERSONAJE TE ELEGIRÁ* y Barista, luego muestra una señal con los dedos. :reminder:",
+    "reminders": [
+      "Sobria & Saludable",
+      "Actúa Dos Veces",
+      "?",
+      "?"
+    ],
+    "setup": false,
+    "ability": "Cada noche, hasta el crepúsculo, 1) una jugadora se vuelve sobria, saludable y obtiene información verdadera, o 2) su habilidad funciona dos veces. Aprende cuál.",
+    "flavor": "¿Un café sin crema, Monsieur? Me lamento terriblemente, pero se nos acabó la crema — ¿qué tal sin leche?"
+  },
+  {
+    "id": "harlot",
+    "name": "Harlot",
+    "edition": "snv",
+    "team": "traveller",
+    "otherNightReminder": "La Harlot elige a una jugadora viva. Pon a la Harlot a dormir. Despierta a la jugadora elegida, muestra el token *ESTE PERSONAJE TE ELEGIRÁ*, luego el token de Harlot. Si esa jugadora asiente, despierta a la Harlot y muestra el token de personaje de la jugadora elegida. Ambas jugadoras pueden morir. :reminder: :reminder:",
+    "reminders": [
+      "Muerta",
+      "Muerta"
+    ],
+    "setup": false,
+    "ability": "Cada noche*, elige a una jugadora viva: si están de acuerdo, aprendes su personaje, pero ambas podrían morir.",
+    "flavor": "Encantado, Marinera. Te ves como si necesitara alguien que realmente escuchara tus problemas. Soy una buena escuchadora. Muy, muy buena."
+  },
+  {
+    "id": "butcher",
+    "name": "Butcher",
+    "edition": "snv",
+    "team": "traveller",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada día, después de la 1ra ejecución, puedes nombrar de nuevo.",
+    "flavor": "Sabe a pollo. Más por favor."
+  },
+  {
+    "id": "cacklejack",
+    "name": "Cacklejack",
+    "edition": "carousel",
+    "team": "traveller",
+    "otherNightReminder": "Antes del amanecer, elige a una jugadora no marcada como *NO SOY YO*. Despierta al objetivo. Muestra el token *TÚ ERES* y su nuevo token de personaje.",
+    "reminders": [
+      "No Soy Yo"
+    ],
+    "setup": false,
+    "ability": "Cada día, elige a una jugadora: una jugadora diferente cambia de personaje esta noche.",
+    "flavor": "Alambre α Alambre β. Luz On. Buzzer off. GAzOinks! Brazos rectos. Dedo 2 nariz. sHOLD stiLL. BoiNgo-banGo! Ha-ha-ha!"
+  },
+  {
+    "id": "gunslinger",
+    "name": "Gunslinger",
+    "edition": "tb",
+    "team": "traveller",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada día, después de que el 1er voto haya sido tallado, puedes elegir a una jugadora que votó: muere.",
+    "flavor": "Es hora de que alguien tome las cosas en sus propias manos. Esa alguien... soy yo."
+  },
+  {
+    "id": "matron",
+    "name": "Matron",
+    "edition": "bmr",
+    "team": "traveller",
+    "reminders": [],
+    "setup": false,
+    "ability": "Cada día, puedes elegir hasta 3 conjuntos de 2 jugadoras para intercambiar asientos. Las jugadoras no pueden dejar sus asientos para hablar en privado.",
+    "flavor": "Señorita Featherbottom, en silencio. Maestro Rutherford, una taza de té necesita solo cuatro dedos, por favor. Sé que eres madre de nueve, pero la edad, o la falta de ella como sea el caso de ser, nunca es una excusa para malas maneras."
+  },
+  {
+    "id": "gangster",
+    "name": "Gangster",
+    "edition": "carousel",
+    "team": "traveller",
+    "reminders": [],
+    "setup": false,
+    "ability": "Una vez por día, puedes elegir matar a una vecina viva, si tu otra vecina viva está de acuerdo.",
+    "flavor": "Me gustan tus zapatos. Sería una lástima si tuvieras un pequeño accidente, y se arruinaran. Por cierto, me gustan tus gemelos también."
+  },
+  {
+    "id": "bonecollector",
+    "name": "Bone Collector",
+    "edition": "snv",
+    "team": "traveller",
+    "otherNightReminder": "La Coleccionista de Huesos puede elegir a una jugadora muerta. :reminder: Si es necesario, despierta a la jugadora elegida para usar su habilidad.",
+    "reminders": [
+      "Sin Habilidad",
+      "Tiene Habilidad"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, en la noche*, elige a una jugadora muerta: recupera su habilidad hasta el crepúsculo.",
+    "flavor": "Recogí muchas cosas. Cabello. Dientes. Ropa. Fragmentos de poemas. Los sueños de amantes perdidos. Mis artes secretas no son para que las conozcas pero mi tarifa es una pizca nada. Tráeme la sangre de una noble mujer que murió de heartbreak bajo una luna llena, y tendrás tus respuestas."
+  },
+  {
+    "id": "judge",
+    "name": "Judge",
+    "edition": "bmr",
+    "team": "traveller",
+    "reminders": [
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "ability": "Una vez por juego, si otra jugadora nombró, puedes elegir forzar la ejecución actual para pasar o fallar.",
+    "flavor": "Encuentro a la acusada culpable de los crímenes de asesinato, fraude, incendio provocado, hurto, falsificación de una oficial de la ley, practicando medicina sin licencia, difamación, regicidio, y tirar basura."
+  },
+  {
+    "id": "apprentice",
+    "name": "Apprentice",
+    "edition": "bmr",
+    "team": "traveller",
+    "firstNightReminder": "Muestra el token *TÚ ERES* y un token de Aldeana o Esbirra. Intercambia la Aprendiz y los tokens de Aldeana o Esbirra. :reminder:",
+    "reminders": [
+      "Es la Aprendiz"
+    ],
+    "setup": false,
+    "ability": "En tu 1ra noche, ganas una habilidad de Aldeana (si eres buena), o una habilidad de Esbirra (si eres mala).",
+    "special": [
+      {
+        "type": "signal",
+        "name": "grimoire",
+        "time": "night"
+      }
+    ],
+    "flavor": "Por años he viajado, estudiando las maneras de La Craft. ¿Qué craft, preguntas? Simplemente esa de la gente simple. Nada de qué preocuparse. Aún no."
+  },
+  {
+    "id": "beggar",
+    "name": "Beggar",
+    "edition": "tb",
+    "team": "traveller",
+    "reminders": [],
+    "setup": false,
+    "ability": "Debes usar un token de voto para votar. Si una jugadora muerta te da el suyo, aprendes su alineación. Estás sobria y saludable.",
+    "flavor": "¿Limosa para la pobre, señora? ¿Un monedero, madama? Gracias. ¡Dios bendiga! ¡Eres un alma bondadosa y sin equivocación! Tendré algo de nosh swanky esta noche, lo haré!"
+  },
+  {
+    "id": "deviant",
+    "name": "Deviant",
+    "edition": "snv",
+    "team": "traveller",
+    "reminders": [],
+    "setup": false,
+    "ability": "Si fuiste graciosa hoy, no puedes morir por exilio.",
+    "flavor": "Fue la quip de la dama, por cierto."
+  },
+  {
+    "id": "scapegoat",
+    "name": "Scapegoat",
+    "edition": "tb",
+    "team": "traveller",
+    "reminders": [],
+    "setup": false,
+    "ability": "Si una jugadora de tu alineación es ejecutada, podrías ser ejecutada en su lugar.",
+    "flavor": "¡Buenas tardes! ¡Gracias por invitarme a la fiesta! No soy de por aquí, pero parecen un grupo realmente amable, golly. Estoy segura de que nos llevaremos bien. ¿Para qué es toda esa cuerda?"
+  },
+  {
+    "id": "gnome",
+    "name": "Gnome",
+    "edition": "carousel",
+    "team": "traveller",
+    "reminders": [
+      "Amigo"
+    ],
+    "setup": false,
+    "ability": "Todas las jugadoras empiezan conociendo a una jugadora de tu alineación. Puedes elegir matar a cualquiera que las nomine.",
+    "flavor": "Cuatro la puntuación o siete cervezas, no shows son va para mí y mi. Un prank para crack the cranks y planks o' floor foundation length, so incontravertabubbilly mini. Las grandes ensayos down streams de joyse, no mayor que is scene, not inherdt. Ha-urrumph."
+  },
+  {
+    "id": "bishop",
+    "name": "Bishop",
+    "edition": "bmr",
+    "team": "traveller",
+    "reminders": [
+      "Nombra Buena",
+      "Nombra Mala"
+    ],
+    "setup": false,
+    "ability": "Solo la Narradora puede nombrar. Al menos 1 jugadora opuesta debe ser nombrada cada día.",
+    "flavor": "En nomine Patris, et Filii, et Spiritus Sancti… Nos mos Dei. Deus vult de nobis."
+  },
+  {
+    "id": "voudon",
+    "name": "Voudon",
+    "edition": "bmr",
+    "team": "traveller",
+    "reminders": [],
+    "setup": false,
+    "ability": "Solo tú y las muertas pueden votar. No necesitan un token de voto para hacerlo. No se requiere una mayoría del 50%.",
+    "flavor": "Bien venu. Siéntate. Respira profundo. Entra en la tierra de los muertos. Ve con sus ojos. Habla con su voz. Yon sel lang se janm ase."
+  },
+  {
+    "id": "angel",
+    "firstNightReminder": "Anuncia cuáles jugadoras están protegidas por el Ángel. :reminder:",
+    "reminders": [
+      "Protegida",
+      "Protegida",
+      "Algo Malo"
+    ],
+    "setup": false,
+    "name": "Angel",
+    "team": "fabled",
+    "edition": "fabled",
+    "ability": "Podría suceder algo malo a quienquiera sea más responsable de la muerte de una nueva jugadora.",
+    "flavor": "Que aquellos que están sin pecado se atrevan a levantar su mano a mi elegida, porque arrojaré a tales tontos abajo con la furia y justicia de mil tormentas."
+  },
+  {
+    "id": "buddhist",
+    "firstNightReminder": "Anuncia cuáles jugadoras están afectadas por la Budista.",
+    "reminders": [],
+    "setup": false,
+    "name": "Buddhist",
+    "team": "fabled",
+    "edition": "fabled",
+    "ability": "Por los primeros 2 minutos de cada día, las jugadoras veteranas no pueden hablar.",
+    "flavor": "Lanzas espinas. Cayendo en mi silencio, se vuelven flores."
+  },
+  {
+    "id": "deusexfiasco",
+    "reminders": [
+      "Whoopsie"
+    ],
+    "setup": true,
+    "name": "Deus ex Fiasco",
+    "team": "fabled",
+    "edition": "carousel",
+    "ability": "Al menos una vez por juego, la Narradora cometerá un error, lo corregirá y lo admitirá públicamente.",
+    "flavor": "No es un bug, es una característica. No es un error, es un ajuste. No está roto, es caprichoso."
+  },
+  {
+    "id": "djinn",
+    "reminders": [],
+    "setup": false,
+    "name": "Djinn",
+    "team": "fabled",
+    "edition": "fabled",
+    "ability": "Usa la regla especial del Djinn. Todas las jugadoras saben cuál es.",
+    "flavor": "نحن لسنا هنا. انت لست حقيقي. كل شيء هو وهم. أسئلتك هي جبل نار في يوم صافٍ."
+  },
+  {
+    "id": "doomsayer",
+    "reminders": [],
+    "setup": false,
+    "name": "Doomsayer",
+    "team": "fabled",
+    "edition": "fabled",
+    "ability": "Si 4 o más jugadoras viven, cada jugadora viva puede públicamente elegir (una vez por juego) que una jugadora de su propia alineación muera.",
+    "flavor": "Y en el Séptimo Día, habrá una gran inundación y una peste sobre el Pueblo de los Cuervos! Los muertos se levantarán y las vivas se arrepentirán! ¡Oh Woe! ¡Oh Día Inmundo! Solo por gran sacrificio prevalecerán! Así lo dicen las Sabias de Nostros y así lo digo yo."
+  },
+  {
+    "id": "duchess",
+    "otherNightReminder": "Una a una: Despierta a cada jugadora marcada como *VISITANTE* o *INFORMACIÓN FALSA*. Muestra el token *ESTE PERSONAJE TE ELEGIRÁ* y Duchess, luego muestra una señal con los dedos.",
+    "reminders": [
+      "Visitante",
+      "Visitante",
+      "Información Falsa"
+    ],
+    "setup": false,
+    "name": "Duchess",
+    "team": "fabled",
+    "edition": "fabled",
+    "ability": "Cada día, 3 jugadoras pueden elegir visitarte. En la noche*, cada visitante aprende cuántas visitantes son malas, pero 1 obtiene información falsa.",
+    "flavor": "Nos entretenemos entre las horas de 6 y 7 con precisión. Té a las 6:15. Rosquillas a las 6:45. No lleguen tarde. Vestimenta formal aplica, como siempre."
+  },
+  {
+    "id": "ferryman",
+    "reminders": [],
+    "setup": false,
+    "name": "Ferryman",
+    "team": "fabled",
+    "edition": "carousel",
+    "ability": "En el día final, todas las jugadoras muertas recuperan su token de voto.",
+    "special": [
+      {
+        "name": "ghost-votes",
+        "type": "ability",
+        "time": "day"
+      }
+    ],
+    "flavor": "Cuando los sueños justos vienen, tienen el peso de la verdad."
+  },
+  {
+    "id": "fibbin",
+    "reminders": [
+      "Sin Habilidad"
+    ],
+    "setup": false,
+    "name": "Fibbin",
+    "team": "fabled",
+    "edition": "fabled",
+    "ability": "Una vez por juego, 1 jugadora buena podría obtener información incorrecta.",
+    "flavor": "Tee-hee-hee. Tee. Hee. Hee."
+  },
+  {
+    "id": "fiddler",
+    "reminders": [],
+    "setup": false,
+    "name": "Fiddler",
+    "team": "fabled",
+    "edition": "fabled",
+    "ability": "Una vez por juego, el Demonio elige en secreto a una jugadora opuesta: todas las jugadoras eligen cuál de estas 2 jugadoras gana.",
+    "special": [
+      {
+        "name": "pointing",
+        "type": "ability",
+        "time": "day"
+      }
+    ],
+    "flavor": "¡Me apuesto mi lyef que no puedo mejorarme en un concurso de violín, tú boss-eyed snook! Vamos a salir al lad, consigue los jammers del pub y ten un right craic. Voy a estar laying mi boots en ya come mornin' ye rumbly muppet."
+  },
+  {
+    "id": "hellslibrarian",
+    "reminders": [
+      "Algo Malo"
+    ],
+    "setup": false,
+    "name": "Hell's Librarian",
+    "team": "fabled",
+    "edition": "fabled",
+    "ability": "Podría suceder algo malo a quienquiera hable cuando la Narradora haya pedido silencio.",
+    "flavor": "Shhhhhh. Por favor, sean silenciosas. Es mejor no perturbar a la Bibliotecaria. He oído que tiene mal genio."
+  },
+  {
+    "id": "revolutionary",
+    "reminders": [
+      "¿Registro Falsamente?",
+      "Alineada",
+      "Alineada"
+    ],
+    "setup": false,
+    "name": "Revolutionary",
+    "team": "fabled",
+    "edition": "fabled",
+    "ability": "2 jugadoras vecinas son conocidas por ser de la misma alineación. Una vez por juego, 1 de ellas se registra falsamente.",
+    "flavor": "Unidos fingimos. Divididos, tardamos."
+  },
+  {
+    "id": "sentinel",
+    "reminders": [],
+    "setup": true,
+    "name": "Sentinel",
+    "team": "fabled",
+    "edition": "fabled",
+    "ability": "Podría haber 1 extra o 1 menos Forastera en juego.",
+    "flavor": "Nombre, por favor. Papeles, por favor. Armas, por favor."
+  },
+  {
+    "id": "spiritofivory",
+    "reminders": [
+      "No Más Malas"
+    ],
+    "setup": false,
+    "name": "Spirit of Ivory",
+    "team": "fabled",
+    "edition": "fabled",
+    "ability": "No puede haber más de 1 jugadora mala extra.",
+    "flavor": "La Tierra Yermo llama. Los huesos se levantan a la carne, luego caen al polvo. El gran espíritu crece. El gran espíritu observa. El gran espíritu guía. El humano escucha, o el humano ya no está."
+  },
+  {
+    "id": "toymaker",
+    "firstNightReminder": "Resuelve la Información de Esbirras y la Información de Demonio, incluso aunque haya menos de 7 jugadoras.",
+    "otherNightReminder": "Si un ataque del Demonio podría terminar el juego, y el Demonio está marcado como *ÚLTIMA NOCHE: NO ATAQUE*, no despiertes al Demonio.",
+    "reminders": [
+      "Última Noche: No Ataque"
+    ],
+    "setup": false,
+    "name": "Toymaker",
+    "team": "fabled",
+    "edition": "fabled",
+    "ability": "El Demonio puede elegir no atacar y debe hacerlo al menos una vez por juego. Las jugadoras malas obtienen información normal de inicio.",
+    "flavor": "¡Zumba! ¡Camina por las escaleras! ¡Te mantiene caliente en la noche! ¡Sabe a azúcar! ¡Los kiddies lo aman! ¡Introduciendo... el nuevo... Warm'o-buzzy-walker-walk'a'bot-thingy-contraption! ¡Diversión para todas las edades!"
+  },
+  {
+    "id": "bootlegger",
+    "reminders": [
+      "?",
+      "?"
+    ],
+    "setup": true,
+    "name": "Bootlegger",
+    "team": "loric",
+    "edition": "loric",
+    "ability": "Este script tiene personajes o reglas homebrew.",
+    "flavor": "Cuando nací, me nombraron 'Homebrewy McHomebrewface', como mi padre antes de mí. Un nombre respetable, para una edad digna."
+  },
+  {
+    "id": "bigwig",
+    "firstNightReminder": "",
+    "otherNightReminder": "",
+    "reminders": [],
+    "setup": false,
+    "name": "Big Wig",
+    "team": "loric",
+    "edition": "loric",
+    "ability": "Cada nominada elige a una jugadora: hasta el voto, solo ellas pueden hablar y están locas de que la nominada es buena o podrían morir.",
+    "flavor": "La vanidad pregunta '¿Es popular?' El miedo pregunta '¿Es seguro?' La conciencia pregunta '¿Es correcto?' ¿Quién de nosotros preguntará '¿Es verdadero?'"
+  },
+  {
+    "id": "gardener",
+    "reminders": [],
+    "setup": true,
+    "name": "Gardener",
+    "team": "loric",
+    "edition": "loric",
+    "ability": "La Narradora asigna todos los personajes de las jugadoras.",
+    "special": [
+      {
+        "name": "distribute-roles",
+        "type": "ability",
+        "time": "pregame"
+      }
+    ],
+    "flavor": "Cuando la sofistería se vuelve estupidez y la hipocresía crueldad, retírate al jardín. El amor final de los hombres viejos son flores y piedras."
+  },
+  {
+    "id": "godofug",
+    "reminders": [
+      "Sombrero"
+    ],
+    "setup": false,
+    "name": "God of Ug",
+    "team": "loric",
+    "edition": "loric",
+    "ability": "Un sombrero Ug. Cuando usas el sombrero Ug, debes hablar un sonido a la vez pero votar dos veces. Si fallas, pasa el sombrero Ug.",
+    "flavor": "Benditos son mis hijos, porque ven la belleza en las cosas simples.",
+    "special": [
+      {
+        "type": "vote",
+        "name": "multiplier",
+        "value": 2
+      },
+      {
+        "type": "reminder",
+        "name": "public"
+      }
+    ]
+  },
+  {
+    "id": "hindu",
+    "reminders": [],
+    "setup": false,
+    "name": "Hindu",
+    "team": "loric",
+    "edition": "loric",
+    "ability": "Las primeras 4 jugadoras en morir son inmediatamente reencarnadas como Viajeras de la misma alineación.",
+    "flavor": "चत्वारो मृत्युमध्ये पतन्ति, चत्वारो यात्रा पुनरुद्गताः। चत्वारो धर मे स्र्थितचित्तव्रत ते, चत वारे षां न पुनः क्षयः॥"
+  },
+  {
+    "id": "knaves",
+    "reminders": [],
+    "setup": false,
+    "name": "Knaves",
+    "team": "loric",
+    "edition": "loric",
+    "ability": "Hay 2 Narradoras: una miente y una dice la verdad. Una vez por juego, al crepúsculo, podrían cambiar.",
+    "flavor": "Cada muro es una puerta. Cada comida es un banquete."
+  },
+  {
+    "id": "pope",
+    "reminders": [],
+    "setup": true,
+    "name": "Pope",
+    "team": "loric",
+    "edition": "loric",
+    "ability": "Hay personajes buenos duplicados en juego. También podrían ser falsificaciones.",
+    "flavor": "...Pulcherrimae.",
+    "special": [
+      {
+        "type": "selection",
+        "name": "good-duplicate"
+      }
+    ]
+  },
+  {
+    "id": "stormcatcher",
+    "firstNightReminder": "Anuncia qué personaje es stormcatcher. Si ese personaje está en juego, marca a esa jugadora como *STORMCAUGHT*. Despierta a cada jugadora mala y muestra el token de personaje, luego la jugadora marcada. Si no está en juego, despierta a cada jugadora mala, muestra el token *ESTOS PERSONAJES NO ESTÁN EN JUEGO* y el token de personaje relevante.",
+    "reminders": [
+      "Stormcatcher"
+    ],
+    "setup": false,
+    "name": "Storm Catcher",
+    "team": "loric",
+    "edition": "loric",
+    "ability": "Nombra un personaje bueno. Si está en juego, solo puede morir por ejecución, pero las jugadoras malas aprenden qué jugadora es.",
+    "flavor": "Al amanecer, la larga sombra del templo se arrastra hasta la fuente. Al atardecer, el obelisco bloquea el resplandor rojo, enfriando el agua tibia bajo el arco. Todas las líneas convergen aquí. Una tormenta se acerca, y esto, este lugar pebblado y lujoso y sagrado entre los árboles de manzana, es el ojo."
+  },
+  {
+    "id": "tor",
+    "otherNightReminder": "Si una jugadora murió esta noche, muestra el token *TÚ ERES*, su token de personaje, y un pulgar hacia arriba o hacia abajo.",
+    "reminders": [],
+    "setup": true,
+    "name": "Tor",
+    "team": "loric",
+    "edition": "loric",
+    "ability": "Las jugadoras no saben su personaje o alineación. Lo aprenden cuando mueren.",
+    "flavor": "Con el trueno como mi voz y el rayo como mi espada, yo, el guardián eterno, me alimento de los tontos que se atreven a acercarse a la puerta prohibida. He aquí, mi meta sagrada! Para purgar el escarabajo del vientre de la tierra rocosa, para atraparlo en una red de estrellas, en la colina donde el cielo se encuentra con la tierra."
+  },
+  {
+    "id": "ventriloquist",
+    "reminders": [
+      "Loca"
+    ],
+    "setup": false,
+    "name": "Ventriloquist",
+    "team": "loric",
+    "edition": "loric",
+    "ability": "Si una jugadora está loca como un personaje fresco durante su nominación, podría no morir si es ejecutada hoy.",
+    "flavor": "Bueno, gente, reúnanse! Este aquí mi amigo Charlie, y tiene una boca en él que haría que una mula se ruborizara. Pero no se preocupen gente, yo hago todo el talking... o lo hago?"
+  },
+  {
+    "id": "zenomancer",
+    "reminders": [
+      "Objetivo",
+      "Objetivo",
+      "Objetivo"
+    ],
+    "setup": false,
+    "name": "Zenomancer",
+    "team": "loric",
+    "edition": "loric",
+    "ability": "Una o más jugadoras cada una tienen un objetivo. Cuando se logra, esa jugadora aprende un trozo de información verdadera.",
+    "flavor": "El universo es un verbo no un sustantivo, dicen, y son tortugas, tortugas hasta abajo. Tortugas hasta abajo, mi amigo, tortugas hasta abajo."
+  }
+]

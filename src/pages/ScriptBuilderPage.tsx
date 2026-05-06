@@ -3,11 +3,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { BookOpen, Trash2, Save, Search, Check } from 'lucide-react';
 import { ALL_CHARACTERS } from '../data/characters';
 import { DIFFICULTY_LABELS } from '../data/scripts';
-import { CharacterTypeBadge } from '../components/UI/CharacterTypeBadge';
+import { CharacterTypeBadge, CharacterIcon } from '../components/UI/CharacterTypeBadge';
 import { useApp } from '../context/AppContext';
 import type { Script, CharacterType } from '../types';
 
-const CHAR_TYPES: CharacterType[] = ['townsfolk', 'outsider', 'minion', 'demon'];
+const CHAR_TYPES: CharacterType[] = ['townsfolk', 'outsider', 'minion', 'demon', 'traveller', 'fabled', 'loric'];
 
 export default function ScriptBuilderPage() {
   const navigate = useNavigate();
@@ -49,6 +49,9 @@ export default function ScriptBuilderPage() {
     outsider: selectedChars.filter(c => c.type === 'outsider').length,
     minion: selectedChars.filter(c => c.type === 'minion').length,
     demon: selectedChars.filter(c => c.type === 'demon').length,
+    traveller: selectedChars.filter(c => c.type === 'traveller').length,
+    fabled: selectedChars.filter(c => c.type === 'fabled').length,
+    loric: selectedChars.filter(c => c.type === 'loric').length,
   };
 
   const handleSave = () => {
@@ -144,12 +147,24 @@ export default function ScriptBuilderPage() {
                 <span className="badge-demon">Demonios</span>
                 <span className="text-gothic-200">{counts.demon}</span>
               </div>
+              <div className="flex justify-between">
+                <span className="badge-traveller">Viajeros</span>
+                <span className="text-gothic-200">{counts.traveller}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="badge-fabled">Legendarios</span>
+                <span className="text-gothic-200">{counts.fabled}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="badge-loric">Loric</span>
+                <span className="text-gothic-200">{counts.loric}</span>
+              </div>
             </div>
             {selectedChars.length > 0 && (
               <div className="max-h-48 overflow-y-auto space-y-1">
                 {selectedChars.map(c => (
                   <div key={c.id} className="flex items-center gap-2 text-xs">
-                    <span>{c.icon || '👤'}</span>
+                    <CharacterIcon character={c} size="sm" />
                     <span className="text-gothic-200">{c.name}</span>
                     <button
                       onClick={() => toggleChar(c.id)}
@@ -200,7 +215,7 @@ export default function ScriptBuilderPage() {
                     onClick={() => setFilterType(t)}
                     className={`px-3 py-1.5 rounded text-xs font-gothic border transition-all badge-${t} ${filterType === t ? 'opacity-100' : 'opacity-60 hover:opacity-80'}`}
                   >
-                    {t === 'townsfolk' ? 'Aldeanos' : t === 'outsider' ? 'Forasteros' : t === 'minion' ? 'Esbirros' : 'Demonios'}
+                    {t === 'townsfolk' ? 'Aldeanos' : t === 'outsider' ? 'Forasteros' : t === 'minion' ? 'Esbirros' : t === 'demon' ? 'Demonios' : t === 'traveller' ? 'Viajeros' : t === 'fabled' ? 'Legendarios' : 'Loric'}
                   </button>
                 ))}
               </div>
@@ -220,7 +235,7 @@ export default function ScriptBuilderPage() {
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-lg">{char.icon || '👤'}</span>
+                      <CharacterIcon character={char} size="md" />
                       <span className="font-gothic text-sm text-gothic-100 flex-1">{char.name}</span>
                       {char.isCustom && <span className="text-xs text-green-400 border border-green-700/50 bg-green-950/30 rounded px-1 py-0.5 font-gothic">✨</span>}
                       {isSelected && <Check className="w-4 h-4 text-blood-400 flex-shrink-0" />}

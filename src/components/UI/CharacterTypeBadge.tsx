@@ -23,3 +23,43 @@ export function getTypeBadgeClass(type: CharacterType): string {
 }
 
 export { TYPE_LABELS };
+
+const SIZE_PX: Record<string, number> = {
+  sm: 16,
+  md: 24,
+  lg: 48,
+  xl: 96,
+  xxl: 192,
+};
+
+export function CharacterIcon({
+  character,
+  size = 'md',
+  className = '',
+}: {
+  character: { icon?: string; iconUrl?: string; name?: string };
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+  className?: string;
+}) {
+  const sizePx = SIZE_PX[size] || SIZE_PX.md;
+
+  if (character.iconUrl) {
+    return (
+      <span className={className}>
+        <img
+          src={character.iconUrl}
+          alt={character.name || ''}
+          width={sizePx}
+          height={sizePx}
+          style={{ imageRendering: 'pixelated', display: 'block' }}
+        />
+      </span>
+    );
+  }
+
+  return (
+    <span className={className} style={{ fontSize: `${sizePx}px` }}>
+      {character.icon || '👤'}
+    </span>
+  );
+}

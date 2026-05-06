@@ -12,7 +12,8 @@ export interface Character {
   reminders?: string[];
   setup?: boolean;           // requiere acción en el setup
   isCustom?: boolean;
-  icon?: string;             // emoji icono
+  icon?: string;             // emoji icono (fallback)
+  iconUrl?: string;          // ruta de imagen del icono (webp)
   author?: string;           // nombre del creador (personajes custom)
 }
 

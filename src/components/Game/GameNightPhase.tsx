@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Moon, CheckCircle, Circle, ChevronRight, FileText, Skull, Users, Eye, EyeOff, RefreshCw, Maximize2, X } from 'lucide-react';
 import type { Game, Character, NightAction } from '../../types';
-import { CharacterTypeBadge } from '../UI/CharacterTypeBadge';
+import { CharacterTypeBadge, CharacterIcon } from '../UI/CharacterTypeBadge';
 import PlayerStatusBar from './PlayerStatusBar';
 import CircularPlayerBoard from './CircularPlayerBoard';
 import { getDistribution } from '../../data/scripts';
@@ -341,7 +341,7 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
                               const c = allChars.find(ch => ch.id === p.characterId);
                               return (
                                 <div key={p.id} className="flex items-center gap-2 text-xs bg-orange-950/30 border border-orange-900/40 rounded px-2 py-1">
-                                  <span>{c?.icon}</span>
+                                  {c && <CharacterIcon character={c} size="sm" />}
                                   <span className="font-gothic text-orange-200">{p.name}</span>
                                   <span className="text-orange-400">({c?.name})</span>
                                 </div>
@@ -352,7 +352,7 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
                               const c = allChars.find(ch => ch.id === p.characterId);
                               return (
                                 <div key={p.id} className="flex items-center gap-2 text-xs bg-red-950/30 border border-red-900/40 rounded px-2 py-1">
-                                  <span>{c?.icon}</span>
+                                  {c && <CharacterIcon character={c} size="sm" />}
                                   <span className="font-gothic text-red-200">{p.name}</span>
                                   <span className="text-red-400">({c?.name})</span>
                                 </div>
@@ -382,11 +382,11 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
 
                         {/* Selected bluffs display */}
                         {selectedBluffs.length > 0 && (
-                          <div className="flex flex-wrap gap-2 mb-3 items-center">
-                            {selectedBluffs.map(c => (
-                              <div key={c.id} className="flex items-center gap-1.5 px-2 py-1 rounded border border-purple-700/50 bg-purple-950/40 text-xs">
-                                <span>{c.icon}</span>
-                                <span className="font-gothic text-purple-200">{c.name}</span>
+                      <div className="flex flex-wrap gap-2 mb-3 items-center">
+                        {selectedBluffs.map(c => (
+                          <div key={c.id} className="flex items-center gap-1.5 px-2 py-1 rounded border border-purple-700/50 bg-purple-950/40 text-xs">
+                            <CharacterIcon character={c} size="sm" />
+                            <span className="font-gothic text-purple-200">{c.name}</span>
                                 {!bluffsDone && (
                                   <button onClick={() => toggleBluff(c)} className="text-purple-500 hover:text-red-400 ml-1">✕</button>
                                 )}
@@ -417,11 +417,11 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
                               <X className="w-8 h-8" />
                             </button>
                             <p className="font-gothic text-purple-400 text-sm uppercase tracking-widest mb-10 opacity-70">🃏 Coartadas del Demonio</p>
-                            <div className="flex flex-wrap gap-10 justify-center px-8">
-                              {selectedBluffs.map(c => (
-                                <div key={c.id} className="flex flex-col items-center gap-4">
-                                  <span className="text-8xl">{c.icon}</span>
-                                  <span className="font-gothic text-purple-100 text-2xl text-center">{c.name}</span>
+                      <div className="flex flex-wrap gap-10 justify-center px-8">
+                        {selectedBluffs.map(c => (
+                          <div key={c.id} className="flex flex-col items-center gap-4">
+                            <CharacterIcon character={c} size="xl" />
+                            <span className="font-gothic text-purple-100 text-2xl text-center">{c.name}</span>
                                 </div>
                               ))}
                             </div>
@@ -479,8 +479,8 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
                                       : 'border-dark-200 bg-dark-500 text-gothic-300 hover:border-purple-700/50 hover:bg-purple-950/30'
                                   }`}
                                 >
-                                  <span>{char.icon}</span>
-                                  <span className="font-gothic">{char.name}</span>
+                          {char && <CharacterIcon character={char} size="md" />}
+                          <span className="font-gothic">{char.name}</span>
                                   <CharacterTypeBadge type={char.type} />
                                   {picked && <span className="ml-auto text-purple-400">✓</span>}
                                 </button>
@@ -512,7 +512,9 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
                     const char = getCharacter(action.characterId, allChars);
                     const player = game.players.find(p => p.id === action.playerId);
                     const isActive = idx === activeIdx && !action.isDone;
-                    const reminder = isFirstNight ? char?.firstNightReminder : char?.otherNightReminder;
+                    const reminder = isFirstNight
+                      ? char?.ability
+                      : char?.ability;
 
                     return (
                       <NightActionItem
@@ -618,7 +620,7 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
                         onClick={() => { setShowTokenDisplay(c); setShowTokenPicker(false); }}
                         className="flex flex-col items-center gap-1 p-2 rounded-lg border border-gothic-800/40 hover:border-amber-600/60 bg-gothic-900/40 hover:bg-amber-950/30 transition-all"
                       >
-                        <span className="text-3xl">{c.icon || '❓'}</span>
+                        <CharacterIcon character={c} size="lg" />
                         <span className="font-gothic text-xs text-gothic-200 text-center leading-tight">{c.name}</span>
                       </button>
                     ))}
@@ -638,7 +640,9 @@ export default function GameNightPhase({ game, allChars, scriptChars, onUpdate }
           onClick={() => setShowTokenDisplay(null)}
         >
           <div className="text-center select-none">
-            <div className="text-[12rem] leading-none mb-6 drop-shadow-2xl">{showTokenDisplay.icon || '❓'}</div>
+            <div className="mb-6 drop-shadow-2xl">
+              <CharacterIcon character={showTokenDisplay} size="xxl" />
+            </div>
             <h1 className="font-gothic text-5xl text-amber-300 mb-3">{showTokenDisplay.name}</h1>
             {showTokenDisplay.ability && (
               <p className="text-gothic-300 text-lg max-w-md mx-auto leading-relaxed px-4">{showTokenDisplay.ability}</p>

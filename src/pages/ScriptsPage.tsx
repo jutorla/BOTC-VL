@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Scroll, Star, Play, Plus, BookOpen, Users, Download, Upload, Trash2, Edit } from 'lucide-react';
+import { Scroll, Star, Play, Plus, BookOpen, Users, Download, Upload, Trash2, Edit, X } from 'lucide-react';
 import { OFFICIAL_SCRIPTS, DIFFICULTY_LABELS, DIFFICULTY_COLORS } from '../data/scripts';
 import { ALL_CHARACTERS } from '../data/characters';
-import { CharacterTypeBadge } from '../components/UI/CharacterTypeBadge';
+import { CharacterTypeBadge, CharacterIcon } from '../components/UI/CharacterTypeBadge';
 import { useApp } from '../context/AppContext';
 import type { Script, Character } from '../types';
 
@@ -81,7 +81,7 @@ function ScriptCard({
             <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-1.5">
               {chars.map((char) => (
                 <div key={char.id} className="flex items-center gap-2 text-xs">
-                  <span className="text-base">{char.icon || "👤"}</span>
+                  <CharacterIcon character={char} size="md" />
                   <span className="text-gothic-200 font-gothic">
                     {char.name}
                   </span>
@@ -135,46 +135,279 @@ function ScriptCard({
   );
 }
 
+/**
+ * Genera un ID único para scripts importados sin ID fijo.
+ * Usa los caracteres como firma para evitar duplicados.
+ */
+function generateImportId(characters: string[]): string {
+  const hash = characters.sort().join(',');
+  let h = 0;
+  for (let i = 0; i < hash.length; i++) {
+    h = ((h << 5) - h + hash.charCodeAt(i)) | 0;
+  }
+  return `imported_${Math.abs(h).toString(36)}_${Date.now().toString(36)}`;
+}
+
+/**
+ * Interfaz para el objeto _meta del formato BOTC estándar.
+ */
+interface BotcMeta {
+  id: string;
+  author?: string;
+  name?: string;
+  [key: string]: unknown;
+}
+
+/**
+ * Convierte un array de character IDs (formato BOTC standar) en un script.
+ * Ejemplo: ["chef","bountyhunter","balloonist"]
+ * O con meta: [{"id":"_meta","author":"...","name":"..."},"chef","bountyhunter",...]
+ */
+function botcStdArrayToScript(characters: string[], meta?: BotcMeta): Script {
+  const allChars = [...ALL_CHARACTERS];
+  const validChars = characters.filter(id => allChars.find(c => c.id === id));
+  
+  // Determinar dificultad basada en cantidad de personajes
+  let difficulty: Script['difficulty'] = 'beginner';
+  if (validChars.length >= 10) difficulty = 'expert';
+  else if (validChars.length >= 7) difficulty = 'advanced';
+  else if (validChars.length >= 5) difficulty = 'intermediate';
+
+  return {
+    id: generateImportId(characters),
+    name: meta?.name || `Script importado (${validChars.length} personajes)`,
+    description: meta?.author 
+      ? `Generado desde formato standar BOTC por ${meta.author}` 
+      : `Generado desde formato standar BOTC: ${validChars.map(id => allChars.find(c => c.id === id)?.name || id).join(', ')}`,
+    author: meta?.author || '',
+    characters,
+    isOfficial: false,
+    isCustom: true,
+    difficulty,
+  };
+}
+
+/**
+ * Convierte un objeto JSON que es un script completo.
+ */
+function jsonObjToScript(obj: unknown): Script | null {
+  if (typeof obj !== 'object' || obj === null) return null;
+  const s = obj as Record<string, unknown>;
+  if (typeof s.id !== 'string' || typeof s.name !== 'string' || !Array.isArray(s.characters)) return null;
+  return {
+    id: s.id,
+    name: s.name,
+    description: (s.description as string) || '',
+    author: (s.author as string) || '',
+    edition: (s.edition as string) || undefined,
+    characters: s.characters as string[],
+    isOfficial: false,
+    isCustom: true,
+    difficulty: (s.difficulty as Script['difficulty']) || undefined,
+  };
+}
+
 export default function ScriptsPage() {
   const navigate = useNavigate();
   const { state, deleteCustomScript, addCustomScript } = useApp();
   const [tab, setTab] = useState<'official' | 'custom'>('official');
+  const [showPasteDialog, setShowPasteDialog] = useState(false);
+  const [pasteText, setPasteText] = useState('');
+  const [importName, setImportName] = useState('');
+  const [importAuthor, setImportAuthor] = useState('');
+  const [importDifficulty, setImportDifficulty] = useState<Script['difficulty']>('beginner');
+  const [showImportConfirmDialog, setShowImportConfirmDialog] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const exportScripts = () => {
-    const data = JSON.stringify(state.customScripts, null, 2);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `botc-scripts-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+  const handleFileImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const parsed = JSON.parse(text);
+      await processImportedData(parsed);
+    } catch {
+      alert('❌ Error al leer el archivo JSON.');
+    }
+    // Reset input para poder importar el mismo archivo de nuevo
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const importScripts = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    input.onchange = async (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (!file) return;
-      try {
-        const text = await file.text();
-        const scripts: Script[] = JSON.parse(text);
-        if (!Array.isArray(scripts)) throw new Error('Formato incorrecto');
-        let imported = 0;
-        for (const s of scripts) {
-          if (s.id && s.name && Array.isArray(s.characters)) {
-            const exists = state.customScripts.some(cs => cs.id === s.id);
-            if (!exists) { addCustomScript({ ...s, isCustom: true, isOfficial: false }); imported++; }
+  const processImportedData = async (data: unknown): Promise<void> => {
+    const scriptsToImport: Script[] = [];
+
+    // Verificar si es un array de formato BOTC estándar:
+    // - Empieza con objeto {id: "_meta", ...} o {name: ..., author: ...}
+    // - Seguido de strings (character IDs)
+    const isBotcStandardFormat = (arr: unknown[]): boolean => {
+      if (arr.length === 0) return false;
+      const first = arr[0];
+      if (typeof first !== 'object' || first === null) return false;
+      const meta = first as Record<string, unknown>;
+      // Debe tener id="_meta" O tener name/author
+      const isMeta = meta.id === '_meta' || meta.name !== undefined || meta.author !== undefined;
+      if (!isMeta) return false;
+      // El resto debe ser strings (character IDs)
+      const rest = arr.slice(1);
+      return rest.length > 0 && rest.every((item): item is string => typeof item === 'string');
+    };
+
+    // Función auxiliar para procesar un valor individual
+    const processValue = (val: unknown) => {
+      if (Array.isArray(val)) {
+        // Formato BOTC estándar con meta: [{"id":"_meta",...},"chef","bountyhunter"]
+        if (isBotcStandardFormat(val)) {
+          const first = val[0] as BotcMeta;
+          const charIds = val.slice(1).filter((item): item is string => typeof item === 'string');
+          if (charIds.length > 0) {
+            const script = botcStdArrayToScript(charIds, first);
+            scriptsToImport.push(script);
           }
+        } else if (val.length > 0 && typeof val[0] === 'object' && val[0] !== null) {
+          // Array anidado → procesar cada elemento
+          for (const entry of val) {
+            processValue(entry);
+          }
+        } else if (val.length > 0 && typeof val[0] === 'string') {
+          // Es un array de strings → formato BOTC standar: character IDs directos
+          const script = botcStdArrayToScript(val as unknown as string[]);
+          scriptsToImport.push(script);
         }
-        alert(`✅ Importados ${imported} script(s) nuevos.`);
-      } catch {
-        alert('❌ Error al importar: el archivo no es válido.');
+      } else if (typeof val === 'object' && val !== null) {
+        // Objeto → intentar como script
+        const s = jsonObjToScript(val);
+        if (s) scriptsToImport.push(s);
       }
     };
-    input.click();
+
+    if (Array.isArray(data)) {
+      // Si el array principal es formato BOTC estándar, procesarlo como un solo script
+      if (isBotcStandardFormat(data)) {
+        const first = data[0] as BotcMeta;
+        const charIds = data.slice(1).filter((item): item is string => typeof item === 'string');
+        if (charIds.length > 0) {
+          const script = botcStdArrayToScript(charIds, first);
+          scriptsToImport.push(script);
+        }
+      } else {
+        // Procesar cada elemento individualmente
+        for (const item of data) {
+          processValue(item);
+        }
+      }
+    } else if (typeof data === 'object' && data !== null) {
+      // Un solo objeto script
+      const s = jsonObjToScript(data);
+      if (s) scriptsToImport.push(s);
+    }
+
+    if (scriptsToImport.length === 0) {
+      alert('❌ No se encontraron scripts válidos en los datos importados.');
+      return;
+    }
+
+    // Importar solo los que no existen
+    let imported = 0;
+    for (const s of scriptsToImport) {
+      const exists = state.customScripts.some(cs => cs.id === s.id);
+      if (!exists) {
+        addCustomScript(s);
+        imported++;
+      }
+    }
+    alert(`✅ Importados ${imported} script(s) nuevo(s).`);
+  };
+
+  const handlePasteImport = () => {
+    if (!pasteText.trim()) {
+      alert('❌ Por favor, pega el JSON aquí primero.');
+      return;
+    }
+    try {
+      const parsed = JSON.parse(pasteText);
+      
+      // Verificar si es formato BOTC estándar: [meta, ...charIds]
+      if (Array.isArray(parsed) && parsed.length > 1) {
+        const first = parsed[0];
+        if (typeof first === 'object' && first !== null) {
+          const meta = first as BotcMeta;
+          if (meta.id === '_meta' || meta.name !== undefined || meta.author !== undefined) {
+            // Verificar que el resto son strings
+            const rest = parsed.slice(1);
+            if (rest.every((item): item is string => typeof item === 'string')) {
+              // Es formato BOTC estándar → mostrar diálogo de confirmación
+              setImportName(meta.name || '');
+              setImportAuthor(meta.author || '');
+              setShowPasteDialog(false);
+              setShowImportConfirmDialog(true);
+              return;
+            }
+          }
+        }
+      }
+      
+      // No es formato BOTC estándar → importar directamente
+      setShowPasteDialog(false);
+      setPasteText('');
+      processImportedData(parsed);
+    } catch {
+      alert('❌ El texto pegado no es un JSON válido.');
+    }
+  };
+
+  const confirmBotcStandardImport = () => {
+    if (!pasteText.trim()) return;
+
+    // Recalcular personajes válidos basados en el pasteText actual
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(pasteText);
+    } catch {
+      alert('❌ El texto pegado no es un JSON válido.');
+      return;
+    }
+
+    if (!Array.isArray(parsed) || parsed.length < 2) {
+      alert('❌ Formato JSON no válido.');
+      return;
+    }
+
+    const first = parsed[0] as BotcMeta;
+    const charIds = (parsed as unknown[]).slice(1).filter((item): item is string => typeof item === 'string');
+      
+      // Validar que los personajes existen
+      const allChars = [...ALL_CHARACTERS];
+      const validChars = charIds.filter(id => allChars.find(c => c.id === id));
+      
+      if (validChars.length === 0) {
+        alert('❌ No se encontraron personajes válidos en el JSON.');
+        setShowImportConfirmDialog(false);
+        setPasteText('');
+        return;
+      }
+
+      const script: Script = {
+        id: generateImportId(charIds),
+        name: importName || first?.name || `Script importado (${validChars.length} personajes)`,
+        description: importAuthor
+          ? `Script personalizado por ${importAuthor}`
+          : first?.author 
+            ? `Generado desde formato standar BOTC por ${first.author}` 
+            : `Generado desde formato standar BOTC: ${validChars.map(id => allChars.find(c => c.id === id)?.name || id).join(', ')}`,
+        author: importAuthor || first?.author || '',
+        characters: charIds,
+        isOfficial: false,
+        isCustom: true,
+        difficulty: importDifficulty,
+      };
+
+      addCustomScript(script);
+      setShowImportConfirmDialog(false);
+      setImportName('');
+      setImportAuthor('');
+      setImportDifficulty('beginner');
+      setPasteText('');
+      alert('✅ Script importado correctamente.');
   };
 
   const handlePlay = (script: Script) => {
@@ -234,16 +467,40 @@ export default function ScriptsPage() {
           {/* Export/Import toolbar */}
           <div className="flex gap-2 justify-end flex-wrap">
             <button
-              onClick={importScripts}
+              onClick={() => setShowPasteDialog(true)}
+              className="btn-secondary text-xs"
+              title="Pegar JSON directamente"
+            >
+              <Upload className="w-3.5 h-3.5" />
+              Pegar JSON
+            </button>
+            <button
+              onClick={() => fileInputRef.current?.click()}
               className="btn-secondary text-xs"
               title="Importar scripts desde un archivo JSON"
             >
               <Upload className="w-3.5 h-3.5" />
-              Importar JSON
+              Importar archivo
             </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json"
+              className="hidden"
+              onChange={handleFileImport}
+            />
             {state.customScripts.length > 0 && (
               <button
-                onClick={exportScripts}
+                onClick={() => {
+                  const data = JSON.stringify(state.customScripts, null, 2);
+                  const blob = new Blob([data], { type: 'application/json' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `botc-scripts-${new Date().toISOString().slice(0, 10)}.json`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
                 className="btn-secondary text-xs"
                 title="Exportar todos tus scripts a un archivo JSON"
               >
@@ -252,6 +509,127 @@ export default function ScriptsPage() {
               </button>
             )}
           </div>
+
+          {/* Paste JSON Dialog */}
+          {showPasteDialog && (
+            <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+              <div className="bg-dark-800 border border-dark-600 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-auto">
+                <div className="flex items-center justify-between p-4 border-b border-dark-600">
+                  <h3 className="font-gothic text-gold-400">Pegar JSON</h3>
+                  <button onClick={() => { setShowPasteDialog(false); setPasteText(''); }} className="text-gothic-400 hover:text-gothic-200">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="p-4">
+                  <p className="text-gothic-300 text-xs mb-3">
+                    Pega tu JSON aquí. Compatible con:
+                  </p>
+                  <ul className="text-gothic-400 text-xs mb-3 space-y-1">
+                    <li>• Array de scripts: <code className="text-gold-300">[{`{id: "...", name: "...", characters: [...]}`}]</code></li>
+                    <li>• Array de character IDs (formato BOTC standar): <code className="text-gold-300">["chef","bountyhunter","balloonist"]</code></li>
+                    <li>• Formato BOTC estándar con meta: <code className="text-gold-300">[{`{"id":"_meta","author":"","name":""}`},"chef","bountyhunter"]</code></li>
+                    <li>• Array de arrays de character IDs: <code className="text-gold-300">[["chef","bountyhunter"], ["balloonist","villageidiot"]]</code></li>
+                  </ul>
+                  <textarea
+                    value={pasteText}
+                    onChange={(e) => setPasteText(e.target.value)}
+                    placeholder='Pega aquí tu JSON, por ejemplo: [{"id":"_meta","author":"","name":""},"chef","bountyhunter","balloonist"]'
+                    className="w-full h-40 bg-dark-900 border border-dark-600 rounded p-3 text-gothic-200 text-sm font-mono resize-none focus:border-blood-500 focus:outline-none"
+                  />
+                </div>
+                <div className="flex justify-end gap-2 p-4 border-t border-dark-600">
+                  <button
+                    onClick={() => { setShowPasteDialog(false); setPasteText(''); }}
+                    className="btn-secondary text-sm"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handlePasteImport}
+                    className="btn-primary text-sm"
+                  >
+                    Importar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Import Confirmation Dialog (para formato BOTC estándar con nombre/autor) */}
+          {showImportConfirmDialog && (
+            <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+              <div className="bg-dark-800 border border-dark-600 rounded-lg max-w-md w-full">
+                <div className="flex items-center justify-between p-4 border-b border-dark-600">
+                  <h3 className="font-gothic text-gold-400">Confirmar Importación</h3>
+                  <button onClick={() => { setShowImportConfirmDialog(false); setImportName(''); setImportAuthor(''); setImportDifficulty('beginner'); setPasteText(''); }} className="text-gothic-400 hover:text-gothic-200">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="p-4 space-y-4">
+                  <div>
+                    <label className="text-gothic-300 text-xs mb-1 block">Nombre del script:</label>
+                    <input
+                      type="text"
+                      value={importName}
+                      onChange={(e) => setImportName(e.target.value)}
+                      placeholder="Nombre personalizado (opcional)"
+                      className="w-full bg-dark-900 border border-dark-600 rounded p-2 text-gothic-200 text-sm focus:border-blood-500 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-gothic-300 text-xs mb-1 block">Autor:</label>
+                    <input
+                      type="text"
+                      value={importAuthor}
+                      onChange={(e) => setImportAuthor(e.target.value)}
+                      placeholder="Autor personalizado (opcional)"
+                      className="w-full bg-dark-900 border border-dark-600 rounded p-2 text-gothic-200 text-sm focus:border-blood-500 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-gothic-300 text-xs mb-1 block">Dificultad:</label>
+                    <select
+                      value={importDifficulty}
+                      onChange={(e) => setImportDifficulty(e.target.value as Script['difficulty'])}
+                      className="w-full bg-dark-900 border border-dark-600 rounded p-2 text-gothic-200 text-sm focus:border-blood-500 focus:outline-none"
+                    >
+                      <option value="beginner">Principiante</option>
+                      <option value="intermediate">Intermedio</option>
+                      <option value="advanced">Avanzado</option>
+                      <option value="expert">Experto</option>
+                    </select>
+                  </div>
+                  {(() => {
+                    try {
+                      const parsed = JSON.parse(pasteText);
+                      if (Array.isArray(parsed) && parsed.length > 1) {
+                        const rest = parsed.slice(1).filter((item): item is string => typeof item === 'string');
+                        return rest.length > 0 ? `${rest.length} personajes detectados` : 'JSON pegado';
+                      }
+                      return 'JSON pegado';
+                    } catch {
+                      return 'JSON pegado';
+                    }
+                  })()}
+                </div>
+                <div className="flex justify-end gap-2 p-4 border-t border-dark-600">
+                  <button
+                    onClick={() => { setShowImportConfirmDialog(false); setImportName(''); setImportAuthor(''); setImportDifficulty('beginner'); setPasteText(''); }}
+                    className="btn-secondary text-sm"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={confirmBotcStandardImport}
+                    className="btn-primary text-sm"
+                  >
+                    Importar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {state.customScripts.length === 0 ? (
             <div className="card text-center py-12">
               <BookOpen className="w-12 h-12 text-gothic-500 mx-auto mb-3" />

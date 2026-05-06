@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Users, Shuffle, ChevronRight, Plus, Trash2, AlertCircle, ShoppingBag, Eye, X } from 'lucide-react';
 import type { Game, Player, Script, Character } from '../../types';
 import { getDistribution, DIFFICULTY_LABELS } from '../../data/scripts';
-import { loricCharacters } from '../../data/characters';
-import { CharacterTypeBadge } from '../UI/CharacterTypeBadge';
+import { modifiersCharacters } from '../../data/characters';
+import { CharacterTypeBadge, CharacterIcon } from '../UI/CharacterTypeBadge';
 
 interface Props {
   scripts: Script[];
@@ -13,12 +13,7 @@ interface Props {
   onStart: (game: Game) => void;
 }
 
-export default function GameSetupPhase({ scripts, allChars, extraLorics = [], initialScriptId, onStart }: Props) {
-  // Merge built-in lorics with any custom loric characters from JSONBin
-  const allLorics = [
-    ...loricCharacters,
-    ...extraLorics.filter(c => c.type === 'loric' && !loricCharacters.find(l => l.id === c.id)),
-  ];
+export default function GameSetupPhase({ scripts, allChars, initialScriptId, onStart }: Props) {
   const [scriptId, setScriptId] = useState(initialScriptId || scripts[0]?.id || '');
   const [playerNames, setPlayerNames] = useState<string[]>(['', '', '', '', '']);
   const [assignments, setAssignments] = useState<Record<string, string>>({}); // playerId -> charId
@@ -39,11 +34,6 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
   const scriptChars = selectedScript
     ? selectedScript.characters.map(id => allChars.find(c => c.id === id)).filter(Boolean) as Character[]
     : [];
-
-  // The chars actually in play (filtered by selection, fallback to all if none selected yet)
-  const activeScriptChars = selectedCharIds.size > 0
-    ? scriptChars.filter(c => selectedCharIds.has(c.id))
-    : scriptChars;
 
   const validNames = playerNames.filter(n => n.trim());
   const distribution = getDistribution(validNames.length);
@@ -70,11 +60,10 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
   const randomAssign = () => {
     const names = validNames;
     const dist = getDistribution(names.length);
-    const chars = activeScriptChars;
-    const townsfolk = chars.filter(c => c.type === 'townsfolk');
-    const outsiders = chars.filter(c => c.type === 'outsider');
-    const minions = chars.filter(c => c.type === 'minion');
-    const demons = chars.filter(c => c.type === 'demon');
+    const townsfolk = scriptChars.filter(c => c.type === 'townsfolk');
+    const outsiders = scriptChars.filter(c => c.type === 'outsider');
+    const minions = scriptChars.filter(c => c.type === 'minion');
+    const demons = scriptChars.filter(c => c.type === 'demon');
 
     const pool: Character[] = [];
 
@@ -105,7 +94,11 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
 
   const enterBagMode = () => {
     setBagMode(true);
-    initBag(activeScriptChars);
+    // Si no hay selección, usar todos los personajes del script
+    const charsToShow = selectedCharIds.size > 0
+      ? scriptChars.filter(c => selectedCharIds.has(c.id))
+      : scriptChars;
+    initBag(charsToShow);
   };
 
   const drawFromBag = (pid: string, playerName: string) => {
@@ -185,7 +178,7 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
         <select
           className="select-gothic"
           value={scriptId}
-          onChange={e => { setScriptId(e.target.value); setAssignments({}); setSelectedCharIds(new Set()); }}
+          onChange={e => { setScriptId(e.target.value); setAssignments({}); setSelectedCharIds(new Set()); setSelectedLoricIds(new Set()); }}
         >
           {scripts.map(s => (
             <option key={s.id} value={s.id}>
@@ -264,20 +257,21 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
             </button>
           </div>
 
-          {/* Loric selector */}
+          {/* Modifiers selector (Fabled + Loric) */}
           <div className="mt-6 border-t border-dark-200 pt-4">
             <p className="text-gothic-300 text-sm font-gothic mb-3">
-              🃏 ¿Usar algún <strong className="text-amber-400">Loric</strong>? (opcional)
+              ⭐ ¿Usar algún <strong className="text-amber-400">modificador de partida</strong> (Legendario/Loric)? (opcional)
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {allLorics.map(loric => {
-                const active = selectedLoricIds.has(loric.id);
+              {modifiersCharacters.map(mod => {
+                const active = selectedLoricIds.has(mod.id);
+                const typeLabel = mod.type === 'fabled' ? '⭐ Legendario' : '📜 Loric';
                 return (
                   <button
-                    key={loric.id}
+                    key={mod.id}
                     onClick={() => setSelectedLoricIds(prev => {
                       const next = new Set(prev);
-                      if (next.has(loric.id)) next.delete(loric.id); else next.add(loric.id);
+                      if (next.has(mod.id)) next.delete(mod.id); else next.add(mod.id);
                       return next;
                     })}
                     className={`flex items-start gap-2 p-2 rounded border text-left transition-all ${
@@ -285,12 +279,17 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
                         ? 'border-amber-600/60 bg-amber-950/30'
                         : 'border-dark-200 bg-dark-500 opacity-60 hover:opacity-90'
                     }`}
-                    title={loric.ability}
+                    title={mod.ability}
                   >
-                    <span className="text-lg flex-shrink-0">{loric.icon}</span>
+                    <CharacterIcon character={mod} size="md" />
                     <div className="flex-1 min-w-0">
-                      <p className={`font-gothic text-sm ${active ? 'text-amber-300' : 'text-gothic-400'}`}>{loric.name}</p>
-                      <p className="text-gothic-600 text-xs leading-tight line-clamp-2">{loric.ability}</p>
+                      <div className="flex items-center gap-2">
+                        <p className={`font-gothic text-sm ${active ? 'text-amber-300' : 'text-gothic-400'}`}>{mod.name}</p>
+                        <span className={`text-xs px-1.5 py-0.5 rounded ${mod.type === 'fabled' ? 'bg-amber-900/30 text-amber-400' : 'bg-amber-900/20 text-amber-500'}`}>
+                          {typeLabel}
+                        </span>
+                      </div>
+                      <p className="text-gothic-600 text-xs leading-tight line-clamp-2">{mod.ability}</p>
                     </div>
                     {active && <span className="text-amber-400 text-xs flex-shrink-0">✓</span>}
                   </button>
@@ -303,12 +302,15 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
 
       {step === 'characters' && (() => {
         const dist = distribution;
-        const counts = {
-          townsfolk: [...selectedCharIds].filter(id => scriptChars.find(c => c.id === id)?.type === 'townsfolk').length,
-          outsider: [...selectedCharIds].filter(id => scriptChars.find(c => c.id === id)?.type === 'outsider').length,
-          minion: [...selectedCharIds].filter(id => scriptChars.find(c => c.id === id)?.type === 'minion').length,
-          demon: [...selectedCharIds].filter(id => scriptChars.find(c => c.id === id)?.type === 'demon').length,
-        };
+         const counts = {
+           townsfolk: [...selectedCharIds].filter(id => scriptChars.find(c => c.id === id)?.type === 'townsfolk').length,
+           outsider: [...selectedCharIds].filter(id => scriptChars.find(c => c.id === id)?.type === 'outsider').length,
+           minion: [...selectedCharIds].filter(id => scriptChars.find(c => c.id === id)?.type === 'minion').length,
+           demon: [...selectedCharIds].filter(id => scriptChars.find(c => c.id === id)?.type === 'demon').length,
+           traveller: [...selectedCharIds].filter(id => scriptChars.find(c => c.id === id)?.type === 'traveller').length,
+           fabled: [...selectedCharIds].filter(id => scriptChars.find(c => c.id === id)?.type === 'fabled').length,
+           loric: [...selectedCharIds].filter(id => scriptChars.find(c => c.id === id)?.type === 'loric').length,
+         };
         const totalSelected = selectedCharIds.size;
         const toggleChar = (id: string) => {
           setSelectedCharIds(prev => {
@@ -355,30 +357,9 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
               ))}
             </div>
 
-            {/* Aviso de conteo manual */}
-            <div className="flex items-start gap-2 text-gothic-400 text-xs mb-3 p-2 bg-dark-500 border border-dark-200/50 rounded">
-              <AlertCircle className="w-3 h-3 flex-shrink-0 mt-0.5 text-amber-500" />
-              <span>
-                <span className="text-amber-400 font-bold">Recuerda:</span> algunos personajes modifican la distribución (p.ej. el Barón añade 2 forasteros y quita 2 aldeanos).
-                Los contadores de arriba son la base oficial — <strong className="text-gothic-200">tú decides cuántos seleccionas realmente</strong>. La bolsa contendrá exactamente los personajes que marques aquí.
-              </span>
-            </div>
-
-            {totalSelected > 0 && totalSelected !== validNames.length && (
-              <div className="flex items-center gap-2 text-yellow-400 text-xs mb-3 p-2 bg-yellow-900/20 border border-yellow-700/30 rounded">
-                <AlertCircle className="w-3 h-3 flex-shrink-0" />
-                <span>
-                  Hay <strong>{totalSelected}</strong> personajes seleccionados para <strong>{validNames.length}</strong> jugadores.
-                  {totalSelected < validNames.length
-                    ? ' Selecciona más personajes o la bolsa quedará corta.'
-                    : ' Hay más personajes que jugadores — sobrará alguno en la bolsa.'}
-                </span>
-              </div>
-            )}
-
             {/* Characters grouped by type */}
             <div className="space-y-4 mb-6">
-              {(['townsfolk', 'outsider', 'minion', 'demon'] as const).map(type => {
+              {(['townsfolk', 'outsider', 'minion', 'demon', 'traveller', 'fabled', 'loric'] as const).map(type => {
                 const group = scriptChars.filter(c => c.type === type);
                 if (!group.length) return null;
                 const typeLabels: Record<string, string> = {
@@ -386,12 +367,18 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
                   outsider: '🧳 Forasteros',
                   minion: '😈 Esbirros',
                   demon: '👹 Demonios',
+                  traveller: '🚶 Viajeros',
+                  fabled: '⭐ Legendarios',
+                  loric: '📜 Loric',
                 };
                 const typeColors: Record<string, string> = {
                   townsfolk: 'text-blue-400 border-blue-900/40 bg-blue-950/20',
                   outsider: 'text-purple-400 border-purple-900/40 bg-purple-950/20',
                   minion: 'text-orange-400 border-orange-900/40 bg-orange-950/20',
                   demon: 'text-red-400 border-red-900/40 bg-red-950/20',
+                  traveller: 'text-yellow-400 border-yellow-900/40 bg-yellow-950/20',
+                  fabled: 'text-amber-400 border-amber-900/40 bg-amber-950/20',
+                  loric: 'text-amber-400 border-amber-900/40 bg-amber-950/20',
                 };
                 return (
                   <div key={type} className={`rounded-lg border p-3 ${typeColors[type]}`}>
@@ -414,7 +401,7 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
                             }`}>
                               {active ? '✓' : ''}
                             </span>
-                            <span className="text-base">{char.icon}</span>
+                            <CharacterIcon character={char} size="md" />
                             <div className="flex-1 min-w-0">
                               <p className={`font-gothic text-sm leading-tight ${active ? 'text-gothic-100' : 'text-gothic-500'}`}>{char.name}</p>
                               <p className="text-gothic-600 text-xs leading-tight truncate">{char.ability}</p>
@@ -451,20 +438,20 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
                 ? `🎒 Modo bolsa — Quedan ${bag.length} rol${bag.length !== 1 ? 'es' : ''} en la bolsa`
                 : 'Asigna un rol a cada jugador:'}
             </p>
-            <div className="flex gap-2">
-              <button
-                onClick={() => { setBagMode(false); setAssignments({}); setBag([]); }}
-                className={`px-3 py-1.5 rounded text-xs font-gothic border transition-all ${!bagMode ? 'bg-blood-700 border-blood-500 text-gothic-100' : 'bg-dark-400 border-dark-200 text-gothic-400 hover:border-dark-100'}`}
-              >
-                ✏️ Manual
-              </button>
-              <button
-                onClick={enterBagMode}
-                className={`px-3 py-1.5 rounded text-xs font-gothic border transition-all ${bagMode ? 'bg-blood-700 border-blood-500 text-gothic-100' : 'bg-dark-400 border-dark-200 text-gothic-400 hover:border-dark-100'}`}
-              >
-                <ShoppingBag className="w-3 h-3 inline mr-1" />
-                Bolsa
-              </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => { setBagMode(false); setAssignments({}); setBag([]); }}
+                      className={`px-3 py-1.5 rounded text-xs font-gothic border transition-all ${!bagMode ? 'bg-blood-700 border-blood-500 text-gothic-100' : 'bg-dark-400 border-dark-200 text-gothic-400 hover:border-dark-100'}`}
+                    >
+                      ✏️ Manual
+                    </button>
+                      <button
+                        onClick={enterBagMode}
+                        className={`px-3 py-1.5 rounded text-xs font-gothic border transition-all ${bagMode ? 'bg-blood-700 border-blood-500 text-gothic-100' : 'bg-dark-400 border-dark-200 text-gothic-400 hover:border-dark-100'}`}
+                      >
+                        <ShoppingBag className="w-3 h-3 inline mr-1" />
+                        Bolsa ({(selectedCharIds.size > 0 ? scriptChars.filter(c => selectedCharIds.has(c.id)) : scriptChars).length})
+                      </button>
               {!bagMode && (
                 <button onClick={randomAssign} className="btn-secondary text-xs py-1.5 px-3">
                   <Shuffle className="w-3 h-3" />
@@ -503,7 +490,7 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
                     <p className="font-gothic text-gothic-100 text-sm">{name}</p>
                     {assignedChar && (
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-sm">{assignedChar.icon}</span>
+                        <CharacterIcon character={assignedChar} size="sm" />
                         <span className="text-gothic-300 text-xs">{assignedChar.name}</span>
                         <CharacterTypeBadge type={assignedChar.type} />
                       </div>
@@ -554,16 +541,17 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
                         onChange={e => assignRole(pid, e.target.value)}
                       >
                         <option value="">— Sin asignar —</option>
-                        {['townsfolk', 'outsider', 'minion', 'demon'].map(type => {
-                          const chars = activeScriptChars.filter(c => c.type === type);
-                          if (!chars.length) return null;
-                          return (
-                            <optgroup key={type} label={type === 'townsfolk' ? 'Aldeanos' : type === 'outsider' ? 'Forasteros' : type === 'minion' ? 'Esbirros' : 'Demonios'}>
+                       {['townsfolk', 'outsider', 'minion', 'demon', 'traveller', 'fabled', 'loric'].map(type => {
+                           const chars = scriptChars.filter(c => c.type === type);
+                           if (!chars.length) return null;
+                           const typeLabel = type === 'townsfolk' ? 'Aldeanos' : type === 'outsider' ? 'Forasteros' : type === 'minion' ? 'Esbirros' : type === 'demon' ? 'Demonios' : type === 'traveller' ? 'Viajeros' : type === 'fabled' ? 'Legendarios' : 'Loric';
+                           return (
+                             <optgroup key={type} label={typeLabel}>
                               {chars.map(c => (
                                 <option key={c.id} value={c.id}
                                   disabled={Object.values(assignments).includes(c.id) && assignments[pid] !== c.id}
                                 >
-                                  {c.icon} {c.name}
+                                  <CharacterIcon character={c} size="sm" /> {c.name}
                                 </option>
                               ))}
                             </optgroup>
@@ -643,7 +631,7 @@ export default function GameSetupPhase({ scripts, allChars, extraLorics = [], in
 
               {/* Icon */}
               <div className="text-8xl mb-4 leading-none" style={{ filter: 'drop-shadow(0 0 20px rgba(255,200,100,0.5))' }}>
-                {revealChar.char.icon}
+                <CharacterIcon character={revealChar.char} size="xxl" />
               </div>
 
               {/* Character name */}
